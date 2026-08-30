@@ -20,6 +20,9 @@ WANTED = [
     (r"freebayes", "freebayes.vcf"), (r"coverage\.regions|regions\.bed|mosdepth.*region", "coverage.regions.bed"),
     (r"fusions\.discarded|discarded", "fusions.discarded.tsv"), (r"fusions", "fusions.tsv"),
     (r"sj\.out|splice.*junction", "SJ.out.tab"), (r"gene_counts|reads_per_gene", "rna_gene_counts.tsv"),
+    (r"dna_umi_extract", "dna_umi_extract.log"), (r"dna_dedup", "dna_dedup.log"),
+    (r"rna_umi_extract", "rna_umi_extract.log"), (r"rna_star\.log|star.*log", "rna_star.log"),
+    (r"coverage\.summary", "coverage.summary.txt"),
     (r"f1r2", "f1r2.tar.gz"),
     (r"mutect.*stats|stats.*mutect", "mutect2.vcf.stats"),
 ]

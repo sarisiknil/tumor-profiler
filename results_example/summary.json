@@ -1810,7 +1810,8 @@
      }
     ]
    }
-  }
+  },
+  "library_complexity": {}
  },
  "variants": {
   "counts_by_class": {
@@ -3893,8 +3894,8 @@
  },
  "disclaimer": "Educational output of a student pipeline. Not a clinical report and not a basis for medical decisions. Somatic findings only; no identifying information.",
  "_provenance": {
-  "generated_utc": "2026-08-30T17:39:43+00:00",
-  "git_commit": "552a2cf",
+  "generated_utc": "2026-08-30T17:47:48+00:00",
+  "git_commit": "371717f",
   "git_dirty": true,
   "python": "3.11.16",
   "argv": "scripts/build_summary_json.py --results results_example --sample EXAMPLE01"

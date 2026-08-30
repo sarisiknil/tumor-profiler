@@ -17,6 +17,41 @@ def jload(p, default=None):
     except Exception:
         return default
 
+def parse_umi_logs(results_dir):
+    """Reads in, reads surviving the UMI pattern, and unique molecules out — the library-complexity numbers.
+
+    The fraction of reads matching the expected `UMI + common region` pattern is also an independent check on
+    the read-structure inference: if the structure were wrong, most reads would fail the pattern."""
+    import re
+    out = {}
+    ex = Path(results_dir) / "galaxy_import" / "dna_umi_extract.log"
+    if ex.exists():
+        txt = ex.read_text(errors="replace")
+        m_in = re.search(r"Input Reads:\s*(\d+)", txt)
+        m_out = re.search(r"Reads output:\s*(\d+)", txt)
+        if m_in and m_out:
+            a, b = int(m_in.group(1)), int(m_out.group(1))
+            out["umi_pattern"] = {"reads_in": a, "reads_matching_pattern": b,
+                                  "fraction_matching": round(b / a, 4) if a else None}
+    dd = Path(results_dir) / "galaxy_import" / "dna_dedup.log"
+    if dd.exists():
+        txt = dd.read_text(errors="replace")
+        m_out = re.search(r"Number of reads out:\s*(\d+)", txt)
+        m_pos = re.search(r"Total number of positions deduplicated:\s*(\d+)", txt)
+        m_umi = re.search(r"Mean number of unique UMIs per position:\s*([\d.]+)", txt)
+        m_in = re.search(r"Input Reads:\s*(\d+)", txt)
+        d = {}
+        if m_in: d["reads_in"] = int(m_in.group(1))
+        if m_out: d["unique_molecules_out"] = int(m_out.group(1))
+        if m_pos: d["positions_deduplicated"] = int(m_pos.group(1))
+        if m_umi: d["mean_unique_umis_per_position"] = float(m_umi.group(1))
+        if d.get("reads_in") and d.get("unique_molecules_out"):
+            d["reads_per_molecule"] = round(d["reads_in"] / d["unique_molecules_out"], 2)
+        if d:
+            out["deduplication"] = d
+    return out
+
+
 def tload(p, limit=None):
     p = Path(p)
     if not p.exists():
@@ -47,7 +82,8 @@ def main():
         "library": cfg.get("library", {}),
         "panel": cfg.get("panel", {}),
         "qc": {"dna": jload(R / "qc" / "read_structure_DNA.json"),
-               "rna": jload(R / "qc" / "read_structure_RNA.json")},
+               "rna": jload(R / "qc" / "read_structure_RNA.json"),
+               "library_complexity": parse_umi_logs(R)},
         "variants": {
             "counts_by_class": (jload(R / "dna" / "variants_filtered_summary.json") or {}).get("counts", {}),
             "counts_by_tier": (jload(R / "dna" / "variants_tiered_summary.json") or {}).get("tier_counts", {}),
@@ -83,6 +119,19 @@ def main():
             L.append(f"- **{arm.upper()}**: {q['reads_analyzed']:,} reads inspected on `{q['instrument']}`; "
                      f"UMI {q['umi_len_inferred']} nt + common region `{q['anchor_inferred']}`; "
                      f"adapter read-through {q['adapter']['frac_reads_with_adapter']*100:.1f} %")
+    lc = (summary["qc"].get("library_complexity") or {})
+    if lc.get("umi_pattern"):
+        u = lc["umi_pattern"]
+        L.append(f"- **{u['fraction_matching']*100:.1f} %** of DNA reads carry the expected "
+                 f"`12-nt UMI + common region` structure ({u['reads_matching_pattern']:,} of "
+                 f"{u['reads_in']:,}) — an independent confirmation of the library identification")
+    if lc.get("deduplication"):
+        d = lc["deduplication"]
+        L.append(f"- Deduplication: {d.get('reads_in', 0):,} reads collapse to "
+                 f"**{d.get('unique_molecules_out', 0):,} unique molecules** "
+                 f"({d.get('reads_per_molecule', '?')} reads per molecule, "
+                 f"{d.get('mean_unique_umis_per_position', '?')} molecules per start position). "
+                 f"Molecules, not reads, are what the variant calls actually rest on.")
     bm = summary.get("biomarkers") or {}
     if bm.get("tmb"):
         t = bm["tmb"]
