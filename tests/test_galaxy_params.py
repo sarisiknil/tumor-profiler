@@ -43,7 +43,9 @@ def _blocks():
     src = (REPO / "scripts" / "galaxy_run.py").read_text()
     tools = dict(re.findall(r'"(\w+)":\s*"(toolshed[^"]+)"', src))
     out = []
-    for key, label, body in re.findall(r'r\.run\("(\w+)",\s*"([^"]+)",\s*\{(.*?)\n    \},', src, re.S):
+    # the closing brace may sit at any indentation (steps inside an `if` are indented further), so match the
+    # shortest body ending at a line that is only whitespace + `},`
+    for key, label, body in re.findall(r'r\.run\("(\w+)",\s*"([^"]+)",\s*\{(.*?)\n\s*\},', src, re.S):
         out.append((key, tools[key], label, re.findall(r'^\s*"([^"]+)":', body, re.M)))
     return out
 

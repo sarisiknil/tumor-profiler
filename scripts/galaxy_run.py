@@ -41,6 +41,7 @@ T = {  # tool ids verified against usegalaxy.eu on 2026-08-30
     "rna_star": "toolshed.g2.bx.psu.edu/repos/iuc/rgrnastar/rna_star/2.7.8a+galaxy1",
     "arriba": "toolshed.g2.bx.psu.edu/repos/iuc/arriba/arriba/2.5.1+galaxy1",
     "arriba_filters": "toolshed.g2.bx.psu.edu/repos/iuc/arriba_get_filters/arriba_get_filters/2.5.1+galaxy1",
+    "bamtobed": "toolshed.g2.bx.psu.edu/repos/iuc/bedtools/bedtools_bamtobed/2.31.1+galaxy0",
 }
 DNA_UMI = r"^(?P<umi_1>.{12})(?P<discard_1>AGTCGTCTCGAAGT?){s<=2}"
 RNA_UMI = r"^(?P<umi_1>.{12})(?P<discard_1>CTGGATAGTACGCT){s<=2}"
@@ -222,15 +223,36 @@ def dna_arm(r, alias):
         "log": "true",
     }, {"output": "dna_dedup.bam", "out_log": "dna_dedup.log"})
 
-    r.run("ampliconclip", "4 primer clip (DNA)", {
-        "input_bam": r.need("dna_dedup.bam"),
-        "input_bed": r.need("panel_dna.bed"),
-        "hard_clip_mode": "true",
-        "both_ends": "true",
-    }, {"output_bam": "dna_clipped.bam"})
+    # `samtools ampliconclip` clips read sequence overlapping the intervals it is given, so it MUST be given
+    # primer footprints. Handing it the exon target BED destroys the data — every read over a target is clipped
+    # away. The primer footprints are recovered by aligning the primer sequences that scripts/infer_primers.py
+    # read out of Read 2; without that FASTA the step is skipped rather than run with the wrong intervals.
+    if r.find("gsp2_DNA.fa"):
+        r.run("bwa_mem", "4a map the inferred primers", {
+            "reference_source|reference_source_selector": "cached",
+            "reference_source|ref_file": "hg38",
+            "fastq_input|fastq_input_selector": "single",
+            "fastq_input|fastq_input1": r.need("gsp2_DNA.fa"),
+            "analysis_type|analysis_type_selector": "illumina",
+        }, {"bam_output": "primers_mapped.bam"})
+        r.run("bamtobed", "4b primer footprints", {
+            "input": r.need("primers_mapped.bam"),
+        }, {"output": "primers_mapped.bed"})
+        r.run("ampliconclip", "4c primer clip (DNA)", {
+            "input_bam": r.need("dna_dedup.bam"),
+            "input_bed": r.need("primers_mapped.bed"),
+            "hard_clip_mode": "true",
+            "both_ends": "true",
+        }, {"output_bam": "dna_clipped.bam"})
+        bam_for_calling = "dna_clipped.bam"
+    else:
+        print("note  no primer FASTA in the history — skipping primer clipping and calling on the "
+              "deduplicated BAM. Primer-derived bases remain, so variants at a primer footprint are "
+              "unreliable; upload results/primers/gsp2_DNA.fa to enable clipping.", flush=True)
+        bam_for_calling = "dna_dedup.bam"
 
     r.run("mosdepth", "5 coverage", {
-        "input_alignment": r.need("dna_clipped.bam"),
+        "input_alignment": r.need(bam_for_calling),
         "per_base_coverage": "false",
         "window|window_mode": "bed",
         "window|region_file": r.need("panel_dna.bed"),
@@ -238,7 +260,7 @@ def dna_arm(r, alias):
 
     r.run("mutect2", "6a Mutect2 (tumour-only)", {
         "mode|mode_parameters": "tumor_only",
-        "mode|tumor": r.need("dna_clipped.bam"),
+        "mode|tumor": r.need(bam_for_calling),
         "reference_source|reference_source_selector": "cached",
         "reference_source|reference_sequence": "hg38",
         "optional|optional_parameters": "yes",
@@ -250,7 +272,7 @@ def dna_arm(r, alias):
 
     r.run("vardict", "6b VarDict", {
         "select_mode|mode": "single",
-        "select_mode|tumor": r.need("dna_clipped.bam"),
+        "select_mode|tumor": r.need(bam_for_calling),
         "select_mode|interval_file": r.need("panel_dna.bed"),
         "reference_source|reference_source_selector": "cached",
         "reference_source|ref_file": "hg38",
@@ -258,7 +280,7 @@ def dna_arm(r, alias):
     }, {"all_variants": "vardict.vcf"})
 
     r.run("lofreq", "6c LoFreq", {
-        "reads": r.need("dna_clipped.bam"),
+        "reads": r.need(bam_for_calling),
         "reference_source|ref_selector": "cached",
         "reference_source|ref": "hg38",
         "regions|restrict_to_region": "regions_from_file",
