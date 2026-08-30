@@ -26,6 +26,15 @@ in frame, which protein domains are retained, and whether only one partner is on
 for anchored multiplex PCR, since the assay primes one known gene and discovers the partner without prior
 knowledge. That is the property that lets a fixed panel find fusion partners nobody has described before.
 
+**What the alignment statistics look like, and why they are not alarming.** On this sample STAR reported
+~21 % uniquely mapped reads and **~76 % chimeric reads**. On whole-transcriptome data that would signal a
+serious problem. Here it is a property of the chemistry: Read 1 begins at an arbitrary ligation point and
+Read 2 at a fixed gene-specific primer, inserts are short, and the Arriba preset sets `--chimSegmentMin 10`,
+so a 10-base segment mapping elsewhere is enough to classify a read as chimeric. The consequence is practical
+rather than cosmetic — the fusion caller receives an enormous pile of candidate chimeras, most of them
+artefacts of library construction, which is exactly why the panel-membership check ("is either partner
+actually a target of this assay?") does more filtering work here than Arriba's own confidence score.
+
 **Honest sensitivity.** Benchmarked on real Archer FusionPlex FFPE samples against the vendor's software, Arriba
 recovered 86 % of fusions on the lung panel and 57 % on the sarcoma panel; STAR-Fusion recovered 33 % and 7 %
 (Capone et al. 2022). The pipeline therefore uses Arriba, keeps low-confidence calls rather than discarding

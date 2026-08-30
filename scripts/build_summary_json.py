@@ -33,6 +33,36 @@ def parse_umi_logs(results_dir):
             a, b = int(m_in.group(1)), int(m_out.group(1))
             out["umi_pattern"] = {"reads_in": a, "reads_matching_pattern": b,
                                   "fraction_matching": round(b / a, 4) if a else None}
+    rex = Path(results_dir) / "galaxy_import" / "rna_umi_extract.log"
+    if rex.exists():
+        txt = rex.read_text(errors="replace")
+        m_in = re.search(r"Input Reads:\s*(\d+)", txt)
+        m_out = re.search(r"Reads output:\s*(\d+)", txt)
+        if m_in and m_out:
+            a, b = int(m_in.group(1)), int(m_out.group(1))
+            out["rna_umi_pattern"] = {"reads_in": a, "reads_matching_pattern": b,
+                                      "fraction_matching": round(b / a, 4) if a else None}
+    star = Path(results_dir) / "galaxy_import" / "rna_star.log"
+    if star.exists():
+        txt = star.read_text(errors="replace")
+
+        def g(pattern, cast=float):
+            m = re.search(pattern + r"\s*\|\s*([\d.]+)%?", txt)
+            return cast(m.group(1)) if m else None
+
+        out["rna_alignment"] = {
+            "input_reads": g(r"Number of input reads", int),
+            "uniquely_mapped_pct": g(r"Uniquely mapped reads %"),
+            "multi_mapped_pct": g(r"% of reads mapped to multiple loci"),
+            "unmapped_too_short_pct": g(r"% of reads unmapped: too short"),
+            "chimeric_pct": g(r"% of chimeric reads"),
+            "note": "A very high chimeric rate is characteristic of anchored multiplex PCR, not of the tumour: "
+                    "Read 1 starts at an arbitrary ligation point and Read 2 at a fixed gene-specific primer, "
+                    "and with short inserts STAR's permissive chimeric threshold (chimSegmentMin 10, set by "
+                    "the Arriba preset) classifies a large share of reads as chimeric. It is the reason "
+                    "whole-transcriptome fusion callers over-call on this chemistry, and the reason the fusion "
+                    "summary keeps the panel-membership check.",
+        }
     dd = Path(results_dir) / "galaxy_import" / "dna_dedup.log"
     if dd.exists():
         txt = dd.read_text(errors="replace")
@@ -132,6 +162,15 @@ def main():
                  f"({d.get('reads_per_molecule', '?')} reads per molecule, "
                  f"{d.get('mean_unique_umis_per_position', '?')} molecules per start position). "
                  f"Molecules, not reads, are what the variant calls actually rest on.")
+    if lc.get("rna_umi_pattern"):
+        u = lc["rna_umi_pattern"]
+        L.append(f"- **{u['fraction_matching']*100:.1f} %** of RNA reads carry the expected structure "
+                 f"({u['reads_matching_pattern']:,} of {u['reads_in']:,})")
+    if lc.get("rna_alignment"):
+        ra = lc["rna_alignment"]
+        L.append(f"- RNA alignment: {ra.get('uniquely_mapped_pct')} % uniquely mapped, "
+                 f"**{ra.get('chimeric_pct')} % chimeric** — expected for anchored multiplex PCR, "
+                 f"not a property of the tumour (see the note in summary.json)")
     bm = summary.get("biomarkers") or {}
     if bm.get("tmb"):
         t = bm["tmb"]
