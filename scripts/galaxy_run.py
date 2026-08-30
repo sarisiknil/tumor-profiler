@@ -42,6 +42,7 @@ T = {  # tool ids verified against usegalaxy.eu on 2026-08-30
     "arriba": "toolshed.g2.bx.psu.edu/repos/iuc/arriba/arriba/2.5.1+galaxy1",
     "arriba_filters": "toolshed.g2.bx.psu.edu/repos/iuc/arriba_get_filters/arriba_get_filters/2.5.1+galaxy1",
     "bamtobed": "toolshed.g2.bx.psu.edu/repos/iuc/bedtools/bedtools_bamtobed/2.31.1+galaxy0",
+    "freebayes": "toolshed.g2.bx.psu.edu/repos/devteam/freebayes/freebayes/1.3.9+galaxy1",
 }
 DNA_UMI = r"^(?P<umi_1>.{12})(?P<discard_1>AGTCGTCTCGAAGT?){s<=2}"
 RNA_UMI = r"^(?P<umi_1>.{12})(?P<discard_1>CTGGATAGTACGCT){s<=2}"
@@ -228,12 +229,20 @@ def dna_arm(r, alias):
     # away. The primer footprints are recovered by aligning the primer sequences that scripts/infer_primers.py
     # read out of Read 2; without that FASTA the step is skipped rather than run with the wrong intervals.
     if r.find("gsp2_DNA.fa"):
+        # BWA-MEM's defaults are wrong for 25 bp queries: a perfect 25-base match scores 25, below the default
+        # minimum output score of 30, so every primer comes back unmapped. Lower the threshold and the seed
+        # length to suit short exact queries.
         r.run("bwa_mem", "4a map the inferred primers", {
             "reference_source|reference_source_selector": "cached",
             "reference_source|ref_file": "hg38",
             "fastq_input|fastq_input_selector": "single",
             "fastq_input|fastq_input1": r.need("gsp2_DNA.fa"),
-            "analysis_type|analysis_type_selector": "illumina",
+            "analysis_type|analysis_type_selector": "full",
+            "analysis_type|algorithmic_options|algorithmic_options_selector": "set",
+            "analysis_type|algorithmic_options|k": "15",
+            "analysis_type|scoring_options|scoring_options_selector": "do_not_set",
+            "analysis_type|io_options|io_options_selector": "set",
+            "analysis_type|io_options|T": "18",
         }, {"bam_output": "primers_mapped.bam"})
         r.run("bamtobed", "4b primer footprints", {
             "input": r.need("primers_mapped.bam"),
@@ -270,14 +279,33 @@ def dna_arm(r, alias):
         "gzipped_output": "false",
     }, {"output_vcf": "mutect2.vcf"})
 
-    r.run("vardict", "6b VarDict", {
-        "select_mode|mode": "single",
-        "select_mode|tumor": r.need(bam_for_calling),
-        "select_mode|interval_file": r.need("panel_dna.bed"),
-        "reference_source|reference_source_selector": "cached",
-        "reference_source|ref_file": "hg38",
-        "advancedsettings|f": "0.01",
-    }, {"all_variants": "vardict.vcf"})
+    # VarDict is the natural second caller for deep amplicon data, but its Galaxy job on usegalaxy.eu fails to
+    # build its conda environment ("Conda dependency seemingly installed but failed to build job environment"),
+    # repeatedly and independently of our parameters. FreeBayes takes its place so the concordance rule still
+    # has three independent callers; the substitution is recorded in the run summary rather than hidden.
+    if not r.find("vardict.vcf"):
+        try:
+            r.run("vardict", "6b VarDict", {
+                "select_mode|mode": "single",
+                "select_mode|tumor": r.need(bam_for_calling),
+                "select_mode|interval_file": r.need("panel_dna.bed"),
+                "reference_source|reference_source_selector": "cached",
+                "reference_source|ref_file": "hg38",
+                "advancedsettings|f": "0.01",
+            }, {"all_variants": "vardict.vcf"})
+        except SystemExit as e:
+            print(f"note  VarDict unavailable on this server ({e}); substituting FreeBayes", flush=True)
+
+    if not r.find("vardict.vcf"):
+        r.run("freebayes", "6b FreeBayes (in place of VarDict)", {
+            "reference_source|reference_source_selector": "cached",
+            "reference_source|ref_file": "hg38",
+            "reference_source|batchmode|processmode": "individual",
+            "reference_source|batchmode|input_bams": r.need(bam_for_calling),
+            "target_limit_type|target_limit_type_selector": "limit_by_target_file",
+            "target_limit_type|input_target_bed": r.need("panel_dna.bed"),
+            "options_type|options_type_selector": "simple_w_filters",
+        }, {"output_vcf": "freebayes.vcf"})
 
     r.run("lofreq", "6c LoFreq", {
         "reads": r.need(bam_for_calling),

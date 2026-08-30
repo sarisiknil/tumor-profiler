@@ -201,9 +201,10 @@ rule call_vardict:
 CALLER_VCFS = ({"fb": rules.call_freebayes.output[0], "lf": rules.call_lofreq.output[0],
                 "vd": rules.call_vardict.output[0]} if MODE == "example" else
                {"fb": str(GALAXY / "mutect2.vcf"), "lf": str(GALAXY / "lofreq.vcf"),
-                "vd": str(GALAXY / "vardict.vcf")})
+                "vd": str(GALAXY / ("vardict.vcf" if (GALAXY / "vardict.vcf").exists() else "freebayes.vcf"))})
 CALLER_NAMES = ({"fb": "freebayes", "lf": "lofreq", "vd": "vardict"} if MODE == "example" else
-                {"fb": "mutect2", "lf": "lofreq", "vd": "vardict"})
+                {"fb": "mutect2", "lf": "lofreq",
+                 "vd": "vardict" if (GALAXY / "vardict.vcf").exists() else "freebayes"})
 
 
 rule lift_vcfs:
