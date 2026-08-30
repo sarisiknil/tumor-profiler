@@ -193,7 +193,11 @@ https://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human/release_44/gencode.v44
 | Computational settings | **Use parameters suggested for Arriba** — this one preset sets every chimeric parameter correctly |
 | Output splice junctions (SJ.out.tab) | Yes — **you need this file** |
 
-### 4.4 UMI-tools deduplicate — on the STAR BAM, paired, directional.
+### 4.4 (skipped on purpose) UMI deduplication
+
+The DNA arm deduplicates; the RNA arm does not. With `--chimOutType WithinBAM` the fusion evidence sits in
+supplementary alignments, which `umi_tools dedup` does not preserve reliably — deduplicating here can delete the
+reads the fusion call depends on. See `docs/09_rna_fusions.md`.
 
 ### 4.5 Arriba Get Filters — `Arriba Get Filters` v2.5.1+galaxy1 → genome **hg38**.
 

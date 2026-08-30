@@ -2177,11 +2177,11 @@
     "Any fusion used for a treatment decision needs orthogonal confirmation (FISH, IHC or RT-PCR)."
    ],
    "_provenance": {
-    "generated_utc": "2026-08-30T16:24:45+00:00",
-    "git_commit": "b4e6d1b",
+    "generated_utc": "2026-08-30T17:29:40+00:00",
+    "git_commit": "3140ca4",
     "git_dirty": true,
     "python": "3.11.16",
-    "argv": "scripts/fusion_summary.py --arriba results_example/rna/arriba_placeholder.tsv -o results_example/rna/fusions_summary"
+    "argv": "scripts/fusion_summary.py --arriba results_example/rna/arriba_placeholder.tsv -o results_example/rna/fusions_summary --panel-genes resources/panel_fusionplex_lung_v2.txt"
    }
   },
   "table": []
@@ -2342,8 +2342,8 @@
    "method": "Membership mapping against Sanchez-Vega et al. 2018 (Cell) curated pathway gene lists plus supplementary DNA-repair and chromatin sets.",
    "caveat": "This is not an enrichment analysis: the gene universe is defined by the panel, and a single sample provides no null distribution. Absence of a pathway hit may simply mean the panel does not cover that pathway's genes.",
    "_provenance": {
-    "generated_utc": "2026-08-30T17:20:27+00:00",
-    "git_commit": "526fe31",
+    "generated_utc": "2026-08-30T17:29:42+00:00",
+    "git_commit": "3140ca4",
     "git_dirty": true,
     "python": "3.11.16",
     "argv": "scripts/pathway_map.py --variants results_example/dna/variants_tiered.tsv --fusions results_example/rna/fusions_summary.tsv -o results_example/pathways/pathway_hits"
@@ -3891,8 +3891,8 @@
  },
  "disclaimer": "Educational output of a student pipeline. Not a clinical report and not a basis for medical decisions. Somatic findings only; no identifying information.",
  "_provenance": {
-  "generated_utc": "2026-08-30T17:20:27+00:00",
-  "git_commit": "526fe31",
+  "generated_utc": "2026-08-30T17:29:42+00:00",
+  "git_commit": "3140ca4",
   "git_dirty": true,
   "python": "3.11.16",
   "argv": "scripts/build_summary_json.py --results results_example --sample EXAMPLE01"

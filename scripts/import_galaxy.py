@@ -19,7 +19,8 @@ WANTED = [
     (r"mutect", "mutect2.vcf"), (r"vardict", "vardict.vcf"), (r"lofreq", "lofreq.vcf"),
     (r"freebayes", "freebayes.vcf"), (r"coverage\.regions|regions\.bed|mosdepth.*region", "coverage.regions.bed"),
     (r"fusions\.discarded|discarded", "fusions.discarded.tsv"), (r"fusions", "fusions.tsv"),
-    (r"sj\.out|splice.*junction", "SJ.out.tab"), (r"f1r2", "f1r2.tar.gz"),
+    (r"sj\.out|splice.*junction", "SJ.out.tab"), (r"gene_counts|reads_per_gene", "rna_gene_counts.tsv"),
+    (r"f1r2", "f1r2.tar.gz"),
     (r"mutect.*stats|stats.*mutect", "mutect2.vcf.stats"),
 ]
 SKIP_EXT = {".bam", ".cram", ".sam", ".fastqsanger", ".fastqsanger.gz", ".fastq.gz"}

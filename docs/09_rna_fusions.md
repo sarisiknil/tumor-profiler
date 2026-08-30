@@ -12,6 +12,14 @@ alignment parameters Arriba expects, then Arriba with its blacklist, known-fusio
 annotation. STAR's human genome index needs ~31 GB of RAM — the alignment step therefore runs on usegalaxy.eu,
 where both STAR and Arriba 2.5.1 are installed.
 
+**Why the RNA arm does *not* UMI-deduplicate before Arriba**, although the DNA arm does. With
+`--chimOutType WithinBAM`, the chimeric evidence for a fusion lives in *supplementary* alignments inside the
+main BAM. `umi_tools dedup` works on primary alignments and does not preserve those supplementary records
+reliably, so deduplicating here can quietly delete the very reads the fusion call rests on. Arriba is therefore
+run on the STAR output directly, as its own workflow intends, and its supporting-read counts are read counts
+rather than molecule counts. The UMI is still in each read name, so a molecule-level count can be recovered
+afterwards from the read names Arriba reports — the ordering is a deliberate trade, not an oversight.
+
 `scripts/fusion_summary.py` then re-ranks Arriba's output by clinical relevance: whether either partner is a
 kinase with approved inhibitors (ALK, ROS1, RET, NTRK1/2/3, MET, FGFR1-3, BRAF, NRG1 …), whether the fusion is
 in frame, which protein domains are retained, and whether only one partner is on the panel — which is *expected*

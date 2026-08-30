@@ -289,8 +289,14 @@ rule fusion_summary:
             src.write_text("#gene1\tgene2\tstrand1(gene/fusion)\tstrand2(gene/fusion)\tbreakpoint1\tbreakpoint2\t"
                            "site1\tsite2\ttype\tsplit_reads1\tsplit_reads2\tdiscordant_mates\tcoverage1\t"
                            "coverage2\tconfidence\treading_frame\tretained_protein_domains\tfilters\n")
-        subprocess.run([PY, "scripts/fusion_summary.py", "--arriba", str(src),
-                        "-o", f"{RES}/rna/fusions_summary"], check=True)
+        panel = Path(config.get("panel", {}).get("rna_genes", "resources/panel_fusionplex_lung_v2.txt"))
+        cmd = [PY, "scripts/fusion_summary.py", "--arriba", str(src), "-o", f"{RES}/rna/fusions_summary"]
+        if panel.exists():
+            cmd += ["--panel-genes", str(panel)]
+        disc = Path(config.get("arriba_discarded", "results/galaxy_import/fusions.discarded.tsv"))
+        if disc.exists():
+            cmd += ["--discarded", str(disc)]
+        subprocess.run(cmd, check=True)
 
 rule exon_skipping:
     output: tsv=RES / "rna/exon_skipping.tsv", js=RES / "rna/exon_skipping.json"
