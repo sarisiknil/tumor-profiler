@@ -141,13 +141,29 @@ class Runner:
             return
         print(f"run   {label} ...", flush=True)
         out = self.gi.tools.run_tool(self.hid, T[key], inputs)
-        ids = {o["output_name"]: o["id"] for o in out["outputs"]} if "output_name" in (out["outputs"][0] or {}) \
-            else {}
-        if not ids:                       # older API shape: outputs come back in tool order
-            ids = {}
+        # The job record is the authoritative mapping from a tool's declared output name to the dataset it
+        # produced. Reading it back beats inferring the order from the run_tool response, which does not always
+        # carry output names — that guesswork previously left some datasets under Galaxy's default names.
+        ids = {}
+        job_id = (out.get("jobs") or [{}])[0].get("id")
+        if job_id:
+            try:
+                job = self.gi.jobs.show_job(job_id, full_details=True)
+                ids = {name: (d.get("id") if isinstance(d, dict) else d)
+                       for name, d in (job.get("outputs") or {}).items()}
+            except Exception as e:
+                print(f"      could not read the job record ({e}); falling back to output order", flush=True)
+        if not ids:
+            for o in out.get("outputs", []):
+                if o.get("output_name"):
+                    ids[o["output_name"]] = o["id"]
+        if not ids:
             info = self.gi.tools.show_tool(T[key], io_details=True)
-            for spec, o in zip(info.get("outputs", []), out["outputs"]):
+            for spec, o in zip(info.get("outputs", []), out.get("outputs", [])):
                 ids[spec["name"]] = o["id"]
+        missing_rename = [n for n in rename if n not in ids]
+        if missing_rename:
+            print(f"      warning: could not identify outputs {missing_rename} to rename", flush=True)
         for out_name, new_name in rename.items():
             if out_name in ids:
                 self.gi.histories.update_dataset(self.hid, ids[out_name], name=new_name)
