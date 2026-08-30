@@ -1,0 +1,34 @@
+# --- patient data & anything derived from it never enters git ---
+results/
+clinical/
+*.fastq
+*.fastq.gz
+*.fq
+*.fq.gz
+*.bam
+*.bam.bai
+*.cram
+*.vcf
+*.vcf.gz
+*.vcf.gz.tbi
+*.bed.gz
+*.tar.gz
+*.zip
+# reference data
+resources/refs/
+# secrets
+.env
+*.token
+secrets*.yaml
+# python / tooling
+__pycache__/
+*.pyc
+.pytest_cache/
+.snakemake/
+.streamlit/secrets.toml
+.ipynb_checkpoints/
+.DS_Store
+# allow small example data
+!examples/**/*.fastq.gz
+!examples/**/*.vcf
+!examples/**/*.bed

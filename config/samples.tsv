@@ -1,0 +1,2 @@
+sample	alias	dna_r1	dna_r2	rna_r1	rna_r2
+patient	TUMOR01	../TUMOR01/DNA/TUMOR01_DNA_R1_001.fastq.gz	../TUMOR01/DNA/TUMOR01_DNA_R2_001.fastq.gz	../TUMOR01/RNA/TUMOR01_RNA_R1_001.fastq.gz	../TUMOR01/RNA/TUMOR01_RNA_R2_001.fastq.gz

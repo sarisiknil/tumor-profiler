@@ -1,0 +1,10 @@
+name: tp-dna
+channels: [conda-forge, bioconda]
+dependencies:
+  - gatk4
+  - fgbio
+  - bcftools
+  - samtools
+  - bedtools
+  - umi_tools
+  - openjdk
