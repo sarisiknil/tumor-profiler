@@ -83,7 +83,10 @@ def main():
         L += ["", "## 2. Biomarkers", "",
               f"- **TMB**: {t['tmb_per_mb']} mutations/Mb "
               f"({t['nonsynonymous_somatic_variants']} nonsynonymous over {t['assessable_mb']} Mb assessable; "
-              f"95 % CI {t['ci95_per_mb'][0]}–{t['ci95_per_mb'][1]})",
+              f"95 % CI {t['ci95_per_mb'][0]}–{t['ci95_per_mb'][1]})"
+              + ("" if t.get("meaningful", True) else
+                 "  \n  **This TMB is not interpretable**: the assessable territory is far below the ~1 Mb "
+                 "that panel TMB estimation assumes. The value is shown only to demonstrate the calculation."),
               f"- FFPE indicator (C>T/G>A share of SNVs): {(bm.get('ffpe_indicator') or {}).get('C>T_or_G>A_fraction_of_snvs')}"]
     L += ["", "## 3. Variants", ""]
     cbc = summary["variants"]["counts_by_class"]; cbt = summary["variants"]["counts_by_tier"]

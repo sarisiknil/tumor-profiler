@@ -3887,8 +3887,8 @@
  "validation": null,
  "disclaimer": "Educational output of a student pipeline. Not a clinical report and not a basis for medical decisions. Somatic findings only; no identifying information.",
  "_provenance": {
-  "generated_utc": "2026-08-30T04:09:33+00:00",
-  "git_commit": "449fd70",
+  "generated_utc": "2026-08-30T04:11:39+00:00",
+  "git_commit": "2ce7a4f",
   "git_dirty": true,
   "python": "3.11.16",
   "argv": "scripts/build_summary_json.py --results results_example --sample EXAMPLE01"

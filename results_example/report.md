@@ -9,7 +9,8 @@
 
 ## 2. Biomarkers
 
-- **TMB**: 3333.33 mutations/Mb (6 nonsynonymous over 0.002 Mb assessable; 95 % CI 1217.21–7255.42)
+- **TMB**: 3333.33 mutations/Mb (6 nonsynonymous over 0.002 Mb assessable; 95 % CI 1217.21–7255.42)  
+  **This TMB is not interpretable**: the assessable territory is far below the ~1 Mb that panel TMB estimation assumes. The value is shown only to demonstrate the calculation.
 - FFPE indicator (C>T/G>A share of SNVs): 0.333
 
 ## 3. Variants
