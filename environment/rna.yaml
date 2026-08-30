@@ -1,0 +1,10 @@
+name: tp-rna
+channels: [conda-forge, bioconda]
+dependencies:
+  # STAR needs ~31 GB RAM for a human genome index -> the patient RNA sample is aligned on Galaxy.
+  # Locally these are used for the small synthetic/example reference and for Arriba post-processing.
+  - star
+  - arriba
+  - samtools
+  - subread          # featureCounts
+  - umi_tools

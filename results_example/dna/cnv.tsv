@@ -1,0 +1,7 @@
+gene	call	log2_ratio	median_depth	panel_median_depth	n_targets	known_amplified_oncogene	known_deleted_tsg
+KRAS	neutral	-0.002	249.6	250.0	2	True	False
+BRAF	neutral	0.0	250.0	250.0	2	True	False
+TP53	neutral	0.0	250.0	250.0	2	False	True
+EGFR	neutral	0.0	250.0	250.0	2	True	False
+PTEN	neutral	0.0	250.0	250.0	2	False	True
+PIK3CA	neutral	0.0	250.0	250.0	2	False	False

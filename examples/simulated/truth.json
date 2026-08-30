@@ -1,0 +1,95 @@
+{
+ "description": "Synthetic anchored-multiplex-PCR dataset on a real mini-GRCh38 reference. Contains no patient data.",
+ "reference": "examples/reference/mini_GRCh38.fa",
+ "regions": "examples/reference/regions.tsv",
+ "read_structure": {
+  "read1": "12-nt UMI + AGTCGTCTCGAAG + T + insert",
+  "read2": "gene-specific primer + insert",
+  "rna_read1": "12-nt UMI + CTGGATAGTACGCT + insert"
+ },
+ "dna_read_pairs": 8609,
+ "rna_read_pairs": 800,
+ "parameters": {
+  "molecules_per_amplicon": 300,
+  "mean_reads_per_umi": 2.5,
+  "sequencing_error_rate": 0.002,
+  "seed": 7
+ },
+ "expected_variants": [
+  {
+   "gene": "KRAS",
+   "chrom": "chr12",
+   "pos": 25245351,
+   "ref": "C",
+   "alt": "A",
+   "expected_vaf": 0.32,
+   "protein_change": "p.Gly12Cys",
+   "contig": "chr12_25204800_25250900",
+   "contig_pos": 40552
+  },
+  {
+   "gene": "BRAF",
+   "chrom": "chr7",
+   "pos": 140753336,
+   "ref": "A",
+   "alt": "T",
+   "expected_vaf": 0.18,
+   "protein_change": "p.Val600Glu",
+   "contig": "chr7_140730000_140784000",
+   "contig_pos": 23337
+  },
+  {
+   "gene": "TP53",
+   "chrom": "chr17",
+   "pos": 7675088,
+   "ref": "C",
+   "alt": "T",
+   "expected_vaf": 0.55,
+   "protein_change": "p.Arg175His",
+   "contig": "chr17_7668000_7690000",
+   "contig_pos": 7089
+  },
+  {
+   "gene": "EGFR",
+   "chrom": "chr7",
+   "pos": 55191822,
+   "ref": "T",
+   "alt": "G",
+   "expected_vaf": 0.07,
+   "protein_change": "p.Leu858Arg",
+   "contig": "chr7_55174000_55200000",
+   "contig_pos": 17823
+  },
+  {
+   "gene": "PTEN",
+   "chrom": "chr10",
+   "pos": 87933147,
+   "ref": "C",
+   "alt": "T",
+   "expected_vaf": 0.4,
+   "protein_change": "p.Arg130Ter",
+   "contig": "chr10_87925000_87975000",
+   "contig_pos": 8148
+  },
+  {
+   "gene": "PIK3CA",
+   "chrom": "chr3",
+   "pos": 179234297,
+   "ref": "A",
+   "alt": "G",
+   "expected_vaf": 0.24,
+   "protein_change": "p.His1047Arg",
+   "contig": "chr3_179198000_179235000",
+   "contig_pos": 36298
+  }
+ ],
+ "expected_fusion": {
+  "supporting_reads": 150,
+  "note": "synthetic transcripts; tests the fusion module plumbing, not real ALK biology"
+ },
+ "expected_exon_skipping": {
+  "skipping_reads": 120,
+  "canonical_reads": 130,
+  "approx_ratio": 0.48
+ }
+}

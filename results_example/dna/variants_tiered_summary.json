@@ -1,0 +1,73 @@
+{
+ "tier_counts": {
+  "I": 4,
+  "II": 2
+ },
+ "n_somatic": 6,
+ "systems": {
+  "AMP/ASCO/CAP": "Li MM et al. 2017 J Mol Diagn 19(1):4-23",
+  "ESCAT": "Mateo J et al. 2018 Ann Oncol 29(9):1895-1902"
+ },
+ "mapping_used": {
+  "OncoKB": {
+   "LEVEL_1": [
+    "I",
+    "I-A"
+   ],
+   "LEVEL_2": [
+    "I",
+    "I-B"
+   ],
+   "LEVEL_3A": [
+    "II",
+    "II"
+   ],
+   "LEVEL_3B": [
+    "II",
+    "III"
+   ],
+   "LEVEL_4": [
+    "II",
+    "IV"
+   ],
+   "LEVEL_R1": [
+    "I",
+    "I-A"
+   ],
+   "LEVEL_R2": [
+    "II",
+    "II"
+   ]
+  },
+  "CIViC": {
+   "A": [
+    "I",
+    "I-B"
+   ],
+   "B": [
+    "I",
+    "I-B"
+   ],
+   "C": [
+    "II",
+    "II"
+   ],
+   "D": [
+    "II",
+    "IV"
+   ],
+   "E": [
+    "III",
+    "V"
+   ]
+  }
+ },
+ "disclaimer": "Educational output. Tier assignment here is automated and does not replace expert review or a clinical molecular tumour board.",
+ "_provenance": {
+  "generated_utc": "2026-08-30T03:40:00+00:00",
+  "git_commit": "a37e977",
+  "git_dirty": true,
+  "python": "3.11.16",
+  "argv": "scripts/tiering.py --variants results_example/dna/variants_filtered.tsv --evidence results_example/evidence/annot_evidence.tsv -o results_example/dna/variants_tiered"
+ }
+}

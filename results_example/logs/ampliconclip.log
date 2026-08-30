@@ -1,0 +1,11 @@
+COMMAND: samtools ampliconclip -b results_example/align/primers.bed --hard-clip --both-ends -o results_example/align/clipped.bam.unsorted.bam results_example/align/dedup.bam
+TOTAL READS: 7198
+TOTAL CLIPPED: 3599
+FORWARD CLIPPED: 3599
+REVERSE CLIPPED: 0
+BOTH CLIPPED: 0
+NOT CLIPPED: 3599
+EXCLUDED: 0
+FILTERED: 0
+FAILED: 0
+WRITTEN: 7198

@@ -32,3 +32,9 @@ __pycache__/
 !examples/**/*.fastq.gz
 !examples/**/*.vcf
 !examples/**/*.bed
+
+# fetched at setup time, not redistributed (see docs/licensing.md)
+resources/cancer_genes.tsv
+resources/cancer_genes.txt
+resources/clinvar_*
+resources/hotspots*

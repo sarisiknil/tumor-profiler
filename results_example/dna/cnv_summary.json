@@ -1,0 +1,25 @@
+{
+ "panel_median_depth": 250.0,
+ "n_targets_used": 12,
+ "n_genes": 6,
+ "gains": [],
+ "losses": [],
+ "thresholds": {
+  "gain_log2": 1.0,
+  "loss_log2": -1.0,
+  "min_depth": 20.0
+ },
+ "limitations": [
+  "No matched normal or panel of normals: primer-efficiency, GC and capture bias are uncorrected, so a 'gain' may be a technical artefact.",
+  "Tumour purity and ploidy are unknown; log2 ratios cannot be converted to absolute copy number.",
+  "Genes with few targets give noisy estimates; interpret only large, consistent shifts.",
+  "For a defensible CNV call use CNVkit with a pooled reference of >= 10-20 samples processed identically (Talevich et al. 2016)."
+ ],
+ "_provenance": {
+  "generated_utc": "2026-08-30T03:37:31+00:00",
+  "git_commit": "a37e977",
+  "git_dirty": true,
+  "python": "3.11.16",
+  "argv": "scripts/cnv_molecules.py --regions results_example/align/coverage.regions.bed.gz --min-depth 20 -o results_example/dna/cnv"
+ }
+}

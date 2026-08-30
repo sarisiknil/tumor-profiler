@@ -1,0 +1,18 @@
+{
+ "n_fusions": 0,
+ "by_confidence": {},
+ "targetable_fusions": [],
+ "n_discarded_with_targetable_gene": 0,
+ "caveats": [
+  "Arriba is tuned for whole-transcriptome data; on anchored-multiplex-PCR panels it recovers ~86 % (lung) / 57 % (sarcoma) of the vendor pipeline's calls (Capone et al. 2022), so low-confidence calls are kept and shown.",
+  "Arriba does not detect intragenic exon-skipping events such as MET exon 14 skipping \u2014 use exon_skipping.py for those.",
+  "Any fusion used for a treatment decision needs orthogonal confirmation (FISH, IHC or RT-PCR)."
+ ],
+ "_provenance": {
+  "generated_utc": "2026-08-30T03:37:27+00:00",
+  "git_commit": "a37e977",
+  "git_dirty": true,
+  "python": "3.11.16",
+  "argv": "scripts/fusion_summary.py --arriba results_example/rna/arriba_placeholder.tsv -o results_example/rna/fusions_summary"
+ }
+}

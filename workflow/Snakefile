@@ -1,0 +1,278 @@
+"""Educational DNA–RNA tumour profiling pipeline.
+
+Two execution modes, selected with --config mode=...
+
+  mode=example  (default)  Runs EVERYTHING locally on the synthetic AMP dataset built over a ~230 kB real
+                           GRCh38 mini-reference (examples/). Alignment, UMI deduplication, three somatic
+                           callers, live annotation, tiering, pathways and the report all run on a laptop in
+                           minutes — this is what CI executes.
+
+  mode=patient             The patient's targeted panel is aligned against the full human genome, which needs
+                           more RAM than a laptop has (BWA ~6 GB, STAR ~31 GB), so alignment and calling run on
+                           usegalaxy.eu (see galaxy/). This mode starts from the files downloaded from Galaxy
+                           into results/galaxy_import/ and runs the whole interpretation half locally.
+
+Run:  snakemake -c4 --use-conda                       # example dataset, end to end
+      snakemake -c4 --use-conda --config mode=patient # after importing Galaxy outputs
+"""
+import os, sys
+from pathlib import Path
+
+configfile: "config/config.yaml"
+
+MODE = config.get("mode", "example")
+RES = Path(config.get("results_dir", "results" if MODE == "patient" else "results_example"))
+SAMPLE = config.get("sample_id", "TUMOR01") if MODE == "patient" else "EXAMPLE01"
+REF = config.get("example_reference", "examples/reference/mini_GRCh38.fa")
+REGIONS = config.get("example_regions", "examples/reference/regions.tsv")
+EX = Path("examples/simulated")
+ENV = lambda n: f"../environment/{n}.yaml"
+PY = sys.executable          # run helper scripts with the interpreter Snakemake itself runs under
+UMI_LEN = config["library"]["umi_len"]
+DNA_CR = config["library"]["dna_common_region"]
+RNA_CR = config["library"]["rna_common_region"]
+
+if MODE == "patient":
+    DNA_R1, DNA_R2 = config["data"]["dna_r1"], config["data"]["dna_r2"]
+    RNA_R1, RNA_R2 = config["data"]["rna_r1"], config["data"]["rna_r2"]
+else:
+    DNA_R1, DNA_R2 = str(EX / "sim_DNA_R1.fastq.gz"), str(EX / "sim_DNA_R2.fastq.gz")
+    RNA_R1, RNA_R2 = str(EX / "sim_RNA_R1.fastq.gz"), str(EX / "sim_RNA_R2.fastq.gz")
+
+# ---------------------------------------------------------------------------------------------------------
+rule all:
+    input:
+        RES / "summary.json",
+        RES / "report.md",
+
+rule qc_read_structure:
+    """Stage 1-2: what kind of library is this? UMI length, common region, primer concentration, adapter read-through."""
+    input:  r1=DNA_R1, r2=DNA_R2
+    output: json=RES / "qc/read_structure_DNA.json", md=RES / "qc/read_structure_DNA.md"
+    params: n=300000
+    shell:  "{PY} scripts/read_structure.py --r1 {input.r1} --r2 {input.r2} -n {params.n} "
+            "-o {RES}/qc/read_structure_DNA"
+
+rule qc_read_structure_rna:
+    input:  r1=RNA_R1, r2=RNA_R2
+    output: json=RES / "qc/read_structure_RNA.json"
+    params: n=300000
+    shell:  "{PY} scripts/read_structure.py --r1 {input.r1} --r2 {input.r2} -n {params.n} "
+            "-o {RES}/qc/read_structure_RNA"
+
+rule infer_primers:
+    """Stage 3: recover the gene-specific primer set (and therefore the panel design) from Read 2."""
+    input:  r2=DNA_R2
+    output: tsv=RES / "primers/gsp2_DNA.tsv", fa=RES / "primers/gsp2_DNA.fa"
+    params: n=3000000, k=25, minc=(30 if MODE == "patient" else 5)
+    shell:  "{PY} scripts/infer_primers.py --r2 {input.r2} -n {params.n} -k {params.k} "
+            "--min-count {params.minc} -o {RES}/primers/gsp2_DNA"
+
+rule fastqc:
+    input:  r1=DNA_R1, r2=DNA_R2
+    output: directory(RES / "qc/fastqc")
+    conda:  ENV("qc")
+    threads: 2
+    shell:  "mkdir -p {output} && fastqc -t {threads} -o {output} {input.r1} {input.r2} > /dev/null 2>&1"
+
+# ---------------------------------------------------------------- example-mode alignment (local, tiny reference)
+rule umi_extract:
+    """Move the 12-nt UMI from the start of Read 1 into the read name and strip the fixed common region.
+    umi_tools' regex method is used because its `X` string-pattern bases are re-attached to the read, while a
+    discard group removes them (see docs/02_umi.md)."""
+    input:  r1=DNA_R1, r2=DNA_R2
+    output: r1=RES / "align/umi_R1.fastq.gz", r2=RES / "align/umi_R2.fastq.gz"
+    conda:  ENV("dna")
+    params: pattern=lambda w: f"^(?P<umi_1>.{{{UMI_LEN}}})(?P<discard_1>{DNA_CR}T?){{s<=2}}"
+    log:    RES / "logs/umi_extract.log"
+    shell:  "umi_tools extract --extract-method=regex --bc-pattern='{params.pattern}' "
+            "-I {input.r1} --read2-in {input.r2} -S {output.r1} --read2-out {output.r2} "
+            "--log={log} 2>> {log}"
+
+rule bwa_index:
+    input:  REF
+    output: REF + ".bwt"
+    conda:  ENV("dna")
+    shell:  "bwa index {input} 2> /dev/null && samtools faidx {input}"
+
+rule bwa_mem:
+    input:  r1=rules.umi_extract.output.r1, r2=rules.umi_extract.output.r2, ref=REF, idx=rules.bwa_index.output
+    output: bam=RES / "align/aligned.bam", bai=RES / "align/aligned.bam.bai"
+    conda:  ENV("dna")
+    threads: 4
+    log:    RES / "logs/bwa.log"
+    shell:  "bwa mem -Y -K 150000000 -t {threads} -R '@RG\\tID:{SAMPLE}\\tSM:{SAMPLE}\\tPL:ILLUMINA\\tLB:AMP' "
+            "{input.ref} {input.r1} {input.r2} 2> {log} | samtools sort -o {output.bam} - && "
+            "samtools index {output.bam}"
+
+rule umi_dedup:
+    """Collapse PCR duplicates by UMI + position. Positional deduplication alone is wrong for single-primer
+    panels: all molecules from one amplicon share a start site (Kim et al. 2019)."""
+    input:  bam=rules.bwa_mem.output.bam
+    output: bam=RES / "align/dedup.bam", bai=RES / "align/dedup.bam.bai",
+            stats=RES / "align/dedup_stats_per_umi_per_position.tsv"
+    conda:  ENV("dna")
+    log:    RES / "logs/umi_dedup.log"
+    shell:  "umi_tools dedup -I {input.bam} -S {output.bam} --paired --method=directional "
+            "--output-stats={RES}/align/dedup_stats --log={log} 2>> {log} && samtools index {output.bam}"
+
+rule primer_bed:
+    """Primer footprints (first 25 bases of each amplicon) so that primer-derived bases are clipped and cannot
+    manufacture a variant."""
+    input:  EX / "sim_targets.bed" if MODE == "example" else config.get("primer_bed", EX / "sim_targets.bed")
+    output: RES / "align/primers.bed"
+    shell:  "awk 'BEGIN{{OFS=\"\\t\"}}{{print $1,$2,$2+25,$4}}' {input} > {output}"
+
+rule ampliconclip:
+    input:  bam=rules.umi_dedup.output.bam, bed=rules.primer_bed.output
+    output: bam=RES / "align/clipped.bam", bai=RES / "align/clipped.bam.bai"
+    conda:  ENV("dna")
+    log:    RES / "logs/ampliconclip.log"
+    params: tmp=lambda w, output: str(output.bam) + ".unsorted.bam"
+    shell:  "samtools ampliconclip -b {input.bed} --hard-clip --both-ends -o {params.tmp} {input.bam} 2> {log} && "
+            "samtools sort -o {output.bam} {params.tmp} && rm -f {params.tmp} && samtools index {output.bam}"
+
+rule mosdepth:
+    input:  bam=rules.ampliconclip.output.bam, bed=EX / "sim_targets.bed" if MODE == "example" else config.get("target_bed", "")
+    output: RES / "align/coverage.regions.bed.gz"
+    conda:  ENV("qc")
+    shell:  "mosdepth --by {input.bed} --no-per-base {RES}/align/coverage {input.bam}"
+
+# ---------------------------------------------------------------- variant calling (3 callers -> concordance)
+BAM = (RES / "align/clipped.bam") if MODE == "example" else Path(config.get("galaxy_bam", "results/galaxy_import/dedup.bam"))
+
+rule call_freebayes:
+    input:  bam=BAM, ref=REF
+    output: RES / "dna/raw/freebayes.vcf"
+    conda:  ENV("dna")
+    log:    RES / "logs/freebayes.log"
+    shell:  "freebayes -f {input.ref} --min-alternate-fraction 0.01 --min-alternate-count 3 --pooled-continuous "
+            "--min-mapping-quality 20 --min-base-quality 20 {input.bam} > {output} 2> {log}"
+
+rule call_lofreq:
+    input:  bam=BAM, ref=REF
+    output: RES / "dna/raw/lofreq.vcf"
+    conda:  ENV("dna")
+    log:    RES / "logs/lofreq.log"
+    shell:  "lofreq call -f {input.ref} -o {output} --no-default-filter --call-indels {input.bam} 2> {log} || "
+            "lofreq call -f {input.ref} -o {output} {input.bam} 2>> {log}"
+
+rule call_vardict:
+    input:  bam=BAM, ref=REF, bed=EX / "sim_targets.bed" if MODE == "example" else config.get("target_bed", "")
+    output: RES / "dna/raw/vardict.vcf"
+    conda:  ENV("dna")
+    log:    RES / "logs/vardict.log"
+    shell:  "vardict-java -G {input.ref} -f 0.01 -N {SAMPLE} -b {input.bam} -c 1 -S 2 -E 3 -g 4 {input.bed} "
+            "2> {log} | teststrandbias.R | var2vcf_valid.pl -N {SAMPLE} -E -f 0.01 > {output} 2>> {log}"
+
+rule lift_vcfs:
+    """The example reference uses region contigs (chr12_25204800_25250900); annotation needs true GRCh38
+    coordinates. In patient mode the Galaxy VCFs are already genome-based, so this is a copy."""
+    input:  fb=rules.call_freebayes.output, lf=rules.call_lofreq.output, vd=rules.call_vardict.output,
+            regions=REGIONS
+    output: fb=RES / "dna/lifted/freebayes.vcf", lf=RES / "dna/lifted/lofreq.vcf", vd=RES / "dna/lifted/vardict.vcf"
+    run:
+        import subprocess
+        for src, dst in zip(input[:3], output[:3]):
+            if MODE == "example":
+                subprocess.run([PY, "scripts/lift_regions.py", "--regions", input.regions,
+                                "-i", str(src), "-o", str(dst)], check=True)
+            else:
+                Path(dst).parent.mkdir(parents=True, exist_ok=True)
+                Path(dst).write_text(Path(src).read_text())
+
+rule merge_callers:
+    input:  fb=rules.lift_vcfs.output.fb, lf=rules.lift_vcfs.output.lf, vd=rules.lift_vcfs.output.vd
+    output: tsv=RES / "dna/variants_merged.tsv", js=RES / "dna/variants_merged_summary.json"
+    shell:  "{PY} scripts/merge_callers.py --vcf freebayes={input.fb} --vcf lofreq={input.lf} "
+            "--vcf vardict={input.vd} -o {output.tsv}"
+
+rule annotate_vep:
+    input:  rules.merge_callers.output.tsv
+    output: tsv=RES / "dna/vep.tsv", js=RES / "dna/vep.json"
+    shell:  "{PY} scripts/annotate_vep_rest.py -i {input} -o {RES}/dna/vep"
+
+rule filter_variants:
+    input:  var=rules.merge_callers.output.tsv, vep=rules.annotate_vep.output.tsv
+    output: tsv=RES / "dna/variants_filtered.tsv", js=RES / "dna/variants_filtered_summary.json"
+    shell:  "{PY} scripts/filter_tumor_only.py --variants {input.var} --vep {input.vep} "
+            "-o {RES}/dna/variants_filtered"
+
+rule evidence:
+    input:  var=rules.filter_variants.output.tsv
+    output: ev=RES / "evidence/annot_evidence.tsv", tr=RES / "evidence/annot_trials.tsv",
+            dr=RES / "evidence/annot_druggability.tsv", js=RES / "evidence/annot_summary.json"
+    params: ct=config.get("cancer_type", "")
+    shell:  "{PY} scripts/annotate_evidence.py --variants {input.var} --cancer-type '{params.ct}' "
+            "-o {RES}/evidence/annot"
+
+rule tiering:
+    input:  var=rules.filter_variants.output.tsv, ev=rules.evidence.output.ev
+    output: tsv=RES / "dna/variants_tiered.tsv", js=RES / "dna/variants_tiered_summary.json"
+    shell:  "{PY} scripts/tiering.py --variants {input.var} --evidence {input.ev} -o {RES}/dna/variants_tiered"
+
+rule biomarkers:
+    input:  var=rules.filter_variants.output.tsv, cov=rules.mosdepth.output
+    output: RES / "dna/biomarkers.json"
+    shell:  "{PY} scripts/biomarkers.py --variants {input.var} --mosdepth-regions {input.cov} -o {output}"
+
+rule cnv:
+    input:  cov=rules.mosdepth.output
+    output: tsv=RES / "dna/cnv.tsv", js=RES / "dna/cnv_summary.json"
+    shell:  "{PY} scripts/cnv_molecules.py --regions {input.cov} --min-depth 20 -o {RES}/dna/cnv"
+
+# ---------------------------------------------------------------- RNA arm
+rule rna_umi_extract:
+    input:  r1=RNA_R1, r2=RNA_R2
+    output: r1=RES / "rna/umi_R1.fastq.gz", r2=RES / "rna/umi_R2.fastq.gz"
+    conda:  ENV("dna")
+    params: pattern=lambda w: f"^(?P<umi_1>.{{{UMI_LEN}}})(?P<discard_1>{RNA_CR}){{s<=2}}"
+    log:    RES / "logs/rna_umi_extract.log"
+    shell:  "umi_tools extract --extract-method=regex --bc-pattern='{params.pattern}' "
+            "-I {input.r1} --read2-in {input.r2} -S {output.r1} --read2-out {output.r2} --log={log} 2>> {log}"
+
+rule fusion_summary:
+    """In patient mode Arriba runs on Galaxy and its fusions.tsv is imported; in example mode a stub is used
+    when no Arriba output exists, so the rest of the workflow still completes."""
+    input:  umi=rules.rna_umi_extract.output.r1
+    output: tsv=RES / "rna/fusions_summary.tsv", js=RES / "rna/fusions_summary_summary.json"
+    params: arriba=config.get("arriba_tsv", "results/galaxy_import/fusions.tsv")
+    run:
+        import subprocess, json as _json
+        src = Path(params.arriba)
+        if not src.exists():
+            src = Path(RES) / "rna" / "arriba_placeholder.tsv"
+            src.parent.mkdir(parents=True, exist_ok=True)
+            src.write_text("#gene1\tgene2\tstrand1(gene/fusion)\tstrand2(gene/fusion)\tbreakpoint1\tbreakpoint2\t"
+                           "site1\tsite2\ttype\tsplit_reads1\tsplit_reads2\tdiscordant_mates\tcoverage1\t"
+                           "coverage2\tconfidence\treading_frame\tretained_protein_domains\tfilters\n")
+        subprocess.run([PY, "scripts/fusion_summary.py", "--arriba", str(src),
+                        "-o", f"{RES}/rna/fusions_summary"], check=True)
+
+rule exon_skipping:
+    output: tsv=RES / "rna/exon_skipping.tsv", js=RES / "rna/exon_skipping.json"
+    params: sj=config.get("star_sj", "results/galaxy_import/SJ.out.tab")
+    run:
+        import subprocess
+        src = Path(params.sj)
+        if not src.exists():
+            src = Path(RES) / "rna" / "SJ_placeholder.tab"
+            src.parent.mkdir(parents=True, exist_ok=True)
+            src.write_text("")
+        subprocess.run([PY, "scripts/exon_skipping.py", "--sj", str(src),
+                        "-o", f"{RES}/rna/exon_skipping"], check=True)
+
+# ---------------------------------------------------------------- integration
+rule pathways:
+    input:  var=rules.tiering.output.tsv, fus=rules.fusion_summary.output.tsv
+    output: tsv=RES / "pathways/pathway_hits.tsv", js=RES / "pathways/pathway_hits_summary.json"
+    shell:  "{PY} scripts/pathway_map.py --variants {input.var} --fusions {input.fus} "
+            "-o {RES}/pathways/pathway_hits"
+
+rule summary:
+    input:  rules.qc_read_structure.output.json, rules.qc_read_structure_rna.output.json,
+            rules.tiering.output.tsv, rules.biomarkers.output, rules.cnv.output.js,
+            rules.pathways.output.tsv, rules.fusion_summary.output.tsv, rules.exon_skipping.output.js,
+            rules.evidence.output.ev, rules.infer_primers.output.tsv
+    output: js=RES / "summary.json", md=RES / "report.md"
+    shell:  "{PY} scripts/build_summary_json.py --results {RES} --sample {SAMPLE}"

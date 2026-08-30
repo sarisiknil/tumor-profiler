@@ -1,10 +1,19 @@
 name: tp-dna
 channels: [conda-forge, bioconda]
 dependencies:
-  - gatk4
+  # alignment (human-genome alignment for the patient sample runs on Galaxy; bwa here is for the
+  # small synthetic/example reference, which indexes in seconds and a few hundred MB of RAM)
+  - bwa
+  - minimap2
+  # UMI handling and BAM utilities
   - fgbio
-  - bcftools
-  - samtools
-  - bedtools
   - umi_tools
+  - samtools
+  - bcftools
+  - bedtools
+  # somatic callers (multi-caller concordance)
+  - gatk4
+  - vardict-java
+  - lofreq
+  - freebayes
   - openjdk

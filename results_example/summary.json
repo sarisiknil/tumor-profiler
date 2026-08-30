@@ -1,0 +1,3895 @@
+{
+ "sample": "EXAMPLE01",
+ "library": {
+  "chemistry": "IDT/Archer Anchored Multiplex PCR (AMP), Liquid P5 MBC + P7 adapters",
+  "umi_len": 12,
+  "dna_common_region": "AGTCGTCTCGAAG",
+  "rna_common_region": "CTGGATAGTACGCT",
+  "umi_skip": 14,
+  "read2_starts_with_primer": true
+ },
+ "panel": {
+  "dna_name": "TBD from clinical report (VariantPlex ...)",
+  "rna_name": "TBD from clinical report (FusionPlex ...)",
+  "min_depth_assessable": 100
+ },
+ "qc": {
+  "dna": {
+   "R1": {
+    "file": "examples/simulated/sim_DNA_R1.fastq.gz",
+    "reads_analyzed": 8609,
+    "instrument": "SIM",
+    "index_sequence": "ACGTACGT+ACGTACGTAC",
+    "index_lengths": [
+     8,
+     10
+    ],
+    "read_length": {
+     "min": 150,
+     "max": 150,
+     "mode": 150,
+     "frac_full_length": 1.0
+    },
+    "frac_reads_with_N": 0.0,
+    "adapter": {
+     "stem": "AGATCGGAAGAGC",
+     "frac_reads_with_adapter": 0.0,
+     "median_adapter_position": null
+    },
+    "umi_len_inferred": 12,
+    "anchor_inferred": "AGTCGTCTCGAAGT",
+    "anchor_tail_inferred": "",
+    "insert_starts_at_base": 27,
+    "start_kmer_k": 20,
+    "distinct_start_kmers": 3599,
+    "start_kmers_covering": {
+     "25pct": 240,
+     "50pct": 694,
+     "80pct": 1878
+    },
+    "top_start_kmers": [
+     {
+      "kmer": "AGGTAAGCGCAAAGTCGTCT",
+      "count": 25,
+      "frac": 0.0029
+     },
+     {
+      "kmer": "GACTTTCGAAATAGTCGTCT",
+      "count": 23,
+      "frac": 0.0027
+     },
+     {
+      "kmer": "CCTGCCAAAAGCAGTCGTCT",
+      "count": 21,
+      "frac": 0.0024
+     },
+     {
+      "kmer": "GAATAGCATTAGAGTCGTCT",
+      "count": 20,
+      "frac": 0.0023
+     },
+     {
+      "kmer": "TCAATGCCGAGAAGTCGTCT",
+      "count": 19,
+      "frac": 0.0022
+     },
+     {
+      "kmer": "GCGCGCCGGGCTAGTCGTCT",
+      "count": 19,
+      "frac": 0.0022
+     },
+     {
+      "kmer": "ACCGTTGGCTTTAGTCGTCT",
+      "count": 18,
+      "frac": 0.0021
+     },
+     {
+      "kmer": "AAGAAAAGTAGGAGTCGTCT",
+      "count": 17,
+      "frac": 0.002
+     },
+     {
+      "kmer": "CTAAATCAGCACAGTCGTCT",
+      "count": 16,
+      "frac": 0.0019
+     },
+     {
+      "kmer": "TAGGCACAGTACAGTCGTCT",
+      "count": 15,
+      "frac": 0.0017
+     }
+    ],
+    "positional_consensus": [
+     {
+      "pos": 1,
+      "base": "A",
+      "frac": 0.2529,
+      "A": 0.253,
+      "C": 0.244,
+      "G": 0.252,
+      "T": 0.251
+     },
+     {
+      "pos": 2,
+      "base": "G",
+      "frac": 0.2588,
+      "A": 0.257,
+      "C": 0.251,
+      "G": 0.259,
+      "T": 0.234
+     },
+     {
+      "pos": 3,
+      "base": "A",
+      "frac": 0.2604,
+      "A": 0.26,
+      "C": 0.247,
+      "G": 0.248,
+      "T": 0.244
+     },
+     {
+      "pos": 4,
+      "base": "A",
+      "frac": 0.2655,
+      "A": 0.266,
+      "C": 0.236,
+      "G": 0.245,
+      "T": 0.253
+     },
+     {
+      "pos": 5,
+      "base": "A",
+      "frac": 0.2585,
+      "A": 0.258,
+      "C": 0.244,
+      "G": 0.252,
+      "T": 0.245
+     },
+     {
+      "pos": 6,
+      "base": "A",
+      "frac": 0.2623,
+      "A": 0.262,
+      "C": 0.245,
+      "G": 0.244,
+      "T": 0.249
+     },
+     {
+      "pos": 7,
+      "base": "C",
+      "frac": 0.2796,
+      "A": 0.236,
+      "C": 0.28,
+      "G": 0.245,
+      "T": 0.24
+     },
+     {
+      "pos": 8,
+      "base": "C",
+      "frac": 0.2647,
+      "A": 0.242,
+      "C": 0.265,
+      "G": 0.243,
+      "T": 0.25
+     },
+     {
+      "pos": 9,
+      "base": "A",
+      "frac": 0.2607,
+      "A": 0.261,
+      "C": 0.254,
+      "G": 0.236,
+      "T": 0.249
+     },
+     {
+      "pos": 10,
+      "base": "T",
+      "frac": 0.2573,
+      "A": 0.247,
+      "C": 0.252,
+      "G": 0.243,
+      "T": 0.257
+     },
+     {
+      "pos": 11,
+      "base": "T",
+      "frac": 0.2615,
+      "A": 0.251,
+      "C": 0.247,
+      "G": 0.241,
+      "T": 0.261
+     },
+     {
+      "pos": 12,
+      "base": "A",
+      "frac": 0.2633,
+      "A": 0.263,
+      "C": 0.242,
+      "G": 0.25,
+      "T": 0.244
+     },
+     {
+      "pos": 13,
+      "base": "A",
+      "frac": 1.0,
+      "A": 1.0,
+      "C": 0.0,
+      "G": 0.0,
+      "T": 0.0
+     },
+     {
+      "pos": 14,
+      "base": "G",
+      "frac": 1.0,
+      "A": 0.0,
+      "C": 0.0,
+      "G": 1.0,
+      "T": 0.0
+     },
+     {
+      "pos": 15,
+      "base": "T",
+      "frac": 1.0,
+      "A": 0.0,
+      "C": 0.0,
+      "G": 0.0,
+      "T": 1.0
+     },
+     {
+      "pos": 16,
+      "base": "C",
+      "frac": 1.0,
+      "A": 0.0,
+      "C": 1.0,
+      "G": 0.0,
+      "T": 0.0
+     },
+     {
+      "pos": 17,
+      "base": "G",
+      "frac": 1.0,
+      "A": 0.0,
+      "C": 0.0,
+      "G": 1.0,
+      "T": 0.0
+     },
+     {
+      "pos": 18,
+      "base": "T",
+      "frac": 1.0,
+      "A": 0.0,
+      "C": 0.0,
+      "G": 0.0,
+      "T": 1.0
+     },
+     {
+      "pos": 19,
+      "base": "C",
+      "frac": 1.0,
+      "A": 0.0,
+      "C": 1.0,
+      "G": 0.0,
+      "T": 0.0
+     },
+     {
+      "pos": 20,
+      "base": "T",
+      "frac": 1.0,
+      "A": 0.0,
+      "C": 0.0,
+      "G": 0.0,
+      "T": 1.0
+     },
+     {
+      "pos": 21,
+      "base": "C",
+      "frac": 1.0,
+      "A": 0.0,
+      "C": 1.0,
+      "G": 0.0,
+      "T": 0.0
+     },
+     {
+      "pos": 22,
+      "base": "G",
+      "frac": 1.0,
+      "A": 0.0,
+      "C": 0.0,
+      "G": 1.0,
+      "T": 0.0
+     },
+     {
+      "pos": 23,
+      "base": "A",
+      "frac": 1.0,
+      "A": 1.0,
+      "C": 0.0,
+      "G": 0.0,
+      "T": 0.0
+     },
+     {
+      "pos": 24,
+      "base": "A",
+      "frac": 1.0,
+      "A": 1.0,
+      "C": 0.0,
+      "G": 0.0,
+      "T": 0.0
+     },
+     {
+      "pos": 25,
+      "base": "G",
+      "frac": 1.0,
+      "A": 0.0,
+      "C": 0.0,
+      "G": 1.0,
+      "T": 0.0
+     },
+     {
+      "pos": 26,
+      "base": "T",
+      "frac": 1.0,
+      "A": 0.0,
+      "C": 0.0,
+      "G": 0.0,
+      "T": 1.0
+     },
+     {
+      "pos": 27,
+      "base": "G",
+      "frac": 0.4098,
+      "A": 0.342,
+      "C": 0.167,
+      "G": 0.41,
+      "T": 0.082
+     },
+     {
+      "pos": 28,
+      "base": "G",
+      "frac": 0.3359,
+      "A": 0.32,
+      "C": 0.084,
+      "G": 0.336,
+      "T": 0.26
+     },
+     {
+      "pos": 29,
+      "base": "A",
+      "frac": 0.3396,
+      "A": 0.34,
+      "C": 0.32,
+      "G": 0.168,
+      "T": 0.172
+     },
+     {
+      "pos": 30,
+      "base": "A",
+      "frac": 0.7488,
+      "A": 0.749,
+      "C": 0.0,
+      "G": 0.164,
+      "T": 0.087
+     },
+     {
+      "pos": 31,
+      "base": "A",
+      "frac": 0.5833,
+      "A": 0.583,
+      "C": 0.161,
+      "G": 0.171,
+      "T": 0.085
+     },
+     {
+      "pos": 32,
+      "base": "A",
+      "frac": 0.3372,
+      "A": 0.337,
+      "C": 0.165,
+      "G": 0.165,
+      "T": 0.333
+     },
+     {
+      "pos": 33,
+      "base": "A",
+      "frac": 0.4114,
+      "A": 0.411,
+      "C": 0.165,
+      "G": 0.08,
+      "T": 0.344
+     },
+     {
+      "pos": 34,
+      "base": "C",
+      "frac": 0.4185,
+      "A": 0.16,
+      "C": 0.419,
+      "G": 0.08,
+      "T": 0.341
+     },
+     {
+      "pos": 35,
+      "base": "T",
+      "frac": 0.335,
+      "A": 0.327,
+      "C": 0.162,
+      "G": 0.176,
+      "T": 0.335
+     },
+     {
+      "pos": 36,
+      "base": "G",
+      "frac": 0.416,
+      "A": 0.249,
+      "C": 0.001,
+      "G": 0.416,
+      "T": 0.334
+     },
+     {
+      "pos": 37,
+      "base": "C",
+      "frac": 0.4214,
+      "A": 0.248,
+      "C": 0.421,
+      "G": 0.081,
+      "T": 0.249
+     },
+     {
+      "pos": 38,
+      "base": "A",
+      "frac": 0.3321,
+      "A": 0.332,
+      "C": 0.164,
+      "G": 0.249,
+      "T": 0.255
+     },
+     {
+      "pos": 39,
+      "base": "A",
+      "frac": 0.5952,
+      "A": 0.595,
+      "C": 0.077,
+      "G": 0.244,
+      "T": 0.084
+     },
+     {
+      "pos": 40,
+      "base": "A",
+      "frac": 0.6744,
+      "A": 0.674,
+      "C": 0.162,
+      "G": 0.083,
+      "T": 0.08
+     }
+    ]
+   },
+   "R2": {
+    "file": "examples/simulated/sim_DNA_R2.fastq.gz",
+    "reads_analyzed": 8609,
+    "instrument": "SIM",
+    "index_sequence": "ACGTACGT+ACGTACGTAC",
+    "index_lengths": [
+     8,
+     10
+    ],
+    "read_length": {
+     "min": 150,
+     "max": 150,
+     "mode": 150,
+     "frac_full_length": 1.0
+    },
+    "frac_reads_with_N": 0.0,
+    "adapter": {
+     "stem": "AGATCGGAAGAGC",
+     "frac_reads_with_adapter": 0.0,
+     "median_adapter_position": null
+    },
+    "umi_len_inferred": 0,
+    "anchor_inferred": "",
+    "anchor_tail_inferred": "",
+    "insert_starts_at_base": 1,
+    "start_kmer_k": 20,
+    "distinct_start_kmers": 286,
+    "start_kmers_covering": {
+     "25pct": 3,
+     "50pct": 7,
+     "80pct": 10
+    },
+    "top_start_kmers": [
+     {
+      "kmer": "CAGGAAGTCCGTTCCCACTG",
+      "count": 770,
+      "frac": 0.0894
+     },
+     {
+      "kmer": "CAATGGCTAAGTGAAGATGA",
+      "count": 732,
+      "frac": 0.085
+     },
+     {
+      "kmer": "CGTCTCTCCAGCCCCAGCTG",
+      "count": 721,
+      "frac": 0.0837
+     },
+     {
+      "kmer": "ATCCACAAAATGGATCCAGA",
+      "count": 690,
+      "frac": 0.0801
+     },
+     {
+      "kmer": "GCTTTGTTAATTTTTATCTC",
+      "count": 690,
+      "frac": 0.0801
+     },
+     {
+      "kmer": "AGTCTAGGCTCACTGCAACC",
+      "count": 690,
+      "frac": 0.0801
+     },
+     {
+      "kmer": "TGGCAGCCAGGAACGTACTG",
+      "count": 674,
+      "frac": 0.0783
+     },
+     {
+      "kmer": "CCTTAGATAAAACTGAGCAA",
+      "count": 671,
+      "frac": 0.0779
+     },
+     {
+      "kmer": "TATCTAAAAATACAATTAGC",
+      "count": 664,
+      "frac": 0.0771
+     },
+     {
+      "kmer": "ATTCGTCCACAAAATGATTC",
+      "count": 662,
+      "frac": 0.0769
+     }
+    ],
+    "positional_consensus": [
+     {
+      "pos": 1,
+      "base": "C",
+      "frac": 0.3484,
+      "A": 0.247,
+      "C": 0.348,
+      "G": 0.165,
+      "T": 0.239
+     },
+     {
+      "pos": 2,
+      "base": "A",
+      "frac": 0.2618,
+      "A": 0.262,
+      "C": 0.246,
+      "G": 0.253,
+      "T": 0.239
+     },
+     {
+      "pos": 3,
+      "base": "T",
+      "frac": 0.5768,
+      "A": 0.089,
+      "C": 0.084,
+      "G": 0.25,
+      "T": 0.577
+     },
+     {
+      "pos": 4,
+      "base": "C",
+      "frac": 0.4972,
+      "A": 0.076,
+      "C": 0.497,
+      "G": 0.092,
+      "T": 0.335
+     },
+     {
+      "pos": 5,
+      "base": "T",
+      "frac": 0.4125,
+      "A": 0.339,
+      "C": 0.081,
+      "G": 0.168,
+      "T": 0.412
+     },
+     {
+      "pos": 6,
+      "base": "G",
+      "frac": 0.3362,
+      "A": 0.333,
+      "C": 0.171,
+      "G": 0.336,
+      "T": 0.161
+     },
+     {
+      "pos": 7,
+      "base": "G",
+      "frac": 0.3322,
+      "A": 0.246,
+      "C": 0.25,
+      "G": 0.332,
+      "T": 0.172
+     },
+     {
+      "pos": 8,
+      "base": "T",
+      "frac": 0.4255,
+      "A": 0.164,
+      "C": 0.326,
+      "G": 0.085,
+      "T": 0.425
+     },
+     {
+      "pos": 9,
+      "base": "A",
+      "frac": 0.6562,
+      "A": 0.656,
+      "C": 0.343,
+      "G": 0.0,
+      "T": 0.0
+     },
+     {
+      "pos": 10,
+      "base": "A",
+      "frac": 0.5044,
+      "A": 0.504,
+      "C": 0.248,
+      "G": 0.083,
+      "T": 0.164
+     },
+     {
+      "pos": 11,
+      "base": "T",
+      "frac": 0.4054,
+      "A": 0.161,
+      "C": 0.084,
+      "G": 0.349,
+      "T": 0.405
+     },
+     {
+      "pos": 12,
+      "base": "T",
+      "frac": 0.4213,
+      "A": 0.407,
+      "C": 0.087,
+      "G": 0.084,
+      "T": 0.421
+     },
+     {
+      "pos": 13,
+      "base": "C",
+      "frac": 0.3331,
+      "A": 0.318,
+      "C": 0.333,
+      "G": 0.172,
+      "T": 0.176
+     },
+     {
+      "pos": 14,
+      "base": "A",
+      "frac": 0.4089,
+      "A": 0.409,
+      "C": 0.341,
+      "G": 0.001,
+      "T": 0.249
+     },
+     {
+      "pos": 15,
+      "base": "C",
+      "frac": 0.2598,
+      "A": 0.245,
+      "C": 0.26,
+      "G": 0.247,
+      "T": 0.248
+     },
+     {
+      "pos": 16,
+      "base": "C",
+      "frac": 0.3351,
+      "A": 0.333,
+      "C": 0.335,
+      "G": 0.168,
+      "T": 0.164
+     },
+     {
+      "pos": 17,
+      "base": "A",
+      "frac": 0.425,
+      "A": 0.425,
+      "C": 0.084,
+      "G": 0.249,
+      "T": 0.242
+     },
+     {
+      "pos": 18,
+      "base": "C",
+      "frac": 0.4261,
+      "A": 0.324,
+      "C": 0.426,
+      "G": 0.0,
+      "T": 0.249
+     },
+     {
+      "pos": 19,
+      "base": "T",
+      "frac": 0.4247,
+      "A": 0.082,
+      "C": 0.084,
+      "G": 0.409,
+      "T": 0.425
+     },
+     {
+      "pos": 20,
+      "base": "C",
+      "frac": 0.4095,
+      "A": 0.253,
+      "C": 0.409,
+      "G": 0.261,
+      "T": 0.077
+     },
+     {
+      "pos": 21,
+      "base": "C",
+      "frac": 0.4197,
+      "A": 0.177,
+      "C": 0.42,
+      "G": 0.163,
+      "T": 0.24
+     },
+     {
+      "pos": 22,
+      "base": "A",
+      "frac": 0.3441,
+      "A": 0.344,
+      "C": 0.321,
+      "G": 0.081,
+      "T": 0.254
+     },
+     {
+      "pos": 23,
+      "base": "A",
+      "frac": 0.4194,
+      "A": 0.419,
+      "C": 0.168,
+      "G": 0.244,
+      "T": 0.168
+     },
+     {
+      "pos": 24,
+      "base": "A",
+      "frac": 0.4211,
+      "A": 0.421,
+      "C": 0.084,
+      "G": 0.33,
+      "T": 0.165
+     },
+     {
+      "pos": 25,
+      "base": "C",
+      "frac": 0.4314,
+      "A": 0.247,
+      "C": 0.431,
+      "G": 0.001,
+      "T": 0.32
+     },
+     {
+      "pos": 26,
+      "base": "A",
+      "frac": 0.3468,
+      "A": 0.347,
+      "C": 0.171,
+      "G": 0.165,
+      "T": 0.317
+     },
+     {
+      "pos": 27,
+      "base": "T",
+      "frac": 0.512,
+      "A": 0.33,
+      "C": 0.077,
+      "G": 0.082,
+      "T": 0.512
+     },
+     {
+      "pos": 28,
+      "base": "T",
+      "frac": 0.507,
+      "A": 0.161,
+      "C": 0.164,
+      "G": 0.169,
+      "T": 0.507
+     },
+     {
+      "pos": 29,
+      "base": "C",
+      "frac": 0.414,
+      "A": 0.243,
+      "C": 0.414,
+      "G": 0.254,
+      "T": 0.089
+     },
+     {
+      "pos": 30,
+      "base": "T",
+      "frac": 0.4282,
+      "A": 0.24,
+      "C": 0.082,
+      "G": 0.249,
+      "T": 0.428
+     },
+     {
+      "pos": 31,
+      "base": "G",
+      "frac": 0.5041,
+      "A": 0.241,
+      "C": 0.169,
+      "G": 0.504,
+      "T": 0.085
+     },
+     {
+      "pos": 32,
+      "base": "T",
+      "frac": 0.3351,
+      "A": 0.245,
+      "C": 0.173,
+      "G": 0.247,
+      "T": 0.335
+     },
+     {
+      "pos": 33,
+      "base": "T",
+      "frac": 0.4066,
+      "A": 0.255,
+      "C": 0.165,
+      "G": 0.173,
+      "T": 0.407
+     },
+     {
+      "pos": 34,
+      "base": "T",
+      "frac": 0.4253,
+      "A": 0.239,
+      "C": 0.167,
+      "G": 0.169,
+      "T": 0.425
+     },
+     {
+      "pos": 35,
+      "base": "T",
+      "frac": 0.4219,
+      "A": 0.077,
+      "C": 0.336,
+      "G": 0.165,
+      "T": 0.422
+     },
+     {
+      "pos": 36,
+      "base": "T",
+      "frac": 0.4253,
+      "A": 0.172,
+      "C": 0.166,
+      "G": 0.237,
+      "T": 0.425
+     },
+     {
+      "pos": 37,
+      "base": "T",
+      "frac": 0.5016,
+      "A": 0.254,
+      "C": 0.077,
+      "G": 0.168,
+      "T": 0.502
+     },
+     {
+      "pos": 38,
+      "base": "T",
+      "frac": 0.4081,
+      "A": 0.171,
+      "C": 0.337,
+      "G": 0.084,
+      "T": 0.408
+     },
+     {
+      "pos": 39,
+      "base": "G",
+      "frac": 0.4164,
+      "A": 0.334,
+      "C": 0.001,
+      "G": 0.416,
+      "T": 0.249
+     },
+     {
+      "pos": 40,
+      "base": "T",
+      "frac": 0.32,
+      "A": 0.253,
+      "C": 0.259,
+      "G": 0.168,
+      "T": 0.32
+     }
+    ]
+   }
+  },
+  "rna": {
+   "R1": {
+    "file": "examples/simulated/sim_RNA_R1.fastq.gz",
+    "reads_analyzed": 800,
+    "instrument": "SIM",
+    "index_sequence": "ACGTACGT+ACGTACGTAC",
+    "index_lengths": [
+     8,
+     10
+    ],
+    "read_length": {
+     "min": 150,
+     "max": 150,
+     "mode": 150,
+     "frac_full_length": 1.0
+    },
+    "frac_reads_with_N": 0.0,
+    "adapter": {
+     "stem": "AGATCGGAAGAGC",
+     "frac_reads_with_adapter": 0.0,
+     "median_adapter_position": null
+    },
+    "umi_len_inferred": 12,
+    "anchor_inferred": "CTGGATAGTACGCT",
+    "anchor_tail_inferred": "",
+    "insert_starts_at_base": 27,
+    "start_kmer_k": 20,
+    "distinct_start_kmers": 800,
+    "start_kmers_covering": {
+     "25pct": 200,
+     "50pct": 400,
+     "80pct": 640
+    },
+    "top_start_kmers": [
+     {
+      "kmer": "GATATCGGTTATCTGGATAG",
+      "count": 1,
+      "frac": 0.0013
+     },
+     {
+      "kmer": "ATTATCCAGAAACTGGATAG",
+      "count": 1,
+      "frac": 0.0013
+     },
+     {
+      "kmer": "GGGTATCCGAGTCTGGATAG",
+      "count": 1,
+      "frac": 0.0013
+     },
+     {
+      "kmer": "TGTGAGAATAGCCTGGATAG",
+      "count": 1,
+      "frac": 0.0013
+     },
+     {
+      "kmer": "GAACTCTACCACCTGGATAG",
+      "count": 1,
+      "frac": 0.0013
+     },
+     {
+      "kmer": "TCTCCAAAGTCTCTGGATAG",
+      "count": 1,
+      "frac": 0.0013
+     },
+     {
+      "kmer": "TGCCTATCTGACCTGGATAG",
+      "count": 1,
+      "frac": 0.0013
+     },
+     {
+      "kmer": "CATAGTACAAGACTGGATAG",
+      "count": 1,
+      "frac": 0.0013
+     },
+     {
+      "kmer": "CTCGGTGTTCGGCTGGATAG",
+      "count": 1,
+      "frac": 0.0013
+     },
+     {
+      "kmer": "GGAATTCGCGGTCTGGATAG",
+      "count": 1,
+      "frac": 0.0013
+     }
+    ],
+    "positional_consensus": [
+     {
+      "pos": 1,
+      "base": "T",
+      "frac": 0.265,
+      "A": 0.249,
+      "C": 0.242,
+      "G": 0.244,
+      "T": 0.265
+     },
+     {
+      "pos": 2,
+      "base": "C",
+      "frac": 0.2625,
+      "A": 0.261,
+      "C": 0.263,
+      "G": 0.229,
+      "T": 0.247
+     },
+     {
+      "pos": 3,
+      "base": "T",
+      "frac": 0.2575,
+      "A": 0.249,
+      "C": 0.246,
+      "G": 0.247,
+      "T": 0.258
+     },
+     {
+      "pos": 4,
+      "base": "G",
+      "frac": 0.2662,
+      "A": 0.239,
+      "C": 0.245,
+      "G": 0.266,
+      "T": 0.25
+     },
+     {
+      "pos": 5,
+      "base": "C",
+      "frac": 0.2575,
+      "A": 0.236,
+      "C": 0.258,
+      "G": 0.255,
+      "T": 0.251
+     },
+     {
+      "pos": 6,
+      "base": "A",
+      "frac": 0.2712,
+      "A": 0.271,
+      "C": 0.253,
+      "G": 0.249,
+      "T": 0.228
+     },
+     {
+      "pos": 7,
+      "base": "G",
+      "frac": 0.2587,
+      "A": 0.253,
+      "C": 0.256,
+      "G": 0.259,
+      "T": 0.233
+     },
+     {
+      "pos": 8,
+      "base": "C",
+      "frac": 0.28,
+      "A": 0.245,
+      "C": 0.28,
+      "G": 0.235,
+      "T": 0.24
+     },
+     {
+      "pos": 9,
+      "base": "T",
+      "frac": 0.2712,
+      "A": 0.239,
+      "C": 0.261,
+      "G": 0.229,
+      "T": 0.271
+     },
+     {
+      "pos": 10,
+      "base": "T",
+      "frac": 0.2612,
+      "A": 0.236,
+      "C": 0.259,
+      "G": 0.244,
+      "T": 0.261
+     },
+     {
+      "pos": 11,
+      "base": "T",
+      "frac": 0.255,
+      "A": 0.25,
+      "C": 0.25,
+      "G": 0.245,
+      "T": 0.255
+     },
+     {
+      "pos": 12,
+      "base": "C",
+      "frac": 0.26,
+      "A": 0.24,
+      "C": 0.26,
+      "G": 0.245,
+      "T": 0.255
+     },
+     {
+      "pos": 13,
+      "base": "C",
+      "frac": 1.0,
+      "A": 0.0,
+      "C": 1.0,
+      "G": 0.0,
+      "T": 0.0
+     },
+     {
+      "pos": 14,
+      "base": "T",
+      "frac": 1.0,
+      "A": 0.0,
+      "C": 0.0,
+      "G": 0.0,
+      "T": 1.0
+     },
+     {
+      "pos": 15,
+      "base": "G",
+      "frac": 1.0,
+      "A": 0.0,
+      "C": 0.0,
+      "G": 1.0,
+      "T": 0.0
+     },
+     {
+      "pos": 16,
+      "base": "G",
+      "frac": 1.0,
+      "A": 0.0,
+      "C": 0.0,
+      "G": 1.0,
+      "T": 0.0
+     },
+     {
+      "pos": 17,
+      "base": "A",
+      "frac": 1.0,
+      "A": 1.0,
+      "C": 0.0,
+      "G": 0.0,
+      "T": 0.0
+     },
+     {
+      "pos": 18,
+      "base": "T",
+      "frac": 1.0,
+      "A": 0.0,
+      "C": 0.0,
+      "G": 0.0,
+      "T": 1.0
+     },
+     {
+      "pos": 19,
+      "base": "A",
+      "frac": 1.0,
+      "A": 1.0,
+      "C": 0.0,
+      "G": 0.0,
+      "T": 0.0
+     },
+     {
+      "pos": 20,
+      "base": "G",
+      "frac": 1.0,
+      "A": 0.0,
+      "C": 0.0,
+      "G": 1.0,
+      "T": 0.0
+     },
+     {
+      "pos": 21,
+      "base": "T",
+      "frac": 1.0,
+      "A": 0.0,
+      "C": 0.0,
+      "G": 0.0,
+      "T": 1.0
+     },
+     {
+      "pos": 22,
+      "base": "A",
+      "frac": 1.0,
+      "A": 1.0,
+      "C": 0.0,
+      "G": 0.0,
+      "T": 0.0
+     },
+     {
+      "pos": 23,
+      "base": "C",
+      "frac": 1.0,
+      "A": 0.0,
+      "C": 1.0,
+      "G": 0.0,
+      "T": 0.0
+     },
+     {
+      "pos": 24,
+      "base": "G",
+      "frac": 1.0,
+      "A": 0.0,
+      "C": 0.0,
+      "G": 1.0,
+      "T": 0.0
+     },
+     {
+      "pos": 25,
+      "base": "C",
+      "frac": 1.0,
+      "A": 0.0,
+      "C": 1.0,
+      "G": 0.0,
+      "T": 0.0
+     },
+     {
+      "pos": 26,
+      "base": "T",
+      "frac": 1.0,
+      "A": 0.0,
+      "C": 0.0,
+      "G": 0.0,
+      "T": 1.0
+     },
+     {
+      "pos": 27,
+      "base": "C",
+      "frac": 0.2863,
+      "A": 0.273,
+      "C": 0.286,
+      "G": 0.224,
+      "T": 0.217
+     },
+     {
+      "pos": 28,
+      "base": "C",
+      "frac": 0.2787,
+      "A": 0.251,
+      "C": 0.279,
+      "G": 0.23,
+      "T": 0.24
+     },
+     {
+      "pos": 29,
+      "base": "C",
+      "frac": 0.33,
+      "A": 0.212,
+      "C": 0.33,
+      "G": 0.229,
+      "T": 0.229
+     },
+     {
+      "pos": 30,
+      "base": "C",
+      "frac": 0.2687,
+      "A": 0.268,
+      "C": 0.269,
+      "G": 0.237,
+      "T": 0.226
+     },
+     {
+      "pos": 31,
+      "base": "C",
+      "frac": 0.2888,
+      "A": 0.249,
+      "C": 0.289,
+      "G": 0.23,
+      "T": 0.233
+     },
+     {
+      "pos": 32,
+      "base": "C",
+      "frac": 0.2888,
+      "A": 0.241,
+      "C": 0.289,
+      "G": 0.217,
+      "T": 0.253
+     },
+     {
+      "pos": 33,
+      "base": "C",
+      "frac": 0.2787,
+      "A": 0.239,
+      "C": 0.279,
+      "G": 0.235,
+      "T": 0.247
+     },
+     {
+      "pos": 34,
+      "base": "C",
+      "frac": 0.3013,
+      "A": 0.22,
+      "C": 0.301,
+      "G": 0.233,
+      "T": 0.246
+     },
+     {
+      "pos": 35,
+      "base": "C",
+      "frac": 0.3212,
+      "A": 0.246,
+      "C": 0.321,
+      "G": 0.21,
+      "T": 0.223
+     },
+     {
+      "pos": 36,
+      "base": "C",
+      "frac": 0.2825,
+      "A": 0.241,
+      "C": 0.282,
+      "G": 0.229,
+      "T": 0.247
+     },
+     {
+      "pos": 37,
+      "base": "C",
+      "frac": 0.2913,
+      "A": 0.255,
+      "C": 0.291,
+      "G": 0.237,
+      "T": 0.216
+     },
+     {
+      "pos": 38,
+      "base": "C",
+      "frac": 0.2925,
+      "A": 0.205,
+      "C": 0.292,
+      "G": 0.253,
+      "T": 0.25
+     },
+     {
+      "pos": 39,
+      "base": "C",
+      "frac": 0.3187,
+      "A": 0.219,
+      "C": 0.319,
+      "G": 0.217,
+      "T": 0.245
+     },
+     {
+      "pos": 40,
+      "base": "C",
+      "frac": 0.3088,
+      "A": 0.226,
+      "C": 0.309,
+      "G": 0.239,
+      "T": 0.226
+     }
+    ]
+   },
+   "R2": {
+    "file": "examples/simulated/sim_RNA_R2.fastq.gz",
+    "reads_analyzed": 800,
+    "instrument": "SIM",
+    "index_sequence": "ACGTACGT+ACGTACGTAC",
+    "index_lengths": [
+     8,
+     10
+    ],
+    "read_length": {
+     "min": 150,
+     "max": 150,
+     "mode": 150,
+     "frac_full_length": 1.0
+    },
+    "frac_reads_with_N": 0.0,
+    "adapter": {
+     "stem": "AGATCGGAAGAGC",
+     "frac_reads_with_adapter": 0.0,
+     "median_adapter_position": null
+    },
+    "umi_len_inferred": 0,
+    "anchor_inferred": "",
+    "anchor_tail_inferred": "",
+    "insert_starts_at_base": 1,
+    "start_kmer_k": 20,
+    "distinct_start_kmers": 537,
+    "start_kmers_covering": {
+     "25pct": 67,
+     "50pct": 167,
+     "80pct": 377
+    },
+    "top_start_kmers": [
+     {
+      "kmer": "TCGGCCTTGTCTAAACTCAT",
+      "count": 4,
+      "frac": 0.005
+     },
+     {
+      "kmer": "GAGGTAACTGAGTTTTTGAG",
+      "count": 4,
+      "frac": 0.005
+     },
+     {
+      "kmer": "GTCCGGATAGCAGTGTCCTG",
+      "count": 4,
+      "frac": 0.005
+     },
+     {
+      "kmer": "GTATCGTAGCCAGTCAAAAG",
+      "count": 4,
+      "frac": 0.005
+     },
+     {
+      "kmer": "CCCTCTGGTATCGTAGCCAG",
+      "count": 4,
+      "frac": 0.005
+     },
+     {
+      "kmer": "TAACCGAGCGCGCTCATTGT",
+      "count": 4,
+      "frac": 0.005
+     },
+     {
+      "kmer": "TTACCAGGCATTTTTGTGCG",
+      "count": 4,
+      "frac": 0.005
+     },
+     {
+      "kmer": "CTGCCCGAGAGTAGGATTTC",
+      "count": 4,
+      "frac": 0.005
+     },
+     {
+      "kmer": "ACCTCGTTCAAGACATGCCG",
+      "count": 4,
+      "frac": 0.005
+     },
+     {
+      "kmer": "GGGGATGCCACCGCTTCCTT",
+      "count": 4,
+      "frac": 0.005
+     }
+    ],
+    "positional_consensus": [
+     {
+      "pos": 1,
+      "base": "G",
+      "frac": 0.2637,
+      "A": 0.247,
+      "C": 0.234,
+      "G": 0.264,
+      "T": 0.255
+     },
+     {
+      "pos": 2,
+      "base": "G",
+      "frac": 0.2675,
+      "A": 0.254,
+      "C": 0.245,
+      "G": 0.268,
+      "T": 0.234
+     },
+     {
+      "pos": 3,
+      "base": "G",
+      "frac": 0.2812,
+      "A": 0.249,
+      "C": 0.239,
+      "G": 0.281,
+      "T": 0.231
+     },
+     {
+      "pos": 4,
+      "base": "G",
+      "frac": 0.305,
+      "A": 0.233,
+      "C": 0.215,
+      "G": 0.305,
+      "T": 0.247
+     },
+     {
+      "pos": 5,
+      "base": "G",
+      "frac": 0.2725,
+      "A": 0.231,
+      "C": 0.247,
+      "G": 0.273,
+      "T": 0.249
+     },
+     {
+      "pos": 6,
+      "base": "G",
+      "frac": 0.2737,
+      "A": 0.231,
+      "C": 0.236,
+      "G": 0.274,
+      "T": 0.259
+     },
+     {
+      "pos": 7,
+      "base": "G",
+      "frac": 0.2825,
+      "A": 0.212,
+      "C": 0.25,
+      "G": 0.282,
+      "T": 0.255
+     },
+     {
+      "pos": 8,
+      "base": "G",
+      "frac": 0.29,
+      "A": 0.246,
+      "C": 0.211,
+      "G": 0.29,
+      "T": 0.253
+     },
+     {
+      "pos": 9,
+      "base": "G",
+      "frac": 0.2812,
+      "A": 0.236,
+      "C": 0.251,
+      "G": 0.281,
+      "T": 0.231
+     },
+     {
+      "pos": 10,
+      "base": "G",
+      "frac": 0.2838,
+      "A": 0.27,
+      "C": 0.215,
+      "G": 0.284,
+      "T": 0.231
+     },
+     {
+      "pos": 11,
+      "base": "G",
+      "frac": 0.275,
+      "A": 0.217,
+      "C": 0.255,
+      "G": 0.275,
+      "T": 0.253
+     },
+     {
+      "pos": 12,
+      "base": "G",
+      "frac": 0.275,
+      "A": 0.233,
+      "C": 0.271,
+      "G": 0.275,
+      "T": 0.221
+     },
+     {
+      "pos": 13,
+      "base": "G",
+      "frac": 0.2988,
+      "A": 0.229,
+      "C": 0.201,
+      "G": 0.299,
+      "T": 0.271
+     },
+     {
+      "pos": 14,
+      "base": "G",
+      "frac": 0.2825,
+      "A": 0.242,
+      "C": 0.214,
+      "G": 0.282,
+      "T": 0.261
+     },
+     {
+      "pos": 15,
+      "base": "G",
+      "frac": 0.2612,
+      "A": 0.249,
+      "C": 0.235,
+      "G": 0.261,
+      "T": 0.255
+     },
+     {
+      "pos": 16,
+      "base": "C",
+      "frac": 0.2675,
+      "A": 0.228,
+      "C": 0.268,
+      "G": 0.249,
+      "T": 0.256
+     },
+     {
+      "pos": 17,
+      "base": "G",
+      "frac": 0.2963,
+      "A": 0.22,
+      "C": 0.223,
+      "G": 0.296,
+      "T": 0.261
+     },
+     {
+      "pos": 18,
+      "base": "G",
+      "frac": 0.325,
+      "A": 0.204,
+      "C": 0.23,
+      "G": 0.325,
+      "T": 0.241
+     },
+     {
+      "pos": 19,
+      "base": "G",
+      "frac": 0.2875,
+      "A": 0.242,
+      "C": 0.215,
+      "G": 0.287,
+      "T": 0.255
+     },
+     {
+      "pos": 20,
+      "base": "G",
+      "frac": 0.3137,
+      "A": 0.223,
+      "C": 0.231,
+      "G": 0.314,
+      "T": 0.233
+     },
+     {
+      "pos": 21,
+      "base": "G",
+      "frac": 0.3075,
+      "A": 0.253,
+      "C": 0.221,
+      "G": 0.307,
+      "T": 0.219
+     },
+     {
+      "pos": 22,
+      "base": "G",
+      "frac": 0.2838,
+      "A": 0.212,
+      "C": 0.254,
+      "G": 0.284,
+      "T": 0.25
+     },
+     {
+      "pos": 23,
+      "base": "G",
+      "frac": 0.3,
+      "A": 0.255,
+      "C": 0.231,
+      "G": 0.3,
+      "T": 0.214
+     },
+     {
+      "pos": 24,
+      "base": "G",
+      "frac": 0.2988,
+      "A": 0.239,
+      "C": 0.245,
+      "G": 0.299,
+      "T": 0.217
+     },
+     {
+      "pos": 25,
+      "base": "G",
+      "frac": 0.2825,
+      "A": 0.231,
+      "C": 0.255,
+      "G": 0.282,
+      "T": 0.231
+     },
+     {
+      "pos": 26,
+      "base": "G",
+      "frac": 0.2975,
+      "A": 0.265,
+      "C": 0.22,
+      "G": 0.297,
+      "T": 0.217
+     },
+     {
+      "pos": 27,
+      "base": "G",
+      "frac": 0.3013,
+      "A": 0.22,
+      "C": 0.251,
+      "G": 0.301,
+      "T": 0.228
+     },
+     {
+      "pos": 28,
+      "base": "G",
+      "frac": 0.325,
+      "A": 0.215,
+      "C": 0.234,
+      "G": 0.325,
+      "T": 0.226
+     },
+     {
+      "pos": 29,
+      "base": "G",
+      "frac": 0.275,
+      "A": 0.241,
+      "C": 0.239,
+      "G": 0.275,
+      "T": 0.245
+     },
+     {
+      "pos": 30,
+      "base": "G",
+      "frac": 0.2938,
+      "A": 0.179,
+      "C": 0.268,
+      "G": 0.294,
+      "T": 0.26
+     },
+     {
+      "pos": 31,
+      "base": "G",
+      "frac": 0.3113,
+      "A": 0.23,
+      "C": 0.235,
+      "G": 0.311,
+      "T": 0.224
+     },
+     {
+      "pos": 32,
+      "base": "G",
+      "frac": 0.28,
+      "A": 0.244,
+      "C": 0.245,
+      "G": 0.28,
+      "T": 0.231
+     },
+     {
+      "pos": 33,
+      "base": "C",
+      "frac": 0.2762,
+      "A": 0.205,
+      "C": 0.276,
+      "G": 0.273,
+      "T": 0.246
+     },
+     {
+      "pos": 34,
+      "base": "G",
+      "frac": 0.285,
+      "A": 0.235,
+      "C": 0.234,
+      "G": 0.285,
+      "T": 0.246
+     },
+     {
+      "pos": 35,
+      "base": "G",
+      "frac": 0.3063,
+      "A": 0.211,
+      "C": 0.22,
+      "G": 0.306,
+      "T": 0.263
+     },
+     {
+      "pos": 36,
+      "base": "G",
+      "frac": 0.2975,
+      "A": 0.251,
+      "C": 0.228,
+      "G": 0.297,
+      "T": 0.224
+     },
+     {
+      "pos": 37,
+      "base": "G",
+      "frac": 0.26,
+      "A": 0.236,
+      "C": 0.245,
+      "G": 0.26,
+      "T": 0.259
+     },
+     {
+      "pos": 38,
+      "base": "G",
+      "frac": 0.285,
+      "A": 0.205,
+      "C": 0.25,
+      "G": 0.285,
+      "T": 0.26
+     },
+     {
+      "pos": 39,
+      "base": "G",
+      "frac": 0.3212,
+      "A": 0.245,
+      "C": 0.224,
+      "G": 0.321,
+      "T": 0.21
+     },
+     {
+      "pos": 40,
+      "base": "G",
+      "frac": 0.2712,
+      "A": 0.246,
+      "C": 0.246,
+      "G": 0.271,
+      "T": 0.236
+     }
+    ]
+   }
+  }
+ },
+ "variants": {
+  "counts_by_class": {
+   "SOMATIC_LIKELY": 6,
+   "LOW_QUALITY": 1
+  },
+  "counts_by_tier": {
+   "I": 4,
+   "II": 2
+  },
+  "caller_concordance": {
+   "per_caller_records": {
+    "freebayes": 6,
+    "lofreq": 7,
+    "vardict": 6
+   },
+   "merged_variants": 7,
+   "by_agreement": {
+    "1": 1,
+    "3": 6
+   },
+   "_provenance": {
+    "generated_utc": "2026-08-30T03:37:36+00:00",
+    "git_commit": "a37e977",
+    "git_dirty": true,
+    "python": "3.11.16",
+    "argv": "scripts/merge_callers.py --vcf freebayes=results_example/dna/lifted/freebayes.vcf --vcf lofreq=results_example/dna/lifted/lofreq.vcf --vcf vardict=results_example/dna/lifted/vardict.vcf -o results_example/dna/variants_merged.tsv"
+   }
+  },
+  "tier_I_II": [
+   {
+    "key": "chr12:25245351:C>A",
+    "gene": "KRAS",
+    "hgvsp": "ENSP00000308495.3:p.Gly12Cys",
+    "hgvsc": "ENST00000311936.8:c.34G>T",
+    "consequence": "missense_variant",
+    "amp_tier": "I",
+    "escat": "I-B",
+    "therapies": "ARS-853,Epidermal Growth Factor Receptor Tyrosine Kinase Inhibitor;Adagrasib;Adagrasib,Cetuximab;Cetuximab,Chemotherapy;Dactolisib,Selumetinib;Divarasib;Docetaxel,Selumetinib;Gefitinib;Gefitinib,Erlotinib;Melphalan;Panitumumab;Regorafenib Anhydrous;Sotorasib;Sotorasib,Panitumumab",
+    "tier_rationale": "CIViC A SENSITIVITYRESPONSE (Sotorasib); CIViC A SENSITIVITYRESPONSE (Adagrasib,Cetuximab); CIViC A SENSITIVITYRESPONSE (Sotorasib,Panitumumab); CIViC B SENSITIVITYRESPONSE (Divarasib); CIViC B RESISTANCE (Gefitinib,Erlotinib); CIViC B RESISTANCE (Cetuximab,Chemotherapy); CIViC B SENSITIVITYRESPONSE (Docetaxel,Selumetinib); CIViC B RESISTANCE (Gefitinib); CIViC C RESISTANCE (Panitumumab); CIViC D RESISTANCE (Melphalan); CIViC D SENSITIVITYRESPONSE (ARS-853,Epidermal Growth Factor Receptor Tyrosine Kinase Inhibitor); CIViC D SENSITIVITYRESPONSE (Adagrasib); CIViC D SENSITIVITYRESPONSE (Dactolisib,Selumetinib); CIViC D RESISTANCE (Melphalan); CIViC D RESISTANCE (Melphalan); CIViC D RESISTANCE (Regorafenib Anhydrous)",
+    "vaf": "0.39",
+    "depth": "300",
+    "n_callers": "3",
+    "gnomad_af_max": "0.0",
+    "clinvar_sig": "likely_pathogenic,not_provided,pathogenic",
+    "n_evidence_items": "18"
+   },
+   {
+    "key": "chr3:179234297:A>G",
+    "gene": "PIK3CA",
+    "hgvsp": "ENSP00000263967.3:p.His1047Arg",
+    "hgvsc": "ENST00000263967.4:c.3140A>G",
+    "consequence": "missense_variant",
+    "amp_tier": "I",
+    "escat": "I-B",
+    "therapies": "Alpelisib,Fulvestrant;Capivasertib,Lapatinib;Capivasertib,Trastuzumab;Cetuximab,Dactolisib;Cetuximab,Irinotecan;Cetuximab,Panitumumab;Dactolisib;Everolimus,Fulvestrant;FAC Regimen,FEC Regimen;Inavolisib,Palbociclib,Fulvestrant;Izorlisib;Lapatinib;Lapatinib,Trastuzumab;Perifosine,Temsirolimus;Pictilisib;Trastuzumab;Trastuzumab Emtansine;Vemurafenib;Vemurafenib,Akt Inhibitor MK2206",
+    "tier_rationale": "CIViC A SENSITIVITYRESPONSE (Alpelisib,Fulvestrant); CIViC A SENSITIVITYRESPONSE (Inavolisib,Palbociclib,Fulvestrant); CIViC B RESISTANCE (FAC Regimen,FEC Regimen); CIViC B RESISTANCE (Cetuximab,Panitumumab); CIViC C RESISTANCE (Cetuximab,Irinotecan); CIViC C RESISTANCE (Cetuximab,Panitumumab); CIViC C SENSITIVITYRESPONSE (Everolimus,Fulvestrant); CIViC D SENSITIVITYRESPONSE (Izorlisib); CIViC D SENSITIVITYRESPONSE (Pictilisib); CIViC D RESISTANCE (Lapatinib,Trastuzumab); CIViC D RESISTANCE (Dactolisib); CIViC D SENSITIVITYRESPONSE (Dactolisib); CIViC D SENSITIVITYRESPONSE (Capivasertib,Trastuzumab); CIViC D SENSITIVITYRESPONSE (Capivasertib,Lapatinib); CIViC D SENSITIVITYRESPONSE (Perifosine,Temsirolimus); CIViC D RESISTANCE (Trastuzumab Emtansine); CIViC D RESISTANCE (Vemurafenib); CIViC D RESISTANCE (Lapatinib); CIViC D RESISTANCE (Trastuzumab); CIViC D SENSITIVITYRESPONSE (Vemurafenib,Akt Inhibitor MK2206); CIViC D SENSITIVITYRESPONSE (Dactolisib); CIViC D SENSITIVITYRESPONSE (Cetuximab,Dactolisib)",
+    "vaf": "0.3111",
+    "depth": "300",
+    "n_callers": "3",
+    "gnomad_af_max": "0.0",
+    "clinvar_sig": "likely_pathogenic,pathogenic",
+    "n_evidence_items": "25"
+   },
+   {
+    "key": "chr7:140753336:A>T",
+    "gene": "BRAF",
+    "hgvsp": "ENSP00000493543.1:p.Val600Glu",
+    "hgvsc": "ENST00000646891.2:c.1799T>A",
+    "consequence": "missense_variant",
+    "amp_tier": "I",
+    "escat": "I-B",
+    "therapies": "Cetuximab,FOLFOX-4 Regimen;Cetuximab,Panitumumab;Dabrafenib,Trametinib;Encorafenib,Binimetinib,Cetuximab;Encorafenib,Cetuximab;Tovorafenib;Trametinib;Trametinib,Dabrafenib;Vemurafenib;Vemurafenib,Cetuximab,Irinotecan;Vemurafenib,Cobimetinib",
+    "tier_rationale": "CIViC A SENSITIVITYRESPONSE (Vemurafenib); CIViC A SENSITIVITYRESPONSE (Encorafenib,Cetuximab); CIViC A SENSITIVITYRESPONSE (Tovorafenib); CIViC A SENSITIVITYRESPONSE (Dabrafenib,Trametinib); CIViC A SENSITIVITYRESPONSE (Dabrafenib,Trametinib); CIViC A SENSITIVITYRESPONSE (Trametinib,Dabrafenib); CIViC B SENSITIVITYRESPONSE (Dabrafenib,Trametinib); CIViC B SENSITIVITYRESPONSE (Vemurafenib); CIViC B SENSITIVITYRESPONSE (Dabrafenib,Trametinib); CIViC B SENSITIVITYRESPONSE (Dabrafenib,Trametinib); CIViC B SENSITIVITYRESPONSE (Encorafenib,Binimetinib,Cetuximab); CIViC B RESISTANCE (Cetuximab,Panitumumab); CIViC B SENSITIVITYRESPONSE (Vemurafenib); CIViC B SENSITIVITYRESPONSE (Vemurafenib,Cobimetinib); CIViC B SENSITIVITYRESPONSE (Vemurafenib); CIViC B SENSITIVITYRESPONSE (Vemurafenib,Cetuximab,Irinotecan); CIViC B SENSITIVITYRESPONSE (Trametinib); CIViC B RESISTANCE (Cetuximab,FOLFOX-4 Regimen); CIViC B SENSITIVITYRESPONSE (Vemurafenib)",
+    "vaf": "0.3022",
+    "depth": "300",
+    "n_callers": "3",
+    "gnomad_af_max": "1.2e-05",
+    "clinvar_sig": "likely_pathogenic,not_provided,pathogenic,uncertain_significance",
+    "n_evidence_items": "25"
+   },
+   {
+    "key": "chr7:55191822:T>G",
+    "gene": "EGFR",
+    "hgvsp": "ENSP00000275493.2:p.Leu858Arg",
+    "hgvsc": "ENST00000275493.7:c.2573T>G",
+    "consequence": "missense_variant",
+    "amp_tier": "I",
+    "escat": "I-B",
+    "therapies": "Afatinib;Amivantamab,Carboplatin,Pemetrexed;Amivantamab,Lazertinib;Dacomitinib;Erlotinib;Erlotinib,Gefitinib;Erlotinib,Ramucirumab;Gefitinib;Gefitinib,Erlotinib;Osimertinib;Osimertinib,Chemotherapy",
+    "tier_rationale": "CIViC A SENSITIVITYRESPONSE (Erlotinib); CIViC A SENSITIVITYRESPONSE (Afatinib); CIViC A SENSITIVITYRESPONSE (Osimertinib); CIViC A SENSITIVITYRESPONSE (Dacomitinib); CIViC A SENSITIVITYRESPONSE (Erlotinib,Ramucirumab); CIViC A SENSITIVITYRESPONSE (Osimertinib,Chemotherapy); CIViC A SENSITIVITYRESPONSE (Gefitinib); CIViC A SENSITIVITYRESPONSE (Osimertinib); CIViC A SENSITIVITYRESPONSE (Amivantamab,Lazertinib); CIViC A SENSITIVITYRESPONSE (Amivantamab,Carboplatin,Pemetrexed); CIViC B SENSITIVITYRESPONSE (Dacomitinib); CIViC B SENSITIVITYRESPONSE (Gefitinib,Erlotinib); CIViC B SENSITIVITYRESPONSE (Afatinib); CIViC B SENSITIVITYRESPONSE (Afatinib); CIViC B SENSITIVITYRESPONSE (Gefitinib); CIViC B SENSITIVITYRESPONSE (Erlotinib); CIViC B SENSITIVITYRESPONSE (Erlotinib,Gefitinib); CIViC B SENSITIVITYRESPONSE (Gefitinib,Erlotinib); CIViC B SENSITIVITYRESPONSE (Afatinib); CIViC B SENSITIVITYRESPONSE (Erlotinib); CIViC B SENSITIVITYRESPONSE (Gefitinib); CIViC B SENSITIVITYRESPONSE (Gefitinib); CIViC B SENSITIVITYRESPONSE (Erlotinib); CIViC B SENSITIVITYRESPONSE (Gefitinib)",
+    "vaf": "0.06",
+    "depth": "300",
+    "n_callers": "3",
+    "gnomad_af_max": "0.0",
+    "clinvar_sig": "drug_response,pathogenic,uncertain_significance",
+    "n_evidence_items": "25"
+   },
+   {
+    "key": "chr17:7675088:C>T",
+    "gene": "TP53",
+    "hgvsp": "ENSP00000269305.4:p.Arg175His",
+    "hgvsc": "ENST00000269305.9:c.524G>A",
+    "consequence": "missense_variant",
+    "amp_tier": "II",
+    "escat": "II",
+    "therapies": "Doxorubicin;EAP Protocol;MDM2 Inhibitor AMGMDS3;Pazopanib,Vorinostat",
+    "tier_rationale": "CIViC C SENSITIVITYRESPONSE (EAP Protocol); CIViC C SENSITIVITYRESPONSE (Pazopanib,Vorinostat); CIViC D SENSITIVITYRESPONSE (Doxorubicin); CIViC D RESISTANCE (MDM2 Inhibitor AMGMDS3); CIViC D RESISTANCE (MDM2 Inhibitor AMGMDS3)",
+    "vaf": "0.5467",
+    "depth": "300",
+    "n_callers": "3",
+    "gnomad_af_max": "1.5e-05",
+    "clinvar_sig": "likely_pathogenic,pathogenic",
+    "n_evidence_items": "7"
+   },
+   {
+    "key": "chr10:87933147:C>T",
+    "gene": "PTEN",
+    "hgvsp": "ENSP00000361021.3:p.Arg130Ter",
+    "hgvsc": "ENST00000371953.8:c.388C>T",
+    "consequence": "stop_gained",
+    "amp_tier": "II",
+    "escat": "IV",
+    "therapies": "Perifosine,Temsirolimus",
+    "tier_rationale": "CIViC D SENSITIVITYRESPONSE (Perifosine,Temsirolimus)",
+    "vaf": "0.4267",
+    "depth": "300",
+    "n_callers": "3",
+    "gnomad_af_max": "3.8e-05",
+    "clinvar_sig": "benign,likely_benign,likely_pathogenic,pathogenic",
+    "n_evidence_items": "1"
+   }
+  ],
+  "top_somatic": [
+   {
+    "key": "chr17:7675088:C>T",
+    "gene": "TP53",
+    "hgvsc": "ENST00000269305.9:c.524G>A",
+    "hgvsp": "ENSP00000269305.4:p.Arg175His",
+    "consequence": "missense_variant",
+    "impact": "MODERATE",
+    "class": "SOMATIC_LIKELY",
+    "germline_ambiguous": "yes",
+    "reasons": "germline_ambiguous: heterozygous VAF in a cancer-predisposition gene - a matched normal would be needed; possible incidental germline finding",
+    "vaf": "0.5467",
+    "depth": "300",
+    "alt_reads": "171",
+    "n_callers": "3",
+    "callers": "freebayes,lofreq,vardict",
+    "gnomad_af_max": "1.5e-05",
+    "clinvar_sig": "likely_pathogenic,pathogenic",
+    "ffpe_context": "yes",
+    "chrom": "chr17",
+    "pos": "7675088",
+    "ref": "C",
+    "alt": "T"
+   },
+   {
+    "key": "chr10:87933147:C>T",
+    "gene": "PTEN",
+    "hgvsc": "ENST00000371953.8:c.388C>T",
+    "hgvsp": "ENSP00000361021.3:p.Arg130Ter",
+    "consequence": "stop_gained",
+    "impact": "HIGH",
+    "class": "SOMATIC_LIKELY",
+    "germline_ambiguous": "yes",
+    "reasons": "germline_ambiguous: heterozygous VAF in a cancer-predisposition gene - a matched normal would be needed; possible incidental germline finding",
+    "vaf": "0.4267",
+    "depth": "300",
+    "alt_reads": "118",
+    "n_callers": "3",
+    "callers": "freebayes,lofreq,vardict",
+    "gnomad_af_max": "3.8e-05",
+    "clinvar_sig": "benign,likely_benign,likely_pathogenic,pathogenic",
+    "ffpe_context": "yes",
+    "chrom": "chr10",
+    "pos": "87933147",
+    "ref": "C",
+    "alt": "T"
+   },
+   {
+    "key": "chr12:25245351:C>A",
+    "gene": "KRAS",
+    "hgvsc": "ENST00000311936.8:c.34G>T",
+    "hgvsp": "ENSP00000308495.3:p.Gly12Cys",
+    "consequence": "missense_variant",
+    "impact": "MODERATE",
+    "class": "SOMATIC_LIKELY",
+    "germline_ambiguous": "no",
+    "reasons": "passes_all_filters",
+    "vaf": "0.39",
+    "depth": "300",
+    "alt_reads": "102",
+    "n_callers": "3",
+    "callers": "freebayes,lofreq,vardict",
+    "gnomad_af_max": "0.0",
+    "clinvar_sig": "likely_pathogenic,not_provided,pathogenic",
+    "ffpe_context": "no",
+    "chrom": "chr12",
+    "pos": "25245351",
+    "ref": "C",
+    "alt": "A"
+   },
+   {
+    "key": "chr3:179234297:A>G",
+    "gene": "PIK3CA",
+    "hgvsc": "ENST00000263967.4:c.3140A>G",
+    "hgvsp": "ENSP00000263967.3:p.His1047Arg",
+    "consequence": "missense_variant",
+    "impact": "MODERATE",
+    "class": "SOMATIC_LIKELY",
+    "germline_ambiguous": "no",
+    "reasons": "passes_all_filters",
+    "vaf": "0.3111",
+    "depth": "300",
+    "alt_reads": "65",
+    "n_callers": "3",
+    "callers": "freebayes,lofreq,vardict",
+    "gnomad_af_max": "0.0",
+    "clinvar_sig": "likely_pathogenic,pathogenic",
+    "ffpe_context": "no",
+    "chrom": "chr3",
+    "pos": "179234297",
+    "ref": "A",
+    "alt": "G"
+   },
+   {
+    "key": "chr7:140753336:A>T",
+    "gene": "BRAF",
+    "hgvsc": "ENST00000646891.2:c.1799T>A",
+    "hgvsp": "ENSP00000493543.1:p.Val600Glu",
+    "consequence": "missense_variant",
+    "impact": "MODERATE",
+    "class": "SOMATIC_LIKELY",
+    "germline_ambiguous": "no",
+    "reasons": "passes_all_filters",
+    "vaf": "0.3022",
+    "depth": "300",
+    "alt_reads": "61",
+    "n_callers": "3",
+    "callers": "freebayes,lofreq,vardict",
+    "gnomad_af_max": "1.2e-05",
+    "clinvar_sig": "likely_pathogenic,not_provided,pathogenic,uncertain_significance",
+    "ffpe_context": "no",
+    "chrom": "chr7",
+    "pos": "140753336",
+    "ref": "A",
+    "alt": "T"
+   },
+   {
+    "key": "chr7:55191822:T>G",
+    "gene": "EGFR",
+    "hgvsc": "ENST00000275493.7:c.2573T>G",
+    "hgvsp": "ENSP00000275493.2:p.Leu858Arg",
+    "consequence": "missense_variant",
+    "impact": "MODERATE",
+    "class": "SOMATIC_LIKELY",
+    "germline_ambiguous": "no",
+    "reasons": "passes_all_filters",
+    "vaf": "0.06",
+    "depth": "300",
+    "alt_reads": "27",
+    "n_callers": "3",
+    "callers": "freebayes,lofreq,vardict",
+    "gnomad_af_max": "0.0",
+    "clinvar_sig": "drug_response,pathogenic,uncertain_significance",
+    "ffpe_context": "no",
+    "chrom": "chr7",
+    "pos": "55191822",
+    "ref": "T",
+    "alt": "G"
+   }
+  ]
+ },
+ "biomarkers": {
+  "tmb": {
+   "nonsynonymous_somatic_variants": 6,
+   "assessable_mb": 0.002,
+   "denominator_source": "mosdepth regions with mean depth >= 100x",
+   "tmb_per_mb": 3333.33,
+   "ci95_per_mb": [
+    1217.21,
+    7255.42
+   ],
+   "reference_threshold": "TMB-high is commonly defined as >= 10 mutations/Mb (FDA pembrolizumab tissue-agnostic indication, measured with FoundationOne CDx)",
+   "meaningful": false,
+   "caveats": [
+    "Assessable territory is only 0.002 Mb: far below the ~1 Mb that panel TMB estimation assumes. The value is reported for completeness but must not be interpreted as a tumour mutational burden.",
+    "Panel TMB is not directly comparable between assays without harmonisation (Merino et al. 2020, J Immunother Cancer 8:e000147).",
+    "Tumour-only calling leaves residual germline variants, which inflate TMB.",
+    "With a small panel the Poisson confidence interval is wide; always report it."
+   ]
+  },
+  "mutation_spectrum": {
+   "C>T": 2,
+   "C>A": 1,
+   "T>C": 1,
+   "T>A": 1,
+   "T>G": 1
+  },
+  "ffpe_indicator": {
+   "C>T_or_G>A_fraction_of_snvs": 0.333,
+   "low_vaf_C>T_count": 0,
+   "note": "Formalin fixation deaminates cytosine, producing C>T/G>A changes at low VAF (Do & Dobrovic 2015). A high fraction argues for artefact filtering (Mutect2 read-orientation model, SOBDetector), not for a biological signature."
+  },
+  "not_computed": {
+   "MSI": "MSIsensor2/-pro require a panel-specific site model (or >= 20 matched normals) and >= 50 covered microsatellite loci; not satisfied by this panel.",
+   "mutational_signatures": "SBS refitting needs >= 100-200 SNVs (PCGR default 200); only 6 somatic SNVs were called."
+  },
+  "counts": {
+   "all_variants": 7,
+   "somatic_likely": 6,
+   "somatic_snvs": 6,
+   "nonsynonymous": 6
+  },
+  "_provenance": {
+   "generated_utc": "2026-08-30T03:37:39+00:00",
+   "git_commit": "a37e977",
+   "git_dirty": true,
+   "python": "3.11.16",
+   "argv": "scripts/biomarkers.py --variants results_example/dna/variants_filtered.tsv --mosdepth-regions results_example/align/coverage.regions.bed.gz -o results_example/dna/biomarkers.json"
+  }
+ },
+ "copy_number": {
+  "panel_median_depth": 250.0,
+  "n_targets_used": 12,
+  "n_genes": 6,
+  "gains": [],
+  "losses": [],
+  "thresholds": {
+   "gain_log2": 1.0,
+   "loss_log2": -1.0,
+   "min_depth": 20.0
+  },
+  "limitations": [
+   "No matched normal or panel of normals: primer-efficiency, GC and capture bias are uncorrected, so a 'gain' may be a technical artefact.",
+   "Tumour purity and ploidy are unknown; log2 ratios cannot be converted to absolute copy number.",
+   "Genes with few targets give noisy estimates; interpret only large, consistent shifts.",
+   "For a defensible CNV call use CNVkit with a pooled reference of >= 10-20 samples processed identically (Talevich et al. 2016)."
+  ],
+  "_provenance": {
+   "generated_utc": "2026-08-30T03:37:31+00:00",
+   "git_commit": "a37e977",
+   "git_dirty": true,
+   "python": "3.11.16",
+   "argv": "scripts/cnv_molecules.py --regions results_example/align/coverage.regions.bed.gz --min-depth 20 -o results_example/dna/cnv"
+  }
+ },
+ "fusions": {
+  "summary": {
+   "n_fusions": 0,
+   "by_confidence": {},
+   "targetable_fusions": [],
+   "n_discarded_with_targetable_gene": 0,
+   "caveats": [
+    "Arriba is tuned for whole-transcriptome data; on anchored-multiplex-PCR panels it recovers ~86 % (lung) / 57 % (sarcoma) of the vendor pipeline's calls (Capone et al. 2022), so low-confidence calls are kept and shown.",
+    "Arriba does not detect intragenic exon-skipping events such as MET exon 14 skipping \u2014 use exon_skipping.py for those.",
+    "Any fusion used for a treatment decision needs orthogonal confirmation (FISH, IHC or RT-PCR)."
+   ],
+   "_provenance": {
+    "generated_utc": "2026-08-30T03:37:27+00:00",
+    "git_commit": "a37e977",
+    "git_dirty": true,
+    "python": "3.11.16",
+    "argv": "scripts/fusion_summary.py --arriba results_example/rna/arriba_placeholder.tsv -o results_example/rna/fusions_summary"
+   }
+  },
+  "table": []
+ },
+ "exon_skipping": {
+  "events": [
+   {
+    "event": "MET_exon14_skipping",
+    "gene": "MET",
+    "skipping_reads": 0,
+    "canonical_reads": "0;0",
+    "canonical_max": 0,
+    "skipping_ratio": 0.0,
+    "called": "no",
+    "significance": "Targetable by MET inhibitors (capmatinib, tepotinib) in NSCLC; ~3-4 % of lung adenocarcinoma. RNA detection is more sensitive than DNA (Davies et al. 2019)."
+   },
+   {
+    "event": "EGFRvIII_exon2-7_deletion",
+    "gene": "EGFR",
+    "skipping_reads": 0,
+    "canonical_reads": "0",
+    "canonical_max": 0,
+    "skipping_ratio": 0.0,
+    "called": "no",
+    "significance": "EGFRvIII: in-frame loss of exons 2-7, common in glioblastoma."
+   }
+  ],
+  "min_reads": 3,
+  "junctions_in_file": 0,
+  "method": "Counts of uniquely+multi-mapped reads spanning the skipping junction versus the canonical flanking junctions in STAR's SJ.out.tab (GRCh38 coordinates).",
+  "caveats": [
+   "Coordinates are transcript-model dependent; verify against the panel's target transcript before reporting.",
+   "A targeted RNA panel only covers primed regions: absence of evidence here is not evidence of absence unless the exon is covered.",
+   "Positive calls require orthogonal confirmation (RT-PCR) before clinical use."
+  ],
+  "_provenance": {
+   "generated_utc": "2026-08-30T03:37:25+00:00",
+   "git_commit": "a37e977",
+   "git_dirty": true,
+   "python": "3.11.16",
+   "argv": "scripts/exon_skipping.py --sj results_example/rna/SJ_placeholder.tab -o results_example/rna/exon_skipping"
+  }
+ },
+ "pathways": {
+  "table": [
+   {
+    "pathway": "RTK_RAS",
+    "n_altered": "3",
+    "n_genes_in_set": "50",
+    "altered_genes": "EGFR,KRAS,BRAF",
+    "alterations": "EGFR: ENSP00000275493.2:p.Leu858Arg (VAF 0.06, tier I) | KRAS: ENSP00000308495.3:p.Gly12Cys (VAF 0.39, tier I) | BRAF: ENSP00000493543.1:p.Val600Glu (VAF 0.3022, tier I)",
+    "source": "Sanchez-Vega et al. 2018 Cell, Table S3"
+   },
+   {
+    "pathway": "PI3K",
+    "n_altered": "2",
+    "n_genes_in_set": "23",
+    "altered_genes": "PIK3CA,PTEN",
+    "alterations": "PIK3CA: ENSP00000263967.3:p.His1047Arg (VAF 0.3111, tier I) | PTEN: ENSP00000361021.3:p.Arg130Ter (VAF 0.4267, tier II)",
+    "source": "Sanchez-Vega et al. 2018 Cell, Table S3"
+   },
+   {
+    "pathway": "TP53",
+    "n_altered": "1",
+    "n_genes_in_set": "9",
+    "altered_genes": "TP53",
+    "alterations": "TP53: ENSP00000269305.4:p.Arg175His (VAF 0.5467, tier II)",
+    "source": "Sanchez-Vega et al. 2018 Cell, Table S3"
+   },
+   {
+    "pathway": "Cell_Cycle",
+    "n_altered": "0",
+    "n_genes_in_set": "14",
+    "altered_genes": "",
+    "alterations": "",
+    "source": "Sanchez-Vega et al. 2018 Cell (10 oncogenic signaling pathways), Table S3"
+   },
+   {
+    "pathway": "Hippo",
+    "n_altered": "0",
+    "n_genes_in_set": "33",
+    "altered_genes": "",
+    "alterations": "",
+    "source": "Sanchez-Vega et al. 2018 Cell, Table S3"
+   },
+   {
+    "pathway": "MYC",
+    "n_altered": "0",
+    "n_genes_in_set": "14",
+    "altered_genes": "",
+    "alterations": "",
+    "source": "Sanchez-Vega et al. 2018 Cell, Table S3"
+   },
+   {
+    "pathway": "NOTCH",
+    "n_altered": "0",
+    "n_genes_in_set": "36",
+    "altered_genes": "",
+    "alterations": "",
+    "source": "Sanchez-Vega et al. 2018 Cell, Table S3"
+   },
+   {
+    "pathway": "NRF2",
+    "n_altered": "0",
+    "n_genes_in_set": "3",
+    "altered_genes": "",
+    "alterations": "",
+    "source": "Sanchez-Vega et al. 2018 Cell, Table S3"
+   },
+   {
+    "pathway": "TGF_Beta",
+    "n_altered": "0",
+    "n_genes_in_set": "13",
+    "altered_genes": "",
+    "alterations": "",
+    "source": "Sanchez-Vega et al. 2018 Cell, Table S3"
+   },
+   {
+    "pathway": "WNT",
+    "n_altered": "0",
+    "n_genes_in_set": "30",
+    "altered_genes": "",
+    "alterations": "",
+    "source": "Sanchez-Vega et al. 2018 Cell, Table S3"
+   },
+   {
+    "pathway": "DNA_Damage_Repair_MMR",
+    "n_altered": "0",
+    "n_genes_in_set": "27",
+    "altered_genes": "",
+    "alterations": "",
+    "source": "Supplementary set (not in Sanchez-Vega): MMR/HR genes for MSI/HRD context"
+   },
+   {
+    "pathway": "Epigenetic_Chromatin",
+    "n_altered": "0",
+    "n_genes_in_set": "22",
+    "altered_genes": "",
+    "alterations": "",
+    "source": "Supplementary set (not in Sanchez-Vega): frequently altered chromatin regulators"
+   }
+  ],
+  "summary": {
+   "pathways_hit": [
+    "RTK_RAS",
+    "PI3K",
+    "TP53"
+   ],
+   "genes_altered": [
+    "BRAF",
+    "EGFR",
+    "KRAS",
+    "PIK3CA",
+    "PTEN",
+    "TP53"
+   ],
+   "unassigned_genes": [],
+   "method": "Membership mapping against Sanchez-Vega et al. 2018 (Cell) curated pathway gene lists plus supplementary DNA-repair and chromatin sets.",
+   "caveat": "This is not an enrichment analysis: the gene universe is defined by the panel, and a single sample provides no null distribution. Absence of a pathway hit may simply mean the panel does not cover that pathway's genes.",
+   "_provenance": {
+    "generated_utc": "2026-08-30T03:40:00+00:00",
+    "git_commit": "a37e977",
+    "git_dirty": true,
+    "python": "3.11.16",
+    "argv": "scripts/pathway_map.py --variants results_example/dna/variants_tiered.tsv --fusions results_example/rna/fusions_summary.tsv -o results_example/pathways/pathway_hits"
+   }
+  }
+ },
+ "evidence": {
+  "n_items": 103,
+  "items": [
+   {
+    "key": "chr17:7675088:C>T",
+    "gene": "TP53",
+    "alteration": "R175H",
+    "source": "CIViC",
+    "type": "PROGNOSTIC",
+    "level": "B",
+    "significance": "POOR_OUTCOME",
+    "direction": "SUPPORTS",
+    "therapies": "",
+    "disease": "Breast Cancer",
+    "url": "/evidence/389",
+    "description": "Breast cancer patients who harbor R175H mutation have worse overall survival than those with wild type TP53, but have better prognosis than those with R248W mutation."
+   },
+   {
+    "key": "chr17:7675088:C>T",
+    "gene": "TP53",
+    "alteration": "R175H",
+    "source": "CIViC",
+    "type": "PREDICTIVE",
+    "level": "C",
+    "significance": "SENSITIVITYRESPONSE",
+    "direction": "SUPPORTS",
+    "therapies": "EAP Protocol",
+    "disease": "Stomach Carcinoma",
+    "url": "/evidence/2310",
+    "description": "In a study of 25 patients with advanced gastric cancer, mutations in TP53 were identified in 32% of primary tumors. TP53 mutations were associated with an improved response to preoperative treatment of a modified EAP protocol (combination of doxorubicin, etoposide and cisplatin). Patients with mutat"
+   },
+   {
+    "key": "chr17:7675088:C>T",
+    "gene": "TP53",
+    "alteration": "R175H",
+    "source": "CIViC",
+    "type": "PREDICTIVE",
+    "level": "C",
+    "significance": "SENSITIVITYRESPONSE",
+    "direction": "SUPPORTS",
+    "therapies": "Pazopanib,Vorinostat",
+    "disease": "Sarcoma",
+    "url": "/evidence/7540",
+    "description": "In the phase I study of pazopanib and vorinostat in 36 patients with advanced solid tumors, detection of hotspot TP53 mutation was associated with a higher rate of SD \u22656 months/PR, longer median PFS (months), and longer median OS (months) compared to patients without a hotspot TP53 mutation.  In sar"
+   },
+   {
+    "key": "chr17:7675088:C>T",
+    "gene": "TP53",
+    "alteration": "R175H",
+    "source": "CIViC",
+    "type": "PREDICTIVE",
+    "level": "D",
+    "significance": "SENSITIVITYRESPONSE",
+    "direction": "SUPPORTS",
+    "therapies": "Doxorubicin",
+    "disease": "Breast Cancer",
+    "url": "/evidence/319",
+    "description": "Breast tumors in a mouse model with R172H mutation (homologous to human R175H) are more responsive to doxorubicin than breast tumors with wild type TP53."
+   },
+   {
+    "key": "chr17:7675088:C>T",
+    "gene": "TP53",
+    "alteration": "R175H",
+    "source": "CIViC",
+    "type": "PREDICTIVE",
+    "level": "D",
+    "significance": "RESISTANCE",
+    "direction": "SUPPORTS",
+    "therapies": "MDM2 Inhibitor AMGMDS3",
+    "disease": "Cancer",
+    "url": "/evidence/4880",
+    "description": "Subset of 58 cancer cell lines with unaltered TP53 is sensitive to MDM2 inhibitor AMGMDS3. None of 115 cancer cell lines with TP53 mutation and absence of WT allele are sensitive to MDM2 inhibitor. TP53 R175H loss of function mutation is present in 6 cell lines that are insensitive to MDM2 inhibitor"
+   },
+   {
+    "key": "chr17:7675088:C>T",
+    "gene": "TP53",
+    "alteration": "R175H",
+    "source": "CIViC",
+    "type": "PREDICTIVE",
+    "level": "D",
+    "significance": "RESISTANCE",
+    "direction": "SUPPORTS",
+    "therapies": "MDM2 Inhibitor AMGMDS3",
+    "disease": "Cancer",
+    "url": "/evidence/10074",
+    "description": "Subset of 58 cancer cell lines with unaltered TP53 is sensitive to MDM2 inhibitor AMGMDS3. None of 115 cancer cell lines with TP53 mutation and absence of WT allele are sensitive to MDM2 inhibitor. TP53 R175H loss of function mutation is present in 6 cell lines that are insensitive to MDM2 inhibitor"
+   },
+   {
+    "key": "chr17:7675088:C>T",
+    "gene": "TP53",
+    "alteration": "R175H",
+    "source": "CIViC",
+    "type": "FUNCTIONAL",
+    "level": "D",
+    "significance": "DOMINANT_NEGATIVE",
+    "direction": "SUPPORTS",
+    "therapies": "",
+    "disease": "",
+    "url": "/evidence/10527",
+    "description": "Yeast strain yIG397 was cultured to express both wild-type (WT) and mutant R175H originally identified in anaplastic astrocytoma. Should the mutant be dominant-negative (DN), TP53 will not bind and transactivate the ADE2 protein, resulting in red/pink colonies. If the mutant is recessive, then WT fu"
+   },
+   {
+    "key": "chr10:87933147:C>T",
+    "gene": "PTEN",
+    "alteration": "R130*",
+    "source": "CIViC",
+    "type": "PREDICTIVE",
+    "level": "D",
+    "significance": "SENSITIVITYRESPONSE",
+    "direction": "SUPPORTS",
+    "therapies": "Perifosine,Temsirolimus",
+    "disease": "Thyroid Cancer",
+    "url": "/evidence/1627",
+    "description": "Preclinical study in thyroid cancer cell lines. 6 cell lines with alterations of the PI3K/Akt pathway were more sensitive to Akt inhibitor perifosine or MTOR inhibitor temsirolimus than 5 cell lines without genetic alterations in the PI3K/Akt pathway. Among the alterations, one cell line harbored a "
+   },
+   {
+    "key": "chr12:25245351:C>A",
+    "gene": "KRAS",
+    "alteration": "G12C",
+    "source": "CIViC",
+    "type": "PREDICTIVE",
+    "level": "A",
+    "significance": "SENSITIVITYRESPONSE",
+    "direction": "SUPPORTS",
+    "therapies": "Sotorasib",
+    "disease": "Lung Non-small Cell Carcinoma",
+    "url": "/evidence/9431",
+    "description": "The phase II cohort of the CodeBreaK 100 study (NCT03600883) investigated the activity of the KRAS G12C inhibitor sotorasib in previously treated patients with KRAS G12C-mutated non-small cell lung cancer. A total of 124 patients had measurable disease and were evaluated for response by independent "
+   },
+   {
+    "key": "chr12:25245351:C>A",
+    "gene": "KRAS",
+    "alteration": "G12C",
+    "source": "CIViC",
+    "type": "PREDICTIVE",
+    "level": "A",
+    "significance": "SENSITIVITYRESPONSE",
+    "direction": "SUPPORTS",
+    "therapies": "Adagrasib,Cetuximab",
+    "disease": "Colorectal Cancer",
+    "url": "/evidence/12063",
+    "description": "The efficacy of adagrasib + cetuximab combination therapy was tested in 94 patients harbouring colorectal cancers with KRAS G12C mutations. ORR was used as the primary end-point for the study. The ORR and disease control rate were 34.0% and 85.1% respectively. The median duration of response and pro"
+   },
+   {
+    "key": "chr12:25245351:C>A",
+    "gene": "KRAS",
+    "alteration": "G12C",
+    "source": "CIViC",
+    "type": "PREDICTIVE",
+    "level": "A",
+    "significance": "SENSITIVITYRESPONSE",
+    "direction": "SUPPORTS",
+    "therapies": "Sotorasib,Panitumumab",
+    "disease": "Colorectal Cancer",
+    "url": "/evidence/12264",
+    "description": "In this phase 3 trial, patients with chemorefractory metastatic colorectal cancer harbouring KRAS G12C mutations were assigned to one of three groups. The first group received 960 mg of sotorasib (KRAS G12C inhibitor) once daily plus panitumumab (n = 53), the second group received 240 mg of sotorasi"
+   },
+   {
+    "key": "chr12:25245351:C>A",
+    "gene": "KRAS",
+    "alteration": "G12C",
+    "source": "CIViC",
+    "type": "PREDICTIVE",
+    "level": "B",
+    "significance": "SENSITIVITYRESPONSE",
+    "direction": "SUPPORTS",
+    "therapies": "Divarasib",
+    "disease": "Lung Non-small Cell Carcinoma",
+    "url": "/evidence/11652",
+    "description": "A phase 1 clinical study conducted with Divarasib in a total of 137 patients, of which 60 patients had NSCLC with G12C mutation in the KRAS gene. Confirmed response was noted in 53.4% (95% CI; 39.9 to 66.7) of the patients, with a progression-free survival of 13.1 months."
+   },
+   {
+    "key": "chr12:25245351:C>A",
+    "gene": "KRAS",
+    "alteration": "G12C",
+    "source": "CIViC",
+    "type": "PREDICTIVE",
+    "level": "B",
+    "significance": "RESISTANCE",
+    "direction": "SUPPORTS",
+    "therapies": "Gefitinib,Erlotinib",
+    "disease": "Colorectal Cancer",
+    "url": "/evidence/1216",
+    "description": "In a study of 448 metastatic colorectal cancer patients treated with EGFR-TKIs and tested for EGFR and KRAS mutations, 69 tested positive for KRAS mutations. In 38 EGFR wildtype patients treated with erlotinib or gefitinib, those with KRAS G12C mutations (n=24) had shorter progression free survival "
+   },
+   {
+    "key": "chr12:25245351:C>A",
+    "gene": "KRAS",
+    "alteration": "G12C",
+    "source": "CIViC",
+    "type": "PROGNOSTIC",
+    "level": "B",
+    "significance": "POOR_OUTCOME",
+    "direction": "SUPPORTS",
+    "therapies": "",
+    "disease": "Lung Non-small Cell Carcinoma",
+    "url": "/evidence/1217",
+    "description": "In a study of 48 NSCLC patients, those with G12C or G12V mutant KRAS were associated with decreased progression free survival (1.84 months) compared with other KRAS mutants or with wild-type KRAS (3.35 and 1.95 months)."
+   },
+   {
+    "key": "chr12:25245351:C>A",
+    "gene": "KRAS",
+    "alteration": "G12C",
+    "source": "CIViC",
+    "type": "PREDICTIVE",
+    "level": "B",
+    "significance": "RESISTANCE",
+    "direction": "SUPPORTS",
+    "therapies": "Cetuximab,Chemotherapy",
+    "disease": "Colorectal Cancer",
+    "url": "/evidence/3967",
+    "description": "This was a retrospective study of 691 cetuximab treated patients with metastatic, chemotherapy refractory colorectal cancer. Of those, 16 patients harbored KRAS G12C, were BRAF, NRAS and PIK3CA wt, and had individual response data. One patient had a partial response, 6 had stable disease, and 9 prog"
+   },
+   {
+    "key": "chr12:25245351:C>A",
+    "gene": "KRAS",
+    "alteration": "G12C",
+    "source": "CIViC",
+    "type": "DIAGNOSTIC",
+    "level": "B",
+    "significance": "POSITIVE",
+    "direction": "SUPPORTS",
+    "therapies": "",
+    "disease": "Lung Cancer",
+    "url": "/evidence/227",
+    "description": "KRAS G12C occur more frequently in women than men."
+   },
+   {
+    "key": "chr12:25245351:C>A",
+    "gene": "KRAS",
+    "alteration": "G12C",
+    "source": "CIViC",
+    "type": "PREDICTIVE",
+    "level": "B",
+    "significance": "SENSITIVITYRESPONSE",
+    "direction": "SUPPORTS",
+    "therapies": "Docetaxel,Selumetinib",
+    "disease": "Lung Non-small Cell Carcinoma",
+    "url": "/evidence/1142",
+    "description": "83 patients from a phase II trial (docetaxel + placebo or MEK1/2 inhibitor selumetinib) with KRAS mutant tumors were retrospectively assessed for differences in OS, PFS, ORR and change in tumor size at week 6 according to type of KRAS mutation. G12C, G12D and G12V were the most common mutations (46%"
+   },
+   {
+    "key": "chr12:25245351:C>A",
+    "gene": "KRAS",
+    "alteration": "G12C",
+    "source": "CIViC",
+    "type": "PREDICTIVE",
+    "level": "B",
+    "significance": "RESISTANCE",
+    "direction": "SUPPORTS",
+    "therapies": "Gefitinib",
+    "disease": "Lung Cancer",
+    "url": "/evidence/2257",
+    "description": "In recurrent lung cancer patients treated with the epidermal growth factor receptor tyrosine kinase inhibitor gefitinib, patients with KRAS mutations had a lower frequency of partial response (PR) and stable disease (SD) and a higher rate of progressive disease (PD) (PR:0, SD:1, PD:15 vs. PR:24, SD:"
+   },
+   {
+    "key": "chr12:25245351:C>A",
+    "gene": "KRAS",
+    "alteration": "G12C",
+    "source": "CIViC",
+    "type": "PREDICTIVE",
+    "level": "C",
+    "significance": "RESISTANCE",
+    "direction": "SUPPORTS",
+    "therapies": "Panitumumab",
+    "disease": "Colorectal Cancer",
+    "url": "/evidence/2253",
+    "description": "In a retrospective study of 427 metastatic colorectal patients, KRAS mutations were observed in 43% of the tumor samples. Patients with mutations in codon 12 or 13 of KRAS were associated with reduced response to panitumumab compared to wildtype KRAS (HR:0.99, 95% CI:0.73-1.36 vs. HR:0.45, 95% CI:0."
+   },
+   {
+    "key": "chr12:25245351:C>A",
+    "gene": "KRAS",
+    "alteration": "G12C",
+    "source": "CIViC",
+    "type": "PREDICTIVE",
+    "level": "D",
+    "significance": "RESISTANCE",
+    "direction": "SUPPORTS",
+    "therapies": "Melphalan",
+    "disease": "Multiple Myeloma",
+    "url": "/evidence/2262",
+    "description": "In in vitro experiments, myeloma cell lines expressing activating NRAS and KRAS mutations are less sensitive to the apoptosis-inducing effects of dexamethasone, doxorubicin, and melphalan in comparison to cells with wildtype RAS."
+   },
+   {
+    "key": "chr12:25245351:C>A",
+    "gene": "KRAS",
+    "alteration": "G12C",
+    "source": "CIViC",
+    "type": "PREDICTIVE",
+    "level": "D",
+    "significance": "SENSITIVITYRESPONSE",
+    "direction": "SUPPORTS",
+    "therapies": "ARS-853,Epidermal Growth Factor Receptor Tyrosine Kinase Inhibitor",
+    "disease": "Cancer",
+    "url": "/evidence/1173",
+    "description": "Preclinical study to investigate mechanisms of KRAS G12C activity and inhibition with ARS-853, a covalent (irreversible) inhibitor which binds KRAS G12C in the GDP-bound state to prevent activation. Results from a mass spectrometry-based assay to evaluate KRAS activity suggests that G12C mutant KRAS"
+   },
+   {
+    "key": "chr12:25245351:C>A",
+    "gene": "KRAS",
+    "alteration": "G12C",
+    "source": "CIViC",
+    "type": "PREDICTIVE",
+    "level": "D",
+    "significance": "SENSITIVITYRESPONSE",
+    "direction": "SUPPORTS",
+    "therapies": "Adagrasib",
+    "disease": "Solid Tumor",
+    "url": "/evidence/7572",
+    "description": "In cell lines, MRTX849 inhibits growth and viability of cells harboring KRAS G12C mutations, but not in cells with other mutant forms or of wild-type KRAS."
+   },
+   {
+    "key": "In animal models, MRTX849 demonstrates antitumor activity in a broad range of KRAS G12C positive tumors."
+   },
+   {
+    "key": "chr12:25245351:C>A",
+    "gene": "KRAS",
+    "alteration": "G12C",
+    "source": "CIViC",
+    "type": "PREDICTIVE",
+    "level": "D",
+    "significance": "SENSITIVITYRESPONSE",
+    "direction": "SUPPORTS",
+    "therapies": "Dactolisib,Selumetinib",
+    "disease": "Colorectal Cancer",
+    "url": "/evidence/2212",
+    "description": "In 28 out of 40 (70%) metastatic colorectal cancer tumors harboring BRAF, KRAS, NRAS or PIK3CA mutations and implanted into mice, the therapeutic combination of the MEK inhibitor AZD6244 and the PI3K/mTor inhibitor BEZ235 resulted in disease stabilization. Mean tumor growth was lower in the tumors t"
+   },
+   {
+    "key": "chr12:25245351:C>A",
+    "gene": "KRAS",
+    "alteration": "G12C",
+    "source": "CIViC",
+    "type": "PREDICTIVE",
+    "level": "D",
+    "significance": "RESISTANCE",
+    "direction": "SUPPORTS",
+    "therapies": "Melphalan",
+    "disease": "Multiple Myeloma",
+    "url": "/evidence/2261",
+    "description": "In in vitro experiments, myeloma cell lines expressing activating NRAS and KRAS mutations are less sensitive to the apoptosis-inducing effects of dexamethasone, doxorubicin, and melphalan in comparison to cells with wildtype RAS."
+   },
+   {
+    "key": "chr12:25245351:C>A",
+    "gene": "KRAS",
+    "alteration": "G12C",
+    "source": "CIViC",
+    "type": "PREDICTIVE",
+    "level": "D",
+    "significance": "RESISTANCE",
+    "direction": "SUPPORTS",
+    "therapies": "Melphalan",
+    "disease": "Multiple Myeloma",
+    "url": "/evidence/2263",
+    "description": "In in vitro experiments, myeloma cell lines expressing activating NRAS and KRAS mutations are less sensitive to the apoptosis-inducing effects of dexamethasone, doxorubicin, and melphalan in comparison to cells with wildtype RAS."
+   },
+   {
+    "key": "chr12:25245351:C>A",
+    "gene": "KRAS",
+    "alteration": "G12C",
+    "source": "CIViC",
+    "type": "PREDICTIVE",
+    "level": "D",
+    "significance": "RESISTANCE",
+    "direction": "SUPPORTS",
+    "therapies": "Regorafenib Anhydrous",
+    "disease": "Colorectal Cancer",
+    "url": "/evidence/3973",
+    "description": "In an in vitro study, a human colon adenocarcinoma SW48 cell line expressing KRAS G12C mutation demonstrated resistance to regorafenib treatment (IC50: 386.22 nM vs. 114.28 nM, P<0.01) compared to SW48 cells expressing KRAS wild-type. Resistance was determined by assessing cell viability. In vivo, K"
+   },
+   {
+    "key": "chr3:179234297:A>G",
+    "gene": "PIK3CA",
+    "alteration": "H1047R",
+    "source": "CIViC",
+    "type": "PREDICTIVE",
+    "level": "A",
+    "significance": "SENSITIVITYRESPONSE",
+    "direction": "SUPPORTS",
+    "therapies": "Alpelisib,Fulvestrant",
+    "disease": "Breast Cancer",
+    "url": "/evidence/7318",
+    "description": "In a phase 3 trial, patients with hormone receptor positive, HER2 receptor negative breast were allocated to alpelisib plus fulvestrant or placebo plus fulvestrant. Patients were enrolled into two cohorts on the basis of tumor-tissue PIK3CA mutation status.PIK3CA mutation was determined according to"
+   },
+   {
+    "key": "chr3:179234297:A>G",
+    "gene": "PIK3CA",
+    "alteration": "H1047R",
+    "source": "CIViC",
+    "type": "PREDICTIVE",
+    "level": "A",
+    "significance": "SENSITIVITYRESPONSE",
+    "direction": "SUPPORTS",
+    "therapies": "Inavolisib,Palbociclib,Fulvestrant",
+    "disease": "Breast Cancer",
+    "url": "/evidence/12533",
+    "description": "The phase III INAVO120 trial (NCT04191499) in 325 patients with endocrine-resistant, PIK3CA-mutated HR\u207a/HER2\u207b locally advanced or metastatic breast cancer evaluated inavolisib plus palbociclib and fulvestrant (n=161) versus placebo plus palbociclib and fulvestrant (n=164). Median PFS was 15.0 months"
+   },
+   {
+    "key": "chr3:179234297:A>G",
+    "gene": "PIK3CA",
+    "alteration": "H1047R",
+    "source": "CIViC",
+    "type": "PREDICTIVE",
+    "level": "B",
+    "significance": "RESISTANCE",
+    "direction": "DOES_NOT_SUPPORT",
+    "therapies": "FAC Regimen,FEC Regimen",
+    "disease": "Breast Cancer",
+    "url": "/evidence/6191",
+    "description": "This study of 140 patients with stage II-III breast cancer assessed the response of patients with PIK3CA mutations to 6 months of preoperative chemotherapy. Exons 1, 9, and 20 of PIK3CA  were screened for mutations. 23/140 patients had PIK3CA mutations: E545K (8); E542K (3); Q546R (1); H1047R (9); H"
+   },
+   {
+    "key": "chr3:179234297:A>G",
+    "gene": "PIK3CA",
+    "alteration": "H1047R",
+    "source": "CIViC",
+    "type": "PREDICTIVE",
+    "level": "B",
+    "significance": "RESISTANCE",
+    "direction": "DOES_NOT_SUPPORT",
+    "therapies": "Cetuximab,Panitumumab",
+    "disease": "Colorectal Cancer",
+    "url": "/evidence/258",
+    "description": "In this study, a large cohort of metastatic colorectal cancer patients were treated with anti-epidermal growth factor receptor monoclonal antibodies (cetuximab or panitumumab). KRAS PIK3CA and PTEN were tested for mutation; PIK3CA H1047R was the only variant noted in the primary tumor (located in re"
+   },
+   {
+    "key": "chr3:179234297:A>G",
+    "gene": "PIK3CA",
+    "alteration": "H1047R",
+    "source": "CIViC",
+    "type": "PROGNOSTIC",
+    "level": "B",
+    "significance": "BETTER_OUTCOME",
+    "direction": "SUPPORTS",
+    "therapies": "",
+    "disease": "Breast Cancer",
+    "url": "/evidence/2097",
+    "description": "Prognostic significance of PIK3CA mutations was evaluated in a retrospective study of 590 patients with surgically resected invasive breast cancer. Patients whose tumors harbored PIK3CA H1047R (n=88, 14.9%) experienced significantly higher 10-year overall survival rate (76% vs 62%) and lower 10-year"
+   },
+   {
+    "key": "chr3:179234297:A>G",
+    "gene": "PIK3CA",
+    "alteration": "H1047R",
+    "source": "CIViC",
+    "type": "PROGNOSTIC",
+    "level": "B",
+    "significance": "BETTER_OUTCOME",
+    "direction": "SUPPORTS",
+    "therapies": "",
+    "disease": "Breast Cancer",
+    "url": "/evidence/2100",
+    "description": "In Japanese invasive breast cancer patients, PIK3CA mutation was associated with improved relapse-free survival (p < .05)."
+   },
+   {
+    "key": "chr3:179234297:A>G",
+    "gene": "PIK3CA",
+    "alteration": "H1047R",
+    "source": "CIViC",
+    "type": "PROGNOSTIC",
+    "level": "B",
+    "significance": "POOR_OUTCOME",
+    "direction": "SUPPORTS",
+    "therapies": "",
+    "disease": "Breast Tubular Carcinoma",
+    "url": "/evidence/3047",
+    "description": "In a retrospective analysis of 32 Western Chinese female patients with invasive ductal breast cancer, PIK3CA H1047L (n=1) or H1047R (n=8) was associated with worse survival and increased incidence of lymph node invasion. The incidence of lymph node invasion was 15/23 (65%) for the PIK3CA wildtype po"
+   },
+   {
+    "key": "chr3:179234297:A>G",
+    "gene": "PIK3CA",
+    "alteration": "H1047R",
+    "source": "CIViC",
+    "type": "PREDICTIVE",
+    "level": "C",
+    "significance": "RESISTANCE",
+    "direction": "SUPPORTS",
+    "therapies": "Cetuximab,Irinotecan",
+    "disease": "Colorectal Cancer",
+    "url": "/evidence/3841",
+    "description": "Five patients participating in a large retrospective study of cetuximab in metastatic, treatment refractory colorectal cancer had tumors which harbored PIK3CA H1047R (exon 21), were wildtype for KRAS, BRAF and NRAS, and had individual response data. All patients were treated with cetuximab and irino"
+   },
+   {
+    "key": "chr3:179234297:A>G",
+    "gene": "PIK3CA",
+    "alteration": "H1047R",
+    "source": "CIViC",
+    "type": "PREDICTIVE",
+    "level": "C",
+    "significance": "RESISTANCE",
+    "direction": "SUPPORTS",
+    "therapies": "Cetuximab,Panitumumab",
+    "disease": "Colorectal Cancer",
+    "url": "/evidence/388",
+    "description": "In this study, a large cohort of metastatic colorectal cancer patients were treated with anti-epidermal growth factor receptor monoclonal antibodies (cetuximab or panitumumab). KRAS PIK3CA and PTEN were tested for mutation; PIK3CA H1047R was the only variant noted in the primary tumors of four patie"
+   },
+   {
+    "key": "chr3:179234297:A>G",
+    "gene": "PIK3CA",
+    "alteration": "H1047R",
+    "source": "CIViC",
+    "type": "PREDICTIVE",
+    "level": "C",
+    "significance": "SENSITIVITYRESPONSE",
+    "direction": "SUPPORTS",
+    "therapies": "Everolimus,Fulvestrant",
+    "disease": "HER2 Positive Breast Cancer",
+    "url": "/evidence/1623",
+    "description": "Case report of a 44-year-old patient with recurrent HER2-positive breast cancer. The primary tumor was HR positive; however, the metastatic tumor was HR negative. The patient was resistant to classical chemotherapeutic agents and anti-HER2 treatment. Thus, the combination of everolimus and fulvestra"
+   },
+   {
+    "key": "chr3:179234297:A>G",
+    "gene": "PIK3CA",
+    "alteration": "H1047R",
+    "source": "CIViC",
+    "type": "PREDICTIVE",
+    "level": "D",
+    "significance": "SENSITIVITYRESPONSE",
+    "direction": "SUPPORTS",
+    "therapies": "Izorlisib",
+    "disease": "Breast Cancer",
+    "url": "/evidence/314",
+    "description": "Breast cancer cell lines with H1047R mutation showed increased sensitivity to CH5132799 than cells with wild-type PIK3CA gene."
+   },
+   {
+    "key": "chr3:179234297:A>G",
+    "gene": "PIK3CA",
+    "alteration": "H1047R",
+    "source": "CIViC",
+    "type": "PREDICTIVE",
+    "level": "D",
+    "significance": "SENSITIVITYRESPONSE",
+    "direction": "SUPPORTS",
+    "therapies": "Pictilisib",
+    "disease": "HER2 Positive Breast Cancer",
+    "url": "/evidence/2096",
+    "description": "This preclinical study tested the efficacy on several breast cancer cell lines of GDC-0941 (pictilisib), a selective inhibitor of all four isoforms of class I PI3-kinases at a range of IC50 values. Sensitivity and resistance was categorized as less than and more than an IC50 of 1umol/L, respectively"
+   },
+   {
+    "key": "chr3:179234297:A>G",
+    "gene": "PIK3CA",
+    "alteration": "H1047R",
+    "source": "CIViC",
+    "type": "PREDICTIVE",
+    "level": "D",
+    "significance": "RESISTANCE",
+    "direction": "SUPPORTS",
+    "therapies": "Lapatinib,Trastuzumab",
+    "disease": "HER2 Positive Breast Cancer",
+    "url": "/evidence/6204",
+    "description": "In a preclinical study, efficacy of lapatinib and trastuzumab was evaluated in vitro against HER2 amplified breast cancer cell line BT474 (heterozygous for PIK3CA K111N) retrovirally transduced with PIK3CA H1047R. The study found that H1047R abrogated the growth inhibitory effects of lapatinib and t"
+   },
+   {
+    "key": "chr3:179234297:A>G",
+    "gene": "PIK3CA",
+    "alteration": "H1047R",
+    "source": "CIViC",
+    "type": "PREDICTIVE",
+    "level": "D",
+    "significance": "RESISTANCE",
+    "direction": "DOES_NOT_SUPPORT",
+    "therapies": "Dactolisib",
+    "disease": "HER2 Positive Breast Cancer",
+    "url": "/evidence/6206",
+    "description": "This preclinical study tested the sensitivity of HER2-positive breast cancer cell line BT-474 (heterozygous for PIK3CA K111N) retrovirally transduced with PIK3CA H1047R to NVP-BEZ235 (dactolisib; a dual PI3K/mTOR inhibitor). The study found that dactolisib was effective in inhibiting outgrowth of H1"
+   },
+   {
+    "key": "chr3:179234297:A>G",
+    "gene": "PIK3CA",
+    "alteration": "H1047R",
+    "source": "CIViC",
+    "type": "PREDICTIVE",
+    "level": "D",
+    "significance": "SENSITIVITYRESPONSE",
+    "direction": "SUPPORTS",
+    "therapies": "Dactolisib",
+    "disease": "Lung Adenocarcinoma",
+    "url": "/evidence/1447",
+    "description": "Doxycycline dependent expression of the PIK3CA H1047R mutation in mouse type II alveolar epithelial cells drove lung cancer in a reversible fashion, indicating the driver properties of this p110alpha catalytic domain mutation. Administration of pan-p110 isoform and mTOR inhibitor BEZ235 to H1047R mi"
+   },
+   {
+    "key": "chr3:179234297:A>G",
+    "gene": "PIK3CA",
+    "alteration": "H1047R",
+    "source": "CIViC",
+    "type": "PREDICTIVE",
+    "level": "D",
+    "significance": "SENSITIVITYRESPONSE",
+    "direction": "SUPPORTS",
+    "therapies": "Capivasertib,Trastuzumab",
+    "disease": "HER2 Positive Breast Cancer",
+    "url": "/evidence/1505",
+    "description": "Tumor xenografts in mice were established with the KPL4 HER2 positive breast cancer cell line with PIK3CA H1047R mutation. KPL4 has suboptimal responses to trastuzumab and lapatinib. Xengraft treatment with trastuzumab and AZD5363 monotherapy induced moderate growth inhibition which was significant "
+   },
+   {
+    "key": "chr3:179234297:A>G",
+    "gene": "PIK3CA",
+    "alteration": "H1047R",
+    "source": "CIViC",
+    "type": "PREDICTIVE",
+    "level": "D",
+    "significance": "SENSITIVITYRESPONSE",
+    "direction": "SUPPORTS",
+    "therapies": "Capivasertib,Lapatinib",
+    "disease": "HER2 Positive Breast Cancer",
+    "url": "/evidence/1506",
+    "description": "The HER2 breast cancer cell line KPL4 with PIK3CA H1047R shows sub-optimal responses to trastuzumab and lapatinib, and was used to establish mouse xenografts. Treatment of mice with monotherapy of AZD5363 or lapatinib alone induced growth inhibition (37%, not significant; 65%, P = 0.004), but treatm"
+   },
+   {
+    "key": "chr3:179234297:A>G",
+    "gene": "PIK3CA",
+    "alteration": "H1047R",
+    "source": "CIViC",
+    "type": "PREDICTIVE",
+    "level": "D",
+    "significance": "SENSITIVITYRESPONSE",
+    "direction": "SUPPORTS",
+    "therapies": "Perifosine,Temsirolimus",
+    "disease": "Thyroid Cancer",
+    "url": "/evidence/1625",
+    "description": "Preclinical study in thyroid cancer cell lines. 6 cell lines with alterations of the PI3K/Akt pathway were more sensitive to Akt inhibitor perifosine or MTOR inhibitor temsirolimus than 5 cell lines without genetic alterations in the PI3K/Akt pathway."
+   },
+   {
+    "key": "Among the alterations, One cell line harbored a "
+   },
+   {
+    "key": "chr3:179234297:A>G",
+    "gene": "PIK3CA",
+    "alteration": "H1047R",
+    "source": "CIViC",
+    "type": "PREDICTIVE",
+    "level": "D",
+    "significance": "RESISTANCE",
+    "direction": "DOES_NOT_SUPPORT",
+    "therapies": "Trastuzumab Emtansine",
+    "disease": "HER2 Positive Breast Cancer",
+    "url": "/evidence/2103",
+    "description": "As part of a pre-clinical experiment, the efficacy of ado-trastuzumab emtansine (T-DM1) was compared to that of trastuzumab against various HER2 positive cell lines. HCC1954 and KPL-4 cell lines expressing PIK3CA H1047R were associated with similar sensitivity to T-DM1 as PIK3CA wild-type cell line "
+   },
+   {
+    "key": "chr3:179234297:A>G",
+    "gene": "PIK3CA",
+    "alteration": "H1047R",
+    "source": "CIViC",
+    "type": "PREDICTIVE",
+    "level": "D",
+    "significance": "RESISTANCE",
+    "direction": "SUPPORTS",
+    "therapies": "Vemurafenib",
+    "disease": "Colorectal Cancer",
+    "url": "/evidence/3733",
+    "description": "In an in vitro study, a RKO cell line expressing BRAF V600E (a known vemurafenib sensitizing mutation) and PIK3CA H1047R co-mutation demonstrated reduced sensitivity to vemurafenib treatment. Resistance was determined by assessing cellular proliferation and AKT phosphorylation."
+   },
+   {
+    "key": "chr3:179234297:A>G",
+    "gene": "PIK3CA",
+    "alteration": "H1047R",
+    "source": "CIViC",
+    "type": "PREDICTIVE",
+    "level": "D",
+    "significance": "RESISTANCE",
+    "direction": "SUPPORTS",
+    "therapies": "Lapatinib",
+    "disease": "HER2 Positive Breast Cancer",
+    "url": "/evidence/6202",
+    "description": "This preclinical study tested, in vitro, the resistance to lapatinib (an anti-HER2 drug) of HER2-positive breast cancer cell lines (BT474 and SKBR3) retrovirally transduced with H1047R. The study found that the H1047R transduced cells were almost completely resistant to the growth inhibitory effects"
+   },
+   {
+    "key": "chr3:179234297:A>G",
+    "gene": "PIK3CA",
+    "alteration": "H1047R",
+    "source": "CIViC",
+    "type": "PREDICTIVE",
+    "level": "D",
+    "significance": "RESISTANCE",
+    "direction": "SUPPORTS",
+    "therapies": "Trastuzumab",
+    "disease": "HER2 Positive Breast Cancer",
+    "url": "/evidence/6203",
+    "description": "This preclinical study tested the effect of trastuzumab (an anti-HER2 drug) on HER2-positive breast cancer cell lines (BT474 and SKBR3) retrovirally transduced with H1047R. The study found that the H1047R transduced cells were almost completely resistant to the growth inhibitory effects of trastuzum"
+   },
+   {
+    "key": "chr3:179234297:A>G",
+    "gene": "PIK3CA",
+    "alteration": "H1047R",
+    "source": "CIViC",
+    "type": "PREDICTIVE",
+    "level": "D",
+    "significance": "SENSITIVITYRESPONSE",
+    "direction": "SUPPORTS",
+    "therapies": "Vemurafenib,Akt Inhibitor MK2206",
+    "disease": "Colorectal Cancer",
+    "url": "/evidence/8364",
+    "description": "Resistance of RKO cells, which harbor BRAF V600E (a known vemurafenib sensitizing mutation) and PIK3CA H1047R, to vemurafenib monotherapy was abrogated by the addition of pan-AKT inhibitor MK-2206 in vitro and in vivo. In vitro, vemurafenib and MK-2206 combination treatment of RKO cells resulted in "
+   },
+   {
+    "key": "chr3:179234297:A>G",
+    "gene": "PIK3CA",
+    "alteration": "H1047R",
+    "source": "CIViC",
+    "type": "PREDICTIVE",
+    "level": "D",
+    "significance": "SENSITIVITYRESPONSE",
+    "direction": "SUPPORTS",
+    "therapies": "Dactolisib",
+    "disease": "Head And Neck Cancer",
+    "url": "/evidence/1362",
+    "description": "Two head and neck cancer cell lines with PIK3CA H1047R mutation were more sensitive to PI3K/mTOR inhibition with BEZ-235 (NVP-BEZ235, Dactolisib) than two wild type cell lines in vitro. One cell line with H1047R mutation was also found to be sensitive to BEZ-235 in vivo. PIK3CA (H1047R) mutation pos"
+   },
+   {
+    "key": "chr3:179234297:A>G",
+    "gene": "PIK3CA",
+    "alteration": "H1047R",
+    "source": "CIViC",
+    "type": "PREDICTIVE",
+    "level": "D",
+    "significance": "SENSITIVITYRESPONSE",
+    "direction": "SUPPORTS",
+    "therapies": "Cetuximab,Dactolisib",
+    "disease": "Head And Neck Cancer",
+    "url": "/evidence/1363",
+    "description": "Xenografts from one head and neck cancer cell line (CAL-33) with a PIK3CA H1047R mutation were more sensitive to the combined inhibition of PI3K/mTOR and EGFR with BEZ-235 and cetuximab (N=9) than cetuximab (N=9, P=0.0039) or BEZ-235 alone (N=9, P=0.0002) in-vivo."
+   },
+   {
+    "key": "chr7:140753336:A>T",
+    "gene": "BRAF",
+    "alteration": "V600E",
+    "source": "CIViC",
+    "type": "PREDICTIVE",
+    "level": "A",
+    "significance": "SENSITIVITYRESPONSE",
+    "direction": "SUPPORTS",
+    "therapies": "Vemurafenib",
+    "disease": "Skin Melanoma",
+    "url": "/evidence/1409",
+    "description": "Phase 3 randomized clinical trial comparing vemurafenib with dacarbazine in 675 patients with previously untreated, metastatic melanoma with the BRAF V600E mutation. At 6 months, overall survival was 84% (95% confidence interval [CI], 78 to 89) in the vemurafenib group and 64% (95% CI, 56 to 73) in "
+   },
+   {
+    "key": "chr7:140753336:A>T",
+    "gene": "BRAF",
+    "alteration": "V600E",
+    "source": "CIViC",
+    "type": "PREDICTIVE",
+    "level": "A",
+    "significance": "SENSITIVITYRESPONSE",
+    "direction": "SUPPORTS",
+    "therapies": "Encorafenib,Cetuximab",
+    "disease": "Colorectal Cancer",
+    "url": "/evidence/9851",
+    "description": "The open-label phase 3 BEACON CRC trial included 665 patients with BRAF V600E-mutated metastatic CRC. Patients were randomly assigned in a 1:1:1 ratio to receive encorafenib, binimetinib, and cetuximab (triplet-therapy group); encorafenib and cetuximab (doublet-therapy group); or the investigators\u2019 "
+   },
+   {
+    "key": "chr7:140753336:A>T",
+    "gene": "BRAF",
+    "alteration": "V600E",
+    "source": "CIViC",
+    "type": "PREDICTIVE",
+    "level": "A",
+    "significance": "SENSITIVITYRESPONSE",
+    "direction": "SUPPORTS",
+    "therapies": "Tovorafenib",
+    "disease": "Childhood Low-grade Glioma",
+    "url": "/evidence/12016",
+    "description": "In this ongoing phase 2 trial (FIREFLY-1), 76 patients, aged 6 months to 25 years, with pediatric low-grade glioma harbouring BRAF alterations (BRAF fusions or BRAF V600E mutations) were treated with tovorafenib (DAY-101). The overall response rate according to the RAPNO-LGG criteria was 51% (95% CI"
+   },
+   {
+    "key": "chr7:140753336:A>T",
+    "gene": "BRAF",
+    "alteration": "V600E",
+    "source": "CIViC",
+    "type": "PREDICTIVE",
+    "level": "A",
+    "significance": "SENSITIVITYRESPONSE",
+    "direction": "SUPPORTS",
+    "therapies": "Dabrafenib,Trametinib",
+    "disease": "Lung Non-small Cell Carcinoma",
+    "url": "/evidence/3017",
+    "description": "Patients with BRAF V600E-mutant NSCLC (n=57) were enrolled into a phase 2, multicentre, non-randomised, open-label study, administering dabrafenib plus trametinib. The overall response rate was 36/57 (63.2%, [95% CI 49.3-75.6]) and the median progression-free survival was 9.7 months (95% CI 6.9-19.6"
+   },
+   {
+    "key": "chr7:140753336:A>T",
+    "gene": "BRAF",
+    "alteration": "V600E",
+    "source": "CIViC",
+    "type": "PREDICTIVE",
+    "level": "A",
+    "significance": "SENSITIVITYRESPONSE",
+    "direction": "SUPPORTS",
+    "therapies": "Dabrafenib,Trametinib",
+    "disease": "Solid Tumor",
+    "url": "/evidence/12161",
+    "description": "In this trial, patients with advanced rare tumours harbouring BRAF V600E mutations were treated with a combination of dabrafenib and trametinib. The study included eight distinct cohorts: anaplastic thyroid carcinoma (ATC) (n=36), biliary tract cancer (BTC)(n=43), gastrointestinal stromal tumour (GI"
+   },
+   {
+    "key": "chr7:140753336:A>T",
+    "gene": "BRAF",
+    "alteration": "V600E",
+    "source": "CIViC",
+    "type": "PREDICTIVE",
+    "level": "A",
+    "significance": "SENSITIVITYRESPONSE",
+    "direction": "SUPPORTS",
+    "therapies": "Trametinib,Dabrafenib",
+    "disease": "Low Grade Glioma",
+    "url": "/evidence/12162",
+    "description": "In this trial, patients with pediatric (age <18 years) low-grade gliomas harbouring BRAF V600E (n=49), were treated with either trametinib monotherapy (n=13) or dabrafenib + trametinib (n=36). In patients treated with trametinib monotherapy, 15% (95% CI, 1.9-45.4; n=2) had objective PRs, and 46% (n="
+   },
+   {
+    "key": "chr7:140753336:A>T",
+    "gene": "BRAF",
+    "alteration": "V600E",
+    "source": "CIViC",
+    "type": "DIAGNOSTIC",
+    "level": "B",
+    "significance": "POSITIVE",
+    "direction": "SUPPORTS",
+    "therapies": "",
+    "disease": "Papillary Thyroid Carcinoma",
+    "url": "/evidence/80",
+    "description": "Thyroid nodule with BRAF V600E mutation is highly correlated with papillary thyroid cancer."
+   },
+   {
+    "key": "chr7:140753336:A>T",
+    "gene": "BRAF",
+    "alteration": "V600E",
+    "source": "CIViC",
+    "type": "PREDICTIVE",
+    "level": "B",
+    "significance": "SENSITIVITYRESPONSE",
+    "direction": "SUPPORTS",
+    "therapies": "Dabrafenib,Trametinib",
+    "disease": "Melanoma",
+    "url": "/evidence/95",
+    "description": "Dabrafenib with trametinib provides higher response rate and lower toxicity (as compared to chemotherapy) in patients with melanoma."
+   },
+   {
+    "key": "chr7:140753336:A>T",
+    "gene": "BRAF",
+    "alteration": "V600E",
+    "source": "CIViC",
+    "type": "PROGNOSTIC",
+    "level": "B",
+    "significance": "POOR_OUTCOME",
+    "direction": "DOES_NOT_SUPPORT",
+    "therapies": "",
+    "disease": "Papillary Thyroid Carcinoma",
+    "url": "/evidence/102",
+    "description": "Unlike other studies that suggest a poorer outcome, BRAF mutation in this study was not correlated with poorer prognosis in papillary thyroid cancer."
+   },
+   {
+    "key": "chr7:140753336:A>T",
+    "gene": "BRAF",
+    "alteration": "V600E",
+    "source": "CIViC",
+    "type": "PROGNOSTIC",
+    "level": "B",
+    "significance": "POOR_OUTCOME",
+    "direction": "SUPPORTS",
+    "therapies": "",
+    "disease": "Colorectal Cancer",
+    "url": "/evidence/103",
+    "description": "V600E is associated with adverse pathological features of colorectal cancer. This can be concluded as a marker of poor prognosis."
+   },
+   {
+    "key": "chr7:140753336:A>T",
+    "gene": "BRAF",
+    "alteration": "V600E",
+    "source": "CIViC",
+    "type": "PROGNOSTIC",
+    "level": "B",
+    "significance": "POOR_OUTCOME",
+    "direction": "SUPPORTS",
+    "therapies": "",
+    "disease": "Papillary Thyroid Carcinoma",
+    "url": "/evidence/656",
+    "description": "In patients with papillary thyroid cancer harboring both BRAF V600E and the TERT promotor mutation C228T (N=35), recurrence-free survival is worse than in patients harboring one of these mutations (N=159 BRAF, N=26 TERT promoter mutated) or no mutations in either gene (N=287)(P<0.001)."
+   },
+   {
+    "key": "chr7:140753336:A>T",
+    "gene": "BRAF",
+    "alteration": "V600E",
+    "source": "CIViC",
+    "type": "PREDICTIVE",
+    "level": "B",
+    "significance": "SENSITIVITYRESPONSE",
+    "direction": "SUPPORTS",
+    "therapies": "Vemurafenib",
+    "disease": "Melanoma",
+    "url": "/evidence/1398",
+    "description": "The BRIM-3 Phase III trial NCT01006980 assessed BRAF inhibitor vemurafenib versus dacarbazine in 598 patients with treatment naive metastatic melanoma and confirmed V600E mutation. Significant differences were seen in overall survival (13.3 months with vemurafenib vs. 10.0 months with dacarbazine) a"
+   },
+   {
+    "key": "chr7:140753336:A>T",
+    "gene": "BRAF",
+    "alteration": "V600E",
+    "source": "CIViC",
+    "type": "PREDICTIVE",
+    "level": "B",
+    "significance": "SENSITIVITYRESPONSE",
+    "direction": "SUPPORTS",
+    "therapies": "Dabrafenib,Trametinib",
+    "disease": "Melanoma",
+    "url": "/evidence/6178",
+    "description": "Adjuvant dual treatment with BRAF inhibitor dabrafenib and MEK inhibitor trametinib was administered to patients with stage III resected melenoma with V600E or V600K mutation in this stage III trial (COMBO-AD, NCT01682083). 792 (91%) patients had V600E, and were administered dabrafenib and trametini"
+   },
+   {
+    "key": "chr7:140753336:A>T",
+    "gene": "BRAF",
+    "alteration": "V600E",
+    "source": "CIViC",
+    "type": "PREDICTIVE",
+    "level": "B",
+    "significance": "SENSITIVITYRESPONSE",
+    "direction": "SUPPORTS",
+    "therapies": "Dabrafenib,Trametinib",
+    "disease": "Melanoma",
+    "url": "/evidence/6938",
+    "description": "In this Phase III trial (NCT01584648 COMBI-d), previously untreated patients with unresectable stage IIIC or IV melanoma with BRAF V600E (359 patients) or V600K (61 patients) received dabrafenib and trametinib or dabrafenib alone with primary endpoint of progression free survival and secondary endpo"
+   },
+   {
+    "key": "chr7:140753336:A>T",
+    "gene": "BRAF",
+    "alteration": "V600E",
+    "source": "CIViC",
+    "type": "PREDICTIVE",
+    "level": "B",
+    "significance": "SENSITIVITYRESPONSE",
+    "direction": "SUPPORTS",
+    "therapies": "Encorafenib,Binimetinib,Cetuximab",
+    "disease": "Colorectal Cancer",
+    "url": "/evidence/7612",
+    "description": "665 patients with BRAF V600E-mutated metastatic CRC were enrolled In this open-label, phase 3 trial. Patients were randomly assigned in a 1:1:1 ratio to receive encorafenib, binimetinib, and cetuximab (triplet-therapy group); encorafenib and cetuximab (doublet-therapy group); or the investigators\u2019 c"
+   },
+   {
+    "key": "chr7:140753336:A>T",
+    "gene": "BRAF",
+    "alteration": "V600E",
+    "source": "CIViC",
+    "type": "PREDICTIVE",
+    "level": "B",
+    "significance": "RESISTANCE",
+    "direction": "DOES_NOT_SUPPORT",
+    "therapies": "Cetuximab,Panitumumab",
+    "disease": "Colorectal Cancer",
+    "url": "/evidence/816",
+    "description": "This meta-analysis of 7 randomized control trials evaluating overall survival (OS) (8 for progression free survival) could not definitely state that survival benefit of anti-EGFR monoclonal antibodies is limited to patients with wild type BRAF. In other words, the authors believe that there is insuf"
+   },
+   {
+    "key": "chr7:140753336:A>T",
+    "gene": "BRAF",
+    "alteration": "V600E",
+    "source": "CIViC",
+    "type": "DIAGNOSTIC",
+    "level": "B",
+    "significance": "POSITIVE",
+    "direction": "SUPPORTS",
+    "therapies": "",
+    "disease": "Hairy Cell Leukemia",
+    "url": "/evidence/1127",
+    "description": "In 47 patients with Hairy Cell Leukemia, sequencing discovered a V600E mutation in all 47 of the sequenced patients."
+   },
+   {
+    "key": "chr7:140753336:A>T",
+    "gene": "BRAF",
+    "alteration": "V600E",
+    "source": "CIViC",
+    "type": "PREDICTIVE",
+    "level": "B",
+    "significance": "SENSITIVITYRESPONSE",
+    "direction": "DOES_NOT_SUPPORT",
+    "therapies": "Vemurafenib",
+    "disease": "Colorectal Cancer",
+    "url": "/evidence/1405",
+    "description": "In this Phase II pilot study (NCT00405587) of BRAF V600 inhibitor vemurafenib in 21 metastatic colorectal cancer (CRC) patients with BRAF V600E, one patient had a durable 21 week partial response, and seven patients had 8 week stable disease as best response. Median progression free survival was 2.1"
+   },
+   {
+    "key": "chr7:140753336:A>T",
+    "gene": "BRAF",
+    "alteration": "V600E",
+    "source": "CIViC",
+    "type": "PREDICTIVE",
+    "level": "B",
+    "significance": "SENSITIVITYRESPONSE",
+    "direction": "SUPPORTS",
+    "therapies": "Vemurafenib,Cobimetinib",
+    "disease": "Melanoma",
+    "url": "/evidence/1421",
+    "description": "In this Phase III trial (coBRIM, NCT01689519) of 495 V600 mutant melanoma patients, 344 had V600E mutation. 174 patients were treated with vemurafenib and placebo, and 170 were treated with vemurafenib and cobimetinib and tested for progression free survival. 88 of 174 monotherapy group patients had"
+   },
+   {
+    "key": "chr7:140753336:A>T",
+    "gene": "BRAF",
+    "alteration": "V600E",
+    "source": "CIViC",
+    "type": "PREDICTIVE",
+    "level": "B",
+    "significance": "SENSITIVITYRESPONSE",
+    "direction": "SUPPORTS",
+    "therapies": "Vemurafenib",
+    "disease": "Melanoma",
+    "url": "/evidence/1749",
+    "description": "Multicenter, phase 1, dose-escalation trial of PLX4032 (Vemurafenib). Treatment of metastatic melanoma with PLX4032 in patients with tumors that carry the V600E BRAF mutation resulted in complete or partial tumor regression in the majority of patients (N=37/48). Patients without the V600E mutation h"
+   },
+   {
+    "key": "chr7:140753336:A>T",
+    "gene": "BRAF",
+    "alteration": "V600E",
+    "source": "CIViC",
+    "type": "PREDICTIVE",
+    "level": "B",
+    "significance": "SENSITIVITYRESPONSE",
+    "direction": "SUPPORTS",
+    "therapies": "Vemurafenib,Cetuximab,Irinotecan",
+    "disease": "Colorectal Cancer",
+    "url": "/evidence/1902",
+    "description": "Phase 1b study of vemurafenib, cetuximab and irinotecan in 19 patients with colorectal cancer (1 with appendiceal cancer). Six of 17 evaluable patients achieved an objective response, 15 patients total had either stable disease or radiographic response (the patient with appendiceal cancer had diseas"
+   },
+   {
+    "key": "chr7:140753336:A>T",
+    "gene": "BRAF",
+    "alteration": "V600E",
+    "source": "CIViC",
+    "type": "PREDICTIVE",
+    "level": "B",
+    "significance": "SENSITIVITYRESPONSE",
+    "direction": "SUPPORTS",
+    "therapies": "Trametinib",
+    "disease": "Melanoma",
+    "url": "/evidence/2135",
+    "description": "In a study of 322 advanced melanoma patients with BRAF-V600E (N=281), BRAF-V600K (N=40), or both mutations (N=1), treatment with trametinib was associated with improved progression-free survival (4.8mo vs. 1.5mo; HR: 0.45, 95% CI: 0.33-0.63, P<0.001) compared to chemotherapy control group. Additiona"
+   },
+   {
+    "key": "chr7:140753336:A>T",
+    "gene": "BRAF",
+    "alteration": "V600E",
+    "source": "CIViC",
+    "type": "PROGNOSTIC",
+    "level": "B",
+    "significance": "POOR_OUTCOME",
+    "direction": "SUPPORTS",
+    "therapies": "",
+    "disease": "Papillary Thyroid Carcinoma",
+    "url": "/evidence/2137",
+    "description": "In a study of 102 papillary thyroid cancer patients with a 15 year median follow-up time, those with BRAF V600E mutations had reduced overall survival compared to those with wildtype BRAF (P=0.015, log-rank test). The presence of BRAF V600E was associated with poorer outcome as defined by persistent"
+   },
+   {
+    "key": "chr7:140753336:A>T",
+    "gene": "BRAF",
+    "alteration": "V600E",
+    "source": "CIViC",
+    "type": "PREDICTIVE",
+    "level": "B",
+    "significance": "RESISTANCE",
+    "direction": "SUPPORTS",
+    "therapies": "Cetuximab,FOLFOX-4 Regimen",
+    "disease": "Colorectal Cancer",
+    "url": "/evidence/3739",
+    "description": "In a retrospective study of 148 treatment naive metastatic colorectal cancer patients, patients with BRAF V600E and wildtype NRAS/KRAS (n=14) mutation treated with FOLFOX4 plus cetuximab were associated with a decreased progression free survival (7.2mo vs. 9.7mo, HR:0.39, 95% CI:0.21-0.72, P=0.0017)"
+   },
+   {
+    "key": "chr7:140753336:A>T",
+    "gene": "BRAF",
+    "alteration": "V600E",
+    "source": "CIViC",
+    "type": "PREDICTIVE",
+    "level": "B",
+    "significance": "SENSITIVITYRESPONSE",
+    "direction": "SUPPORTS",
+    "therapies": "Vemurafenib",
+    "disease": "Melanoma",
+    "url": "/evidence/3750",
+    "description": "In a phase 2 clinical trial (NCT00949702) of 132 BRAF mutation positive metastatic melanoma patients treated with vemurafenib monotherapy, patients harboring BRAF V600E (n=123) or V600K (n=9) mutations were associated with a favorable objective response rate (53% per RECIST v1.1 criteria, 70/132), w"
+   },
+   {
+    "key": "chr7:55191822:T>G",
+    "gene": "EGFR",
+    "alteration": "L858R",
+    "source": "CIViC",
+    "type": "PREDICTIVE",
+    "level": "A",
+    "significance": "SENSITIVITYRESPONSE",
+    "direction": "SUPPORTS",
+    "therapies": "Erlotinib",
+    "disease": "Lung Non-small Cell Carcinoma",
+    "url": "/evidence/2994",
+    "description": "On May 14, 2013, the U.S. Food and Drug Administration approved erlotinib (Tarceva) for the first-line treatment of patients with metastatic non-small cell lung cancer (NSCLC) whose tumors have epidermal growth factor receptor (EGFR) exon 19 deletions or exon 21 (L858R) substitution mutations."
+   },
+   {
+    "key": "chr7:55191822:T>G",
+    "gene": "EGFR",
+    "alteration": "L858R",
+    "source": "CIViC",
+    "type": "PREDICTIVE",
+    "level": "A",
+    "significance": "SENSITIVITYRESPONSE",
+    "direction": "SUPPORTS",
+    "therapies": "Afatinib",
+    "disease": "Lung Non-small Cell Carcinoma",
+    "url": "/evidence/2997",
+    "description": "Afatinib, an irreversible inhibitor of the ErbB family of tyrosine kinases has been approved in the US for the first-line treatment of patients with metastatic non-small-cell lung cancer (NSCLC) who have tumours with EGFR exon 19 deletions or exon 21 (L858R) substitution mutations as detected by a U"
+   },
+   {
+    "key": "chr7:55191822:T>G",
+    "gene": "EGFR",
+    "alteration": "L858R",
+    "source": "CIViC",
+    "type": "PREDICTIVE",
+    "level": "A",
+    "significance": "SENSITIVITYRESPONSE",
+    "direction": "SUPPORTS",
+    "therapies": "Osimertinib",
+    "disease": "Lung Non-small Cell Carcinoma",
+    "url": "/evidence/11219",
+    "description": "In this phase 3, double-blind trial, 682 patients were randomly assigned 1:1 to either osimertinib (80 mg once daily) or placebo for 3 years following complete resection of EGFR mutation positive (exon 19 deletion or L858R) non-small cell lung cancer (NSCLC). At two years, 90% of the patients with s"
+   },
+   {
+    "key": "chr7:55191822:T>G",
+    "gene": "EGFR",
+    "alteration": "L858R",
+    "source": "CIViC",
+    "type": "PREDICTIVE",
+    "level": "A",
+    "significance": "SENSITIVITYRESPONSE",
+    "direction": "SUPPORTS",
+    "therapies": "Dacomitinib",
+    "disease": "Lung Non-small Cell Carcinoma",
+    "url": "/evidence/11239",
+    "description": "In this phase 3, open-label, randomized trial, 452 patients with EGFR mutation-positive non-small cell lung cancer including exon 19 deletions and exon 21 L858R point mutations were randomized into cohorts receive either oral dacomitinib 45 mg/day or oral gefitinib 250 mg/day, both in 28-day cycles."
+   },
+   {
+    "key": "chr7:55191822:T>G",
+    "gene": "EGFR",
+    "alteration": "L858R",
+    "source": "CIViC",
+    "type": "PREDICTIVE",
+    "level": "A",
+    "significance": "SENSITIVITYRESPONSE",
+    "direction": "SUPPORTS",
+    "therapies": "Erlotinib,Ramucirumab",
+    "disease": "Lung Non-small Cell Carcinoma",
+    "url": "/evidence/11240",
+    "description": "In this phase 3, randomized, double-blind, placebo-controlled trial, 449 patients stage IV NSCLC with EGFR exon 19 deletions or exon 21 (L858R) mutations. Patients were randomly assigned in a 1:1 ratio to receive oral erlotinib (150 mg/day) plus either intravenous ramucirumab (10 mg/kg) or matching "
+   },
+   {
+    "key": "chr7:55191822:T>G",
+    "gene": "EGFR",
+    "alteration": "L858R",
+    "source": "CIViC",
+    "type": "PREDICTIVE",
+    "level": "A",
+    "significance": "SENSITIVITYRESPONSE",
+    "direction": "SUPPORTS",
+    "therapies": "Osimertinib,Chemotherapy",
+    "disease": "Lung Non-small Cell Carcinoma",
+    "url": "/evidence/12015",
+    "description": "In this phase 3 clinical trial, 557 patients with NSCLC harbouring EGFR mutations (exon 19 deletion or L858R mutation) were randomly assigned to two groups and treated with either osimertinib with chemotherapy or osimertinib monotherapy. Significantly higher PFS was noted in the group treated with o"
+   },
+   {
+    "key": "chr7:55191822:T>G",
+    "gene": "EGFR",
+    "alteration": "L858R",
+    "source": "CIViC",
+    "type": "PREDICTIVE",
+    "level": "A",
+    "significance": "SENSITIVITYRESPONSE",
+    "direction": "SUPPORTS",
+    "therapies": "Gefitinib",
+    "disease": "Lung Non-small Cell Carcinoma",
+    "url": "/evidence/11241",
+    "description": "In this phase-IV, open-label, single-arm study, 106 patients with NSCLC and EGFR mutations including exon 19 deletion and exon 21 L858R point mutations were administered 250 mg daily doses of gefitinib with the primary endpoint being objective response rate (ORR). The objective response rate was 69."
+   },
+   {
+    "key": "chr7:55191822:T>G",
+    "gene": "EGFR",
+    "alteration": "L858R",
+    "source": "CIViC",
+    "type": "PREDICTIVE",
+    "level": "A",
+    "significance": "SENSITIVITYRESPONSE",
+    "direction": "SUPPORTS",
+    "therapies": "Osimertinib",
+    "disease": "Lung Non-small Cell Carcinoma",
+    "url": "/evidence/11599",
+    "description": "This phase 3 trial (NCT02151981) involved 419 patients with EGFR T790M mutant NSCLC who progressed after first-line EGFR inhibitor therapy (gefitinib, erlotinib, or afatinib) and were either treated with the third-generation EGFR inhibitor osimertinib or platinum therapy plus pemetrexed.  The object"
+   },
+   {
+    "key": "chr7:55191822:T>G",
+    "gene": "EGFR",
+    "alteration": "L858R",
+    "source": "CIViC",
+    "type": "PREDICTIVE",
+    "level": "A",
+    "significance": "SENSITIVITYRESPONSE",
+    "direction": "SUPPORTS",
+    "therapies": "Amivantamab,Lazertinib",
+    "disease": "Lung Non-small Cell Carcinoma",
+    "url": "/evidence/12131",
+    "description": "In this trial (MARIPOSA), 1074 patients with Non-Small Cell Lung Cancer harbouring exon 19 deletion or exon 21 L858R substitution were randomized (2:2:1) to receive lazertinib-amivantamab (n=429), osimertinib monotherapy (n=429) or lazertininib monotherapy (n=216). Patients who received lazertinib-a"
+   },
+   {
+    "key": "chr7:55191822:T>G",
+    "gene": "EGFR",
+    "alteration": "L858R",
+    "source": "CIViC",
+    "type": "PREDICTIVE",
+    "level": "A",
+    "significance": "SENSITIVITYRESPONSE",
+    "direction": "SUPPORTS",
+    "therapies": "Amivantamab,Carboplatin,Pemetrexed",
+    "disease": "Lung Non-small Cell Carcinoma",
+    "url": "/evidence/12156",
+    "description": "In this phase III trial, 657 patients with locally advanced or metastatic NSCLC (Non-Small Cell Lung Cancer) harbouring EGFR mutations (exon 19 deletions or L858R) were treated with amivantamab plus carboplatin-pemetrexed (chemotherapy). These patients were then randomized 2:2:1 to receive amivantam"
+   },
+   {
+    "key": "chr7:55191822:T>G",
+    "gene": "EGFR",
+    "alteration": "L858R",
+    "source": "CIViC",
+    "type": "PREDICTIVE",
+    "level": "B",
+    "significance": "SENSITIVITYRESPONSE",
+    "direction": "SUPPORTS",
+    "therapies": "Dacomitinib",
+    "disease": "Lung Non-small Cell Carcinoma",
+    "url": "/evidence/4860",
+    "description": "The authors pooled patients with exon 19 deletion and L858R EGFR (Exon 21) mutations from both studies (The ARCHER 1009 (NCT01360554) and A7471028 (NCT00769067)) to compare the efficacy of dacomitinib to erlotinib. 121 patients with any EGFR mutation were enrolled, 101 had activating mutations in ex"
+   },
+   {
+    "key": "chr7:55191822:T>G",
+    "gene": "EGFR",
+    "alteration": "L858R",
+    "source": "CIViC",
+    "type": "PREDICTIVE",
+    "level": "B",
+    "significance": "SENSITIVITYRESPONSE",
+    "direction": "SUPPORTS",
+    "therapies": "Gefitinib,Erlotinib",
+    "disease": "Lung Non-small Cell Carcinoma",
+    "url": "/evidence/275",
+    "description": "In NSCLC patients treated with EGFR tyrosine kinase inhibitors, the presence of L858R mutation is prognostic for better progression free survival."
+   },
+   {
+    "key": "chr7:55191822:T>G",
+    "gene": "EGFR",
+    "alteration": "L858R",
+    "source": "CIViC",
+    "type": "PREDICTIVE",
+    "level": "B",
+    "significance": "SENSITIVITYRESPONSE",
+    "direction": "SUPPORTS",
+    "therapies": "Afatinib",
+    "disease": "Lung Adenocarcinoma",
+    "url": "/evidence/879",
+    "description": "A phase III clinical trial (NCT00949650) found that median progression free survival among patients with exon 19 deletions or L858R EGFR mutations (n = 308) was 13.6 months for afatinib and 6.9 months for chemotherapy (HR, 0.47; 95% CI, 0.34 to 0.65; P = 0.001)."
+   },
+   {
+    "key": "chr7:55191822:T>G",
+    "gene": "EGFR",
+    "alteration": "L858R",
+    "source": "CIViC",
+    "type": "PREDICTIVE",
+    "level": "B",
+    "significance": "SENSITIVITYRESPONSE",
+    "direction": "SUPPORTS",
+    "therapies": "Afatinib",
+    "disease": "Lung Adenocarcinoma",
+    "url": "/evidence/982",
+    "description": "Afatinib is an irreversible covalent inhibitor of EGFR (second generation). This Phase III clinical trial (LUX-Lung 6; NCT01121393) was performed in Asian patients with EGFR mutant advanced NSCLC. 364 eligible patients with EGFR mutations were assigned to afatinib (n=242) or gemcitabine and cisplati"
+   },
+   {
+    "key": "chr7:55191822:T>G",
+    "gene": "EGFR",
+    "alteration": "L858R",
+    "source": "CIViC",
+    "type": "PREDICTIVE",
+    "level": "B",
+    "significance": "SENSITIVITYRESPONSE",
+    "direction": "SUPPORTS",
+    "therapies": "Gefitinib",
+    "disease": "Lung Non-small Cell Carcinoma",
+    "url": "/evidence/2621",
+    "description": "In a phase 3 clinical trial of non-small cell lung cancer (NSCLC) patients, a subset of patients with EGFR mutations (n=44) treated with gefitinib were associated with improved progression free survival (HR: 0.16, 95% CI: 0.05-0.49, P=0.001), and a higher objective response rate (ORR: 42.1% vs 21.1%"
+   },
+   {
+    "key": "chr7:55191822:T>G",
+    "gene": "EGFR",
+    "alteration": "L858R",
+    "source": "CIViC",
+    "type": "PREDICTIVE",
+    "level": "B",
+    "significance": "SENSITIVITYRESPONSE",
+    "direction": "SUPPORTS",
+    "therapies": "Erlotinib",
+    "disease": "Lung Adenocarcinoma",
+    "url": "/evidence/3791",
+    "description": "The phase 3 (EURTAC) study consisted of of 173 non-small cell lung cancer patients who had not had prior chemotherapy for metastatic disease (although adjuvant or neoadjuvant chemotherapy was permitted) and included 160 patients with lung adenocarcinoma subtype. The patients had EGFR mutations (exon"
+   },
+   {
+    "key": "chr7:55191822:T>G",
+    "gene": "EGFR",
+    "alteration": "L858R",
+    "source": "CIViC",
+    "type": "PREDICTIVE",
+    "level": "B",
+    "significance": "SENSITIVITYRESPONSE",
+    "direction": "SUPPORTS",
+    "therapies": "Erlotinib,Gefitinib",
+    "disease": "Lung Non-small Cell Carcinoma",
+    "url": "/evidence/4759",
+    "description": "In a study of 1261 non-small cell lung cancer patients, 49.8% of the analyzed tumors had EGFR mutations including deletions in exon 19 (n=258), L858R (n=260), T790M (n=6) and insertions or duplications in exon 20 (n=25). Patients with EGFR deletions in exon 19 or L858R mutations were associated with"
+   },
+   {
+    "key": "chr7:55191822:T>G",
+    "gene": "EGFR",
+    "alteration": "L858R",
+    "source": "CIViC",
+    "type": "PREDICTIVE",
+    "level": "B",
+    "significance": "SENSITIVITYRESPONSE",
+    "direction": "SUPPORTS",
+    "therapies": "Gefitinib,Erlotinib",
+    "disease": "Lung Non-small Cell Carcinoma",
+    "url": "/evidence/229",
+    "description": "There is no statistical difference in progression free survival between lung cancer patients treated with gefitinib or erlotinib with EGFR L858R mutations (N=72/242; univariate: P=0.283; multivariate: P=0.250) compared to patients with Exon 19 mutations (N=170)."
+   },
+   {
+    "key": "chr7:55191822:T>G",
+    "gene": "EGFR",
+    "alteration": "L858R",
+    "source": "CIViC",
+    "type": "PROGNOSTIC",
+    "level": "B",
+    "significance": "BETTER_OUTCOME",
+    "direction": "SUPPORTS",
+    "therapies": "",
+    "disease": "Lung Non-small Cell Carcinoma",
+    "url": "/evidence/347",
+    "description": "Median survival of patients with EGFR L858R mutation is better than those with wild type EGFR."
+   },
+   {
+    "key": "chr7:55191822:T>G",
+    "gene": "EGFR",
+    "alteration": "L858R",
+    "source": "CIViC",
+    "type": "PREDICTIVE",
+    "level": "B",
+    "significance": "SENSITIVITYRESPONSE",
+    "direction": "SUPPORTS",
+    "therapies": "Afatinib",
+    "disease": "Lung Adenocarcinoma",
+    "url": "/evidence/883",
+    "description": "In a phase 2 study of patients with lung adenocarcinoma (stage IIIb with pleural effusion or stage IV) and EGFR mutations, treated with afatinib were assessed by objective response. 129 patients were treated with afatinib. 66% of the 106 patients with two common activating EGFR mutations (deletion 1"
+   },
+   {
+    "key": "chr7:55191822:T>G",
+    "gene": "EGFR",
+    "alteration": "L858R",
+    "source": "CIViC",
+    "type": "PREDICTIVE",
+    "level": "B",
+    "significance": "SENSITIVITYRESPONSE",
+    "direction": "SUPPORTS",
+    "therapies": "Erlotinib",
+    "disease": "Lung Non-small Cell Carcinoma",
+    "url": "/evidence/885",
+    "description": "A randomized phase 3 trial (NCT00446225) involving 173 NSCLC patients with EGFR mutations (exon 19 deletion or L858R mutation in exon 21) with no history of chemotherapy for metastatic disease. Patients were randomly allocated (1:1) to receive either erlotinib or standard chemotherapy. The primary e"
+   },
+   {
+    "key": "chr7:55191822:T>G",
+    "gene": "EGFR",
+    "alteration": "L858R",
+    "source": "CIViC",
+    "type": "PREDICTIVE",
+    "level": "B",
+    "significance": "SENSITIVITYRESPONSE",
+    "direction": "SUPPORTS",
+    "therapies": "Gefitinib",
+    "disease": "Lung Non-small Cell Carcinoma",
+    "url": "/evidence/1665",
+    "description": "90 NSCLC patients with stage IIIB/IV chemotherapy-resistant tumors were treated with gefitinib, and the L858R EGFR mutation was associated with longer time to treatment failure than those with wild-type EGFR (median 9.1 versus 2.1). In multivariate analysis, L858R mutations plus adenocarcinoma was a"
+   },
+   {
+    "key": "chr7:55191822:T>G",
+    "gene": "EGFR",
+    "alteration": "L858R",
+    "source": "CIViC",
+    "type": "PREDICTIVE",
+    "level": "B",
+    "significance": "SENSITIVITYRESPONSE",
+    "direction": "SUPPORTS",
+    "therapies": "Gefitinib",
+    "disease": "Lung Adenocarcinoma",
+    "url": "/evidence/2634",
+    "description": "In a phase 3 clinical trial of Korean, never-smoker, lung adenocarcinoma patients, a subset of patients with EGFR mutations (n=42) treated with gefitinib were associated with improved overall response rate compared to gemcitabine plus cisplatin treatment (84.6%, 22/26, vs. 37.5%, 6/16, P=0.002). By "
+   },
+   {
+    "key": "chr7:55191822:T>G",
+    "gene": "EGFR",
+    "alteration": "L858R",
+    "source": "CIViC",
+    "type": "PREDICTIVE",
+    "level": "B",
+    "significance": "SENSITIVITYRESPONSE",
+    "direction": "SUPPORTS",
+    "therapies": "Erlotinib",
+    "disease": "Lung Adenocarcinoma",
+    "url": "/evidence/4290",
+    "description": "In a prospective study of 46 Caucasian, advanced lung adenocarcinoma patients harboring EGFR mutations, first-line erlotinib treatment was assessed. Average PFS and OS for these 46 patients was 11 months (95% CI: 9.7-12.3 months) and 23 months (95% CI: 21.3-28.6+ months), respectively. A PFS rate of"
+   },
+   {
+    "key": "chr7:55191822:T>G",
+    "gene": "EGFR",
+    "alteration": "L858R",
+    "source": "CIViC",
+    "type": "PREDICTIVE",
+    "level": "B",
+    "significance": "SENSITIVITYRESPONSE",
+    "direction": "SUPPORTS",
+    "therapies": "Gefitinib",
+    "disease": "Lung Adenocarcinoma",
+    "url": "/evidence/6183",
+    "description": "In a Japanese Phase III clinical trial, noninferiority of Gefitinib as compared to Erlotinib was assessed in 561 postoperative recurrent or stage IIIb/VI patients who had undergone prior chemotherapy treatment but no tyrosine kinase inhibitor therapy. In a subset of patients with sole EGFR L858R, th"
+   }
+  ],
+  "trials": [
+   {
+    "matched_gene": "EGFR",
+    "nct_id": "NCT06068049",
+    "title": "OSIREAL - Osimertinib RWE on EGFRm NSCLC in Spain",
+    "phase": "",
+    "status": "RECRUITING",
+    "conditions": "Non-small Cell Lung Cancer",
+    "url": "https://clinicaltrials.gov/study/NCT06068049"
+   },
+   {
+    "matched_gene": "EGFR",
+    "nct_id": "NCT06775743",
+    "title": "ORIENT-31 Regimen in Combination With SBRT for EGFR-mutant Metastatic NSCLC After First-line Third-generation EGFR-TKIs",
+    "phase": "PHASE2",
+    "status": "RECRUITING",
+    "conditions": "NSCLC (Advanced Non-small Cell Lung Cancer),EGFR Mutation Positive Advanced Non Small Cell Lung Cancer",
+    "url": "https://clinicaltrials.gov/study/NCT06775743"
+   },
+   {
+    "matched_gene": "EGFR",
+    "nct_id": "NCT06830863",
+    "title": "A Study to Evaluate Topical ATR04-484 for EGFRi-Associated Dermal Toxicity",
+    "phase": "PHASE1,PHASE2",
+    "status": "RECRUITING",
+    "conditions": "EGFR Inhibitor-associated Rash",
+    "url": "https://clinicaltrials.gov/study/NCT06830863"
+   },
+   {
+    "matched_gene": "EGFR",
+    "nct_id": "NCT06722911",
+    "title": "Study of Adjuvant Nimotuzumab Combined with Nab-paclitaxel+ Gemcitabine in EGFR-positive Pancreatic Cancer",
+    "phase": "PHASE2",
+    "status": "RECRUITING",
+    "conditions": "Pancreatic Cancer Resectable",
+    "url": "https://clinicaltrials.gov/study/NCT06722911"
+   },
+   {
+    "matched_gene": "KRAS",
+    "nct_id": "NCT06793215",
+    "title": "A Study Evaluating the Efficacy and Safety of Divarasib and Pembrolizumab Versus Pembrolizumab and Pemetrexed and Carboplatin or Cisplatin in Participants With ",
+    "phase": "PHASE3",
+    "status": "RECRUITING",
+    "conditions": "Non-Small Cell Lung Cancer,KRAS G12C Lung Cancer",
+    "url": "https://clinicaltrials.gov/study/NCT06793215"
+   },
+   {
+    "matched_gene": "KRAS",
+    "nct_id": "NCT07094113",
+    "title": "AMG 410 Alone and in Combination With Other Agents in Participants With KRAS Altered Advanced or Metastatic Solid Tumors",
+    "phase": "PHASE1",
+    "status": "RECRUITING",
+    "conditions": "KRAS Altered Advanced or Metastatic Solid Tumors",
+    "url": "https://clinicaltrials.gov/study/NCT07094113"
+   },
+   {
+    "matched_gene": "KRAS",
+    "nct_id": "NCT06043713",
+    "title": "Autologous CD8+ and CD4+ Transgenic T Cells Expressing High Affinity KRASG12V Mutation-Specific T Cell Receptors (FH-A11KRASG12V-TCR) in Treating Patients With ",
+    "phase": "PHASE1",
+    "status": "RECRUITING",
+    "conditions": "Metastatic Malignant Solid Neoplasm",
+    "url": "https://clinicaltrials.gov/study/NCT06043713"
+   },
+   {
+    "matched_gene": "PIK3CA",
+    "nct_id": "NCT07054190",
+    "title": "A Study to Test Inavolisib Treatments in Participants With Early-Stage, PIK3CA-Mutated Breast Cancer",
+    "phase": "PHASE2",
+    "status": "RECRUITING",
+    "conditions": "Breast Cancer",
+    "url": "https://clinicaltrials.gov/study/NCT07054190"
+   },
+   {
+    "matched_gene": "PIK3CA",
+    "nct_id": "NCT05983107",
+    "title": "Chidamide/Everolimus for PIK3CA Wild-type/Mutant HR+/HER2- Advanced Breast Cancer",
+    "phase": "PHASE2",
+    "status": "RECRUITING",
+    "conditions": "HR+/HER2- Advanced Breast Cancer,Targeted Therapy",
+    "url": "https://clinicaltrials.gov/study/NCT05983107"
+   },
+   {
+    "matched_gene": "PIK3CA",
+    "nct_id": "NCT06982521",
+    "title": "Phase 3 Study of RLY-2608 + Fulvestrant vs Capivasertib + Fulvestrant as Treatment for Locally Advanced or Metastatic PIK3CA-mutant HR+/HER2- Breast Cancer",
+    "phase": "PHASE3",
+    "status": "RECRUITING",
+    "conditions": "PIK3CA Mutation,HER2- Negative Breast Cancer,Hormone Receptor Positive Tumor,Breast Cancer,Metastatic Breast Cancer,Adva",
+    "url": "https://clinicaltrials.gov/study/NCT06982521"
+   },
+   {
+    "matched_gene": "PTEN",
+    "nct_id": "NCT06462430",
+    "title": "PTEN Hamartoma Tumor Syndrome Pediatric Patient Registry",
+    "phase": "",
+    "status": "RECRUITING",
+    "conditions": "PTEN Hamartoma Tumor Syndrome,Macrocephaly Autism Syndrome",
+    "url": "https://clinicaltrials.gov/study/NCT06462430"
+   },
+   {
+    "matched_gene": "TP53",
+    "nct_id": "NCT06136351",
+    "title": "A Study of the Zanubrutinib Given in Combination With Bendamustine and Rituximab in (Elderly or TP53 Alterations or Chemotherapy Intolerance) Patients With Newl",
+    "phase": "PHASE2",
+    "status": "RECRUITING",
+    "conditions": "Lymphoma, Mantle-Cell",
+    "url": "https://clinicaltrials.gov/study/NCT06136351"
+   },
+   {
+    "matched_gene": "TP53",
+    "nct_id": "NCT07419893",
+    "title": "Germline Genetic Testing of the TP53 Gene",
+    "phase": "",
+    "status": "RECRUITING",
+    "conditions": "TP53 Gene Mutation,Multi-Gene Transcriptional Profiling,TP53 Gene Germline Mutation Carrier",
+    "url": "https://clinicaltrials.gov/study/NCT07419893"
+   }
+  ]
+ },
+ "validation": null,
+ "disclaimer": "Educational output of a student pipeline. Not a clinical report and not a basis for medical decisions. Somatic findings only; no identifying information.",
+ "_provenance": {
+  "generated_utc": "2026-08-30T03:40:00+00:00",
+  "git_commit": "a37e977",
+  "git_dirty": true,
+  "python": "3.11.16",
+  "argv": "scripts/build_summary_json.py --results results_example --sample EXAMPLE01"
+ }
+}

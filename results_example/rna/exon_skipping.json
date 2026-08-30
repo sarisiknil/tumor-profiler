@@ -1,0 +1,39 @@
+{
+ "events": [
+  {
+   "event": "MET_exon14_skipping",
+   "gene": "MET",
+   "skipping_reads": 0,
+   "canonical_reads": "0;0",
+   "canonical_max": 0,
+   "skipping_ratio": 0.0,
+   "called": "no",
+   "significance": "Targetable by MET inhibitors (capmatinib, tepotinib) in NSCLC; ~3-4 % of lung adenocarcinoma. RNA detection is more sensitive than DNA (Davies et al. 2019)."
+  },
+  {
+   "event": "EGFRvIII_exon2-7_deletion",
+   "gene": "EGFR",
+   "skipping_reads": 0,
+   "canonical_reads": "0",
+   "canonical_max": 0,
+   "skipping_ratio": 0.0,
+   "called": "no",
+   "significance": "EGFRvIII: in-frame loss of exons 2-7, common in glioblastoma."
+  }
+ ],
+ "min_reads": 3,
+ "junctions_in_file": 0,
+ "method": "Counts of uniquely+multi-mapped reads spanning the skipping junction versus the canonical flanking junctions in STAR's SJ.out.tab (GRCh38 coordinates).",
+ "caveats": [
+  "Coordinates are transcript-model dependent; verify against the panel's target transcript before reporting.",
+  "A targeted RNA panel only covers primed regions: absence of evidence here is not evidence of absence unless the exon is covered.",
+  "Positive calls require orthogonal confirmation (RT-PCR) before clinical use."
+ ],
+ "_provenance": {
+  "generated_utc": "2026-08-30T03:37:25+00:00",
+  "git_commit": "a37e977",
+  "git_dirty": true,
+  "python": "3.11.16",
+  "argv": "scripts/exon_skipping.py --sj results_example/rna/SJ_placeholder.tab -o results_example/rna/exon_skipping"
+ }
+}

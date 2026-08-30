@@ -1,0 +1,19 @@
+{
+ "per_caller_records": {
+  "freebayes": 6,
+  "lofreq": 7,
+  "vardict": 6
+ },
+ "merged_variants": 7,
+ "by_agreement": {
+  "1": 1,
+  "3": 6
+ },
+ "_provenance": {
+  "generated_utc": "2026-08-30T03:37:36+00:00",
+  "git_commit": "a37e977",
+  "git_dirty": true,
+  "python": "3.11.16",
+  "argv": "scripts/merge_callers.py --vcf freebayes=results_example/dna/lifted/freebayes.vcf --vcf lofreq=results_example/dna/lifted/lofreq.vcf --vcf vardict=results_example/dna/lifted/vardict.vcf -o results_example/dna/variants_merged.tsv"
+ }
+}

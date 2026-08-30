@@ -1,0 +1,22 @@
+{
+ "n_variants_annotated": 6,
+ "n_evidence_items": 101,
+ "genes_queried": [
+  "BRAF",
+  "EGFR",
+  "KRAS",
+  "PIK3CA",
+  "PTEN",
+  "TP53"
+ ],
+ "oncokb_token_present": false,
+ "cancer_type": "",
+ "note": "OncoKB annotations are licensed for academic use and must not be redistributed; they are written under results/ which is git-ignored.",
+ "_provenance": {
+  "generated_utc": "2026-08-30T03:39:59+00:00",
+  "git_commit": "a37e977",
+  "git_dirty": true,
+  "python": "3.11.16",
+  "argv": "scripts/annotate_evidence.py --variants results_example/dna/variants_filtered.tsv --cancer-type  -o results_example/evidence/annot"
+ }
+}

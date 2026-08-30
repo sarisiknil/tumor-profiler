@@ -1,0 +1,13 @@
+pathway	n_altered	n_genes_in_set	altered_genes	alterations	source
+RTK_RAS	3	50	EGFR,KRAS,BRAF	EGFR: ENSP00000275493.2:p.Leu858Arg (VAF 0.06, tier I) | KRAS: ENSP00000308495.3:p.Gly12Cys (VAF 0.39, tier I) | BRAF: ENSP00000493543.1:p.Val600Glu (VAF 0.3022, tier I)	Sanchez-Vega et al. 2018 Cell, Table S3
+PI3K	2	23	PIK3CA,PTEN	PIK3CA: ENSP00000263967.3:p.His1047Arg (VAF 0.3111, tier I) | PTEN: ENSP00000361021.3:p.Arg130Ter (VAF 0.4267, tier II)	Sanchez-Vega et al. 2018 Cell, Table S3
+TP53	1	9	TP53	TP53: ENSP00000269305.4:p.Arg175His (VAF 0.5467, tier II)	Sanchez-Vega et al. 2018 Cell, Table S3
+Cell_Cycle	0	14			Sanchez-Vega et al. 2018 Cell (10 oncogenic signaling pathways), Table S3
+Hippo	0	33			Sanchez-Vega et al. 2018 Cell, Table S3
+MYC	0	14			Sanchez-Vega et al. 2018 Cell, Table S3
+NOTCH	0	36			Sanchez-Vega et al. 2018 Cell, Table S3
+NRF2	0	3			Sanchez-Vega et al. 2018 Cell, Table S3
+TGF_Beta	0	13			Sanchez-Vega et al. 2018 Cell, Table S3
+WNT	0	30			Sanchez-Vega et al. 2018 Cell, Table S3
+DNA_Damage_Repair_MMR	0	27			Supplementary set (not in Sanchez-Vega): MMR/HR genes for MSI/HRD context
+Epigenetic_Chromatin	0	22			Supplementary set (not in Sanchez-Vega): frequently altered chromatin regulators

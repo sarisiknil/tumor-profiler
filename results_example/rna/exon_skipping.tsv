@@ -1,0 +1,3 @@
+event	gene	called	skipping_reads	canonical_max	skipping_ratio	canonical_reads	significance
+MET_exon14_skipping	MET	no	0	0	0.0	0;0	Targetable by MET inhibitors (capmatinib, tepotinib) in NSCLC; ~3-4 % of lung adenocarcinoma. RNA detection is more sensitive than DNA (Davies et al. 2019).
+EGFRvIII_exon2-7_deletion	EGFR	no	0	0	0.0	0	EGFRvIII: in-frame loss of exons 2-7, common in glioblastoma.
