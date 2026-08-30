@@ -27,6 +27,9 @@ def _flatten(inputs, prefix=""):
         t = i.get("type")
         if t == "conditional":
             paths.add(full)
+            tp = (i.get("test_param") or {}).get("name")
+            if tp:
+                paths.add(f"{full}|{tp}")
             for c in i.get("cases", []) or []:
                 paths |= _flatten(c.get("inputs"), f"{full}|")
         elif t in ("section", "repeat"):

@@ -57,6 +57,10 @@ def flatten(inputs, prefix=""):
         t = i.get("type")
         if t == "conditional":
             paths.add(full)
+            # a conditional is selected through its test parameter: `<conditional>|<test_param>`
+            tp = (i.get("test_param") or {}).get("name")
+            if tp:
+                paths.add(f"{full}|{tp}")
             for c in i.get("cases", []) or []:
                 paths |= flatten(c.get("inputs"), f"{full}|")
         elif t in ("section", "repeat"):
@@ -70,6 +74,7 @@ class Runner:
     def __init__(self, gi, history_id, dry_run=False):
         self.gi, self.hid, self.dry = gi, history_id, dry_run
         self._tools = {}
+        self.pending = set()
         self.refresh()
 
     def refresh(self):
@@ -86,11 +91,17 @@ class Runner:
         return None
 
     def need(self, name):
+        """Reference a dataset by name. In a dry run the datasets a previous step would create do not exist
+        yet, so a placeholder is returned and the whole chain can still be validated."""
         d = self.find(name)
-        if not d:
-            raise SystemExit(f"missing input dataset {name!r} in the history — upload it first "
-                             f"(scripts/galaxy_upload.py)")
-        return {"src": "hda", "id": d["id"]}
+        if d:
+            return {"src": "hda", "id": d["id"]}
+        if self.dry:
+            self.pending.add(name)
+            return {"src": "hda", "id": "<from an earlier step>"}
+        raise SystemExit(f"missing input dataset {name!r} in the history.\n"
+                         f"  If it is an upload, run scripts/galaxy_upload.py first;\n"
+                         f"  if an earlier step should have produced it, check that step's job in Galaxy.")
 
     def tool_paths(self, key):
         if key not in self._tools:
@@ -106,14 +117,27 @@ class Runner:
                              f"`show_tool('{T[key]}', io_details=True)`)")
 
     def run(self, key, label, inputs, rename):
-        """Run one tool unless its renamed outputs are already present."""
-        done = all(self.find(n) for n in rename.values())
-        if done:
+        """Run one tool unless its outputs already exist — finished *or* still being produced.
+
+        Waiting on an in-flight job matters: if this script is restarted while a step is running, resubmitting
+        would duplicate an hour of compute and leave two copies of the output in the history."""
+        finished = [self.find(n) for n in rename.values()]
+        if all(finished):
             print(f"skip  {label} — outputs already in the history")
+            return
+        inflight = [d for n in rename.values()
+                    for d in self.datasets.get(n, [])
+                    if d.get("state") in ("new", "queued", "running", "paused", "upload")]
+        if inflight:
+            print(f"wait  {label} — already running in this history", flush=True)
+            self.wait([d["id"] for d in inflight], label)
+            self.refresh()
             return
         self.validate(key, inputs)
         if self.dry:
-            print(f"would run {label} ({T[key].split('/')[-2]}) -> {list(rename.values())}")
+            print(f"validated {label:28s} ({T[key].split('/')[-2]}) -> {', '.join(rename.values())}")
+            for n in rename.values():
+                self.datasets.setdefault(n, []).append({"id": "<pending>", "state": "ok", "name": n})
             return
         print(f"run   {label} ...", flush=True)
         out = self.gi.tools.run_tool(self.hid, T[key], inputs)
@@ -149,34 +173,34 @@ class Runner:
 
 def dna_arm(r, alias):
     r.run("umi_extract", "1 UMI extract (DNA)", {
-        "input_type_cond": "paired",
+        "input_type_cond|input_type": "paired",
         "input_type_cond|input_read1": r.need(f"{alias}_DNA_R1.fastq.gz"),
         "input_type_cond|input_read2": r.need(f"{alias}_DNA_R2.fastq.gz"),
         "input_type_cond|bc_pattern": DNA_UMI,
-        "extract_method_cond": "regex",
+        "extract_method_cond|extract_method": "regex",
         "log": "true",
     }, {"out": "dna_umi_R1.fastq.gz", "out2": "dna_umi_R2.fastq.gz", "out_log": "dna_umi_extract.log"})
 
     r.run("bwa_mem", "2 BWA-MEM (DNA)", {
-        "reference_source": "cached",
+        "reference_source|reference_source_selector": "cached",
         "reference_source|ref_file": "hg38",
-        "fastq_input": "paired",
+        "fastq_input|fastq_input_selector": "paired",
         "fastq_input|fastq_input1": r.need("dna_umi_R1.fastq.gz"),
         "fastq_input|fastq_input2": r.need("dna_umi_R2.fastq.gz"),
-        "rg": "set",
-        "rg|read_group_id_conditional": "true",
+        "rg|rg_selector": "set",
+        "rg|read_group_id_conditional|do_auto_name": "false",
         "rg|read_group_id_conditional|ID": alias,
-        "rg|read_group_sm_conditional": "true",
+        "rg|read_group_sm_conditional|do_auto_name": "false",
         "rg|read_group_sm_conditional|SM": alias,
-        "rg|read_group_lb_conditional": "true",
+        "rg|read_group_lb_conditional|do_auto_name": "false",
         "rg|read_group_lb_conditional|LB": "VariantPlex",
         "rg|PL": "ILLUMINA",
-        "analysis_type": "illumina",
+        "analysis_type|analysis_type_selector": "illumina",
     }, {"bam_output": "dna_aligned.bam"})
 
     r.run("umi_dedup", "3 UMI dedup (DNA)", {
         "input": r.need("dna_aligned.bam"),
-        "bc": "read_id",                       # the UMI sits in the read name, put there by UMI-tools extract
+        "bc|extract_umi_method": "read_id",                       # the UMI sits in the read name, put there by UMI-tools extract
         "umi|method": "directional",
         "sambam|paired": "true",
         "log": "true",
@@ -192,39 +216,39 @@ def dna_arm(r, alias):
     r.run("mosdepth", "5 coverage", {
         "input_alignment": r.need("dna_clipped.bam"),
         "per_base_coverage": "false",
-        "window": "bed",
+        "window|window_mode": "bed",
         "window|region_file": r.need("panel_dna.bed"),
     }, {"output_regions_bed": "coverage.regions.bed", "output_summary": "coverage.summary.txt"})
 
     r.run("mutect2", "6a Mutect2 (tumour-only)", {
-        "mode": "tumor_only",
+        "mode|mode_parameters": "tumor_only",
         "mode|tumor": r.need("dna_clipped.bam"),
-        "reference_source": "cached",
+        "reference_source|reference_source_selector": "cached",
         "reference_source|reference_sequence": "hg38",
-        "optional": "yes",
+        "optional|optional_parameters": "yes",
         "optional|germline_resource": r.need("af-only-gnomad.hg38.vcf.gz"),
-        "optional|ival_type": "ival_file",
+        "optional|ival_type|ival_type_sel": "ival_file",
         "optional|ival_type|intervals": r.need("panel_dna.bed"),
         "gzipped_output": "false",
     }, {"output_vcf": "mutect2.vcf"})
 
     r.run("vardict", "6b VarDict", {
-        "select_mode": "single",
+        "select_mode|mode": "single",
         "select_mode|tumor": r.need("dna_clipped.bam"),
         "select_mode|interval_file": r.need("panel_dna.bed"),
-        "reference_source": "cached",
+        "reference_source|reference_source_selector": "cached",
         "reference_source|ref_file": "hg38",
         "advancedsettings|f": "0.01",
     }, {"all_variants": "vardict.vcf"})
 
     r.run("lofreq", "6c LoFreq", {
         "reads": r.need("dna_clipped.bam"),
-        "reference_source": "cached",
+        "reference_source|ref_selector": "cached",
         "reference_source|ref": "hg38",
-        "regions": "regions_from_file",
+        "regions|restrict_to_region": "regions_from_file",
         "regions|bed": r.need("panel_dna.bed"),
         "variant_types": "--call-indels",
-        "call_control": "no",
+        "call_control|set_call_options": "no",
     }, {"variants": "lofreq.vcf"})
 
 
@@ -235,26 +259,26 @@ def rna_arm(r, alias):
         time.sleep(20); r.refresh()
 
     r.run("umi_extract", "1 UMI extract (RNA)", {
-        "input_type_cond": "paired",
+        "input_type_cond|input_type": "paired",
         "input_type_cond|input_read1": r.need(f"{alias}_RNA_R1.fastq.gz"),
         "input_type_cond|input_read2": r.need(f"{alias}_RNA_R2.fastq.gz"),
         "input_type_cond|bc_pattern": RNA_UMI,
-        "extract_method_cond": "regex",
+        "extract_method_cond|extract_method": "regex",
         "log": "true",
     }, {"out": "rna_umi_R1.fastq.gz", "out2": "rna_umi_R2.fastq.gz", "out_log": "rna_umi_extract.log"})
 
     r.run("rna_star", "2 STAR (arriba preset)", {
-        "singlePaired": "paired",
+        "singlePaired|sPaired": "paired",
         "singlePaired|input1": r.need("rna_umi_R1.fastq.gz"),
         "singlePaired|input2": r.need("rna_umi_R2.fastq.gz"),
-        "refGenomeSource": "indexed",
-        "refGenomeSource|GTFconditional": "without-gtf",
+        "refGenomeSource|geneSource": "indexed",
+        "refGenomeSource|GTFconditional|GTFselect": "without-gtf",
         "refGenomeSource|GTFconditional|genomeDir": "hg38",
         "refGenomeSource|GTFconditional|sjdbGTFfile": r.need("gencode.gtf.gz"),
         "refGenomeSource|GTFconditional|sjdbOverhang": "150",
         "chimOutType": "WithinBAM SoftClip",
-        "algo|params": "arriba",               # STAR preset that sets every chimeric parameter Arriba needs
-        "quantmode_output": "GeneCounts",
+        "algo|params|settingsType": "arriba",               # STAR preset that sets every chimeric parameter Arriba needs
+        "quantmode_output|quantMode": "GeneCounts",
     }, {"mapped_reads": "rna_star.bam", "splice_junctions": "SJ.out.tab",
         "reads_per_gene": "rna_gene_counts.tsv", "output_log": "rna_star.log"})
 
@@ -265,14 +289,14 @@ def rna_arm(r, alias):
 
     r.run("arriba", "4 Arriba", {
         "input": r.need("rna_star.bam"),
-        "genome": "cached",
+        "genome|genome_source": "cached",
         "genome|ref_file": "hg38",
-        "genome_gtf": "history",
+        "genome_gtf|gtf_source": "history",
         "genome_gtf|annotation": r.need("gencode.gtf.gz"),
         "blacklist": r.need("arriba_blacklist.tsv.gz"),
         "known_fusions": r.need("arriba_known_fusions.tsv.gz"),
         "protein_domains": r.need("arriba_protein_domains.gff3"),
-        "wgs_cond": "no",
+        "wgs_cond|use_wgs": "no",
     }, {"fusions_tsv": "fusions.tsv", "discarded_fusions_tsv": "fusions.discarded.tsv"})
 
 

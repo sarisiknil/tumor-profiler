@@ -17,22 +17,28 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from common import write_tsv, write_json
 
-# GRCh38 coordinates. MET (chr7, + strand): exon 13 ends 116771997, exon 14 = 116771999-116772175,
-# exon 15 starts 116777349 (RefSeq NM_000245.4 / MANE). Skipping joins exon13 -> exon15.
+# GRCh38 intron coordinates, derived from the Ensembl canonical transcript and pinned here so the tool needs
+# no network access. `tests/test_exon_skipping_coords.py` re-derives them from Ensembl and fails if they drift -
+# a wrong coordinate would silently report "not detected", which is the worst possible failure mode for a
+# targetable event.
+#   MET  ENST00000397752: exon 13 ends 116771654, exon 14 = 116771849-116771989 (141 bp), exon 15 starts 116774881
+#   EGFR ENST00000275493: exon 1 ends 55019365, exon 2 starts 55142286, exon 8 starts 55155830
 EVENTS = {
     "MET_exon14_skipping": {
-        "chrom": "chr7", "gene": "MET",
-        "canonical_junctions": [(116771998, 116772000), (116772176, 116777348)],
-        "skipping_junction": (116771998, 116777348),
-        "significance": "Targetable by MET inhibitors (capmatinib, tepotinib) in NSCLC; ~3-4 % of lung "
-                        "adenocarcinoma. RNA detection is more sensitive than DNA (Davies et al. 2019).",
+        "chrom": "chr7", "gene": "MET", "transcript": "ENST00000397752",
+        "canonical_junctions": [(116771655, 116771848), (116771990, 116774880)],
+        "skipping_junction": (116771655, 116774880),
+        "significance": "Targetable by MET inhibitors (capmatinib, tepotinib); ~3-4 % of lung adenocarcinoma. "
+                        "RNA detects it more reliably than DNA, because the causal variants are scattered "
+                        "across the flanking introns and splice sites (Davies et al. 2019). This event is "
+                        "explicitly within the FusionPlex Lung v2 assay's scope.",
         "tolerance": 12,
     },
     "EGFRvIII_exon2-7_deletion": {
-        "chrom": "chr7", "gene": "EGFR",
-        "canonical_junctions": [(55019366, 55142286)],
-        "skipping_junction": (55019366, 55156994),
-        "significance": "EGFRvIII: in-frame loss of exons 2-7, common in glioblastoma.",
+        "chrom": "chr7", "gene": "EGFR", "transcript": "ENST00000275493",
+        "canonical_junctions": [(55019366, 55142285)],
+        "skipping_junction": (55019366, 55155829),
+        "significance": "EGFRvIII: in-frame loss of exons 2-7, characteristic of glioblastoma.",
         "tolerance": 20,
     },
 }
