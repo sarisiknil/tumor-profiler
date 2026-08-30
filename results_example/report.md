@@ -2,6 +2,7 @@
 
 > Educational output. Not a clinical report.
 
+
 ## 1. Library and QC
 
 - **DNA**: 8,609 reads inspected on `SIM`; UMI 12 nt + common region `AGTCGTCTCGAAGT`; adapter read-through 0.0 %
@@ -11,7 +12,7 @@
 
 - **TMB**: 3333.33 mutations/Mb (6 nonsynonymous over 0.002 Mb assessable; 95 % CI 1217.21–7255.42)  
   **This TMB is not interpretable**: the assessable territory is far below the ~1 Mb that panel TMB estimation assumes. The value is shown only to demonstrate the calculation.
-- FFPE indicator (C>T/G>A share of SNVs): 0.333
+- FFPE indicator not reported: only 6 somatic SNV(s), too few to interpret
 
 ## 3. Variants
 
@@ -27,13 +28,13 @@
 | PTEN | ENSP00000361021.3:p.Arg130Ter | II | IV | 0.4278 | Perifosine,Temsirolimus |
 | PIK3CA | ENSP00000263967.3:p.His1047Arg | II | III | 0.3111 | Alpelisib,Fulvestrant;Capivasertib,Lapatinib;Capivasertib,Tr |
 
-## 5. Pathways
+## 4. Pathways
 
 - **RTK_RAS**: 3 altered gene(s) — EGFR,KRAS,BRAF
 - **PI3K**: 2 altered gene(s) — PIK3CA,PTEN
 - **TP53**: 1 altered gene(s) — TP53
 
-## 6. Clinical-trial context (recruiting)
+## 5. Clinical-trial context (recruiting)
 
 - [NCT03340506](https://clinicaltrials.gov/study/NCT03340506) — Dabrafenib and/or Trametinib Rollover Study (PHASE4)
 - [NCT06068049](https://clinicaltrials.gov/study/NCT06068049) — OSIREAL - Osimertinib RWE on EGFRm NSCLC in Spain ()
@@ -46,7 +47,7 @@
 - [NCT06917079](https://clinicaltrials.gov/study/NCT06917079) — BBO-11818 in Adult Subjects With KRAS Mutant Cancer (PHASE1)
 - [NCT04585750](https://clinicaltrials.gov/study/NCT04585750) — The Evaluation of PC14586 in Patients With Advanced Solid Tumors Harboring a TP53 Y220C Mutation (PYNNACLE) (PHASE1,PHASE2)
 
-## 8. Caveats
+## 6. Caveats
 
 - Assessable territory is only 0.002 Mb: far below the ~1 Mb that panel TMB estimation assumes. The value is reported for completeness but must not be interpreted as a tumour mutational burden.
 - Panel TMB is not directly comparable between assays without harmonisation (Merino et al. 2020, J Immunother Cancer 8:e000147).

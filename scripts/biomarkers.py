@@ -123,9 +123,14 @@ def main():
                             "Tumour-only calling leaves residual germline variants, which inflate TMB.",
                             "With a small panel the Poisson confidence interval is wide; always report it."]},
         "mutation_spectrum": spectrum,
-        "ffpe_indicator": {"C>T_or_G>A_fraction_of_snvs": round(ct / len(snvs), 3) if snvs else None,
+        "ffpe_indicator": {"C>T_or_G>A_fraction_of_snvs": round(ct / len(snvs), 3) if len(snvs) >= 10 else None,
+                           "n_snvs": len(snvs),
+                           "interpretable": len(snvs) >= 10,
                            "low_vaf_C>T_count": low_vaf_ct,
-                           "note": "Formalin fixation deaminates cytosine, producing C>T/G>A changes at low VAF "
+                           "note": ("" if len(snvs) >= 10 else
+                                    f"Only {len(snvs)} somatic SNV(s): the C>T fraction is not interpretable "
+                                    "and is therefore not reported. ") +
+                                   "Formalin fixation deaminates cytosine, producing C>T/G>A changes at low VAF "
                                    "(Do & Dobrovic 2015). A high fraction argues for artefact filtering "
                                    "(Mutect2 read-orientation model, SOBDetector), not for a biological signature."},
         "not_computed": {"MSI": "MSIsensor2/-pro require a panel-specific site model (or >= 20 matched normals) "

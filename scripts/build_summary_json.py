@@ -69,9 +69,14 @@ def main():
     write_json(summary, R / "summary.json")
 
     # ---- Markdown report ----------------------------------------------------
+    section = {"n": 0}
+
+    def head(title):
+        section["n"] += 1
+        return ["", f"## {section['n']}. {title}", ""]
+
     L = [f"# Tumour profiling summary — sample `{alias}`", "",
-         "> Educational output. Not a clinical report.", "",
-         "## 1. Library and QC", ""]
+         "> Educational output. Not a clinical report.", ""] + head("Library and QC")
     for arm in ("dna", "rna"):
         q = (summary["qc"].get(arm) or {}).get("R1")
         if q:
@@ -81,15 +86,19 @@ def main():
     bm = summary.get("biomarkers") or {}
     if bm.get("tmb"):
         t = bm["tmb"]
-        L += ["", "## 2. Biomarkers", "",
+        L += head("Biomarkers") + [
               f"- **TMB**: {t['tmb_per_mb']} mutations/Mb "
               f"({t['nonsynonymous_somatic_variants']} nonsynonymous over {t['assessable_mb']} Mb assessable; "
               f"95 % CI {t['ci95_per_mb'][0]}–{t['ci95_per_mb'][1]})"
               + ("" if t.get("meaningful", True) else
                  "  \n  **This TMB is not interpretable**: the assessable territory is far below the ~1 Mb "
                  "that panel TMB estimation assumes. The value is shown only to demonstrate the calculation."),
-              f"- FFPE indicator (C>T/G>A share of SNVs): {(bm.get('ffpe_indicator') or {}).get('C>T_or_G>A_fraction_of_snvs')}"]
-    L += ["", "## 3. Variants", ""]
+              ] + ([f"- FFPE indicator (C>T/G>A share of somatic SNVs): "
+                    f"{(bm.get('ffpe_indicator') or {}).get('C>T_or_G>A_fraction_of_snvs')}"]
+                   if (bm.get('ffpe_indicator') or {}).get('interpretable') else
+                   [f"- FFPE indicator not reported: only "
+                    f"{(bm.get('ffpe_indicator') or {}).get('n_snvs', 0)} somatic SNV(s), too few to interpret"])
+    L += head("Variants")
     cbc = summary["variants"]["counts_by_class"]; cbt = summary["variants"]["counts_by_tier"]
     if cbc: L.append("- Classification: " + ", ".join(f"{k} {v}" for k, v in cbc.items()))
     if cbt: L.append("- AMP/ASCO/CAP tiers: " + ", ".join(f"Tier {k}: {v}" for k, v in sorted(cbt.items())))
@@ -99,8 +108,8 @@ def main():
             L.append(f"| {v.get('gene','')} | {v.get('hgvsp') or v.get('hgvsc','')} | {v.get('amp_tier','')} | "
                      f"{v.get('escat','')} | {v.get('vaf','')} | {(v.get('therapies') or '')[:60]} |")
     if fusions:
-        L += ["", "## 4. Fusions and splicing", "", "| Fusion | Confidence | Frame | Support | Targetable |",
-              "|---|---|---|---|---|"]
+        L += head("Fusions and splicing") + ["| Fusion | Confidence | Frame | Support | Targetable |",
+                                             "|---|---|---|---|---|"]
         for f in fusions[:15]:
             L.append(f"| {f.get('fusion','')} | {f.get('confidence','')} | {f.get('reading_frame','')} | "
                      f"{f.get('support_total','')} | {f.get('targetable','')} |")
@@ -110,18 +119,18 @@ def main():
             L.append(f"- **{e['event']}** detected: {e['skipping_reads']} skipping reads "
                      f"(ratio {e['skipping_ratio']}) — {e['significance']}")
     if pathways:
-        L += ["", "## 5. Pathways", ""]
+        L += head("Pathways")
         for p in pathways:
             if int(p.get("n_altered", 0) or 0):
                 L.append(f"- **{p['pathway']}**: {p['n_altered']} altered gene(s) — {p['altered_genes']}")
     if trials:
-        L += ["", "## 6. Clinical-trial context (recruiting)", ""]
+        L += head("Clinical-trial context (recruiting)")
         for t in trials[:10]:
             L.append(f"- [{t.get('nct_id','')}]({t.get('url','')}) — {t.get('title','')} ({t.get('phase','')})")
     val = (summary.get("validation") or {}).get("summary") or {}
     vtab = (summary.get("validation") or {}).get("table") or []
     if val:
-        L += ["", "## 7. Validation against the accredited laboratory's report", "",
+        L += head("Validation against the accredited laboratory's report") + [
               f"- Reported by the laboratory: **{val.get('reported_by_laboratory')}** · "
               f"recovered here: **{val.get('concordant')}** · missed: **{val.get('missed')}** "
               f"(sensitivity {val.get('sensitivity_vs_report')})",
@@ -134,7 +143,7 @@ def main():
                          f"{r.get('our_tier','')} |")
         for c in (val.get("interpretation") or []):
             L.append(f"- {c}")
-    L += ["", "## 8. Caveats", ""]
+    L += head("Caveats")
     for c in ((bm.get("tmb") or {}).get("caveats") or []):
         L.append(f"- {c}")
     for c in ((summary["fusions"]["summary"] or {}).get("caveats") or []):

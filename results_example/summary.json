@@ -2118,9 +2118,11 @@
    "T>G": 1
   },
   "ffpe_indicator": {
-   "C>T_or_G>A_fraction_of_snvs": 0.333,
+   "C>T_or_G>A_fraction_of_snvs": null,
+   "n_snvs": 6,
+   "interpretable": false,
    "low_vaf_C>T_count": 0,
-   "note": "Formalin fixation deaminates cytosine, producing C>T/G>A changes at low VAF (Do & Dobrovic 2015). A high fraction argues for artefact filtering (Mutect2 read-orientation model, SOBDetector), not for a biological signature."
+   "note": "Only 6 somatic SNV(s): the C>T fraction is not interpretable and is therefore not reported. Formalin fixation deaminates cytosine, producing C>T/G>A changes at low VAF (Do & Dobrovic 2015). A high fraction argues for artefact filtering (Mutect2 read-orientation model, SOBDetector), not for a biological signature."
   },
   "not_computed": {
    "MSI": "MSIsensor2/-pro require a panel-specific site model (or >= 20 matched normals) and >= 50 covered microsatellite loci; not satisfied by this panel.",
@@ -2133,8 +2135,8 @@
    "nonsynonymous": 6
   },
   "_provenance": {
-   "generated_utc": "2026-08-30T16:25:05+00:00",
-   "git_commit": "b4e6d1b",
+   "generated_utc": "2026-08-30T17:39:43+00:00",
+   "git_commit": "552a2cf",
    "git_dirty": true,
    "python": "3.11.16",
    "argv": "scripts/biomarkers.py --variants results_example/dna/variants_filtered.tsv --mosdepth-regions results_example/align/coverage.regions.bed.gz -o results_example/dna/biomarkers.json"
@@ -3891,8 +3893,8 @@
  },
  "disclaimer": "Educational output of a student pipeline. Not a clinical report and not a basis for medical decisions. Somatic findings only; no identifying information.",
  "_provenance": {
-  "generated_utc": "2026-08-30T17:29:42+00:00",
-  "git_commit": "3140ca4",
+  "generated_utc": "2026-08-30T17:39:43+00:00",
+  "git_commit": "552a2cf",
   "git_dirty": true,
   "python": "3.11.16",
   "argv": "scripts/build_summary_json.py --results results_example --sample EXAMPLE01"
