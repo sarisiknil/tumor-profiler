@@ -48,7 +48,23 @@ While it uploads, read `docs/02_umi.md` and `docs/05_variant_calling.md` — tho
 
 ---
 
-## Step 3 · DNA arm, tool by tool
+## Step 3 · DNA arm
+
+### The short way
+
+```bash
+export GALAXY_API_KEY=<your key>
+python3 scripts/galaxy_run.py --history "TUMOR01 tumour profiling" --arm dna --dry-run   # validates only
+python3 scripts/galaxy_run.py --history "TUMOR01 tumour profiling" --arm dna
+```
+
+`galaxy_run.py` submits the six tools in order, waits for each, renames the outputs to the names
+`import_galaxy.py` expects, and skips any step whose output already exists — so an interrupted run just
+restarts. Every parameter path is checked against the tool definition Galaxy currently serves *before*
+anything is submitted, so a renamed parameter fails loudly instead of silently falling back to a default.
+`tests/test_galaxy_params.py` runs the same check in CI.
+
+### The long way — the same thing in the web interface
 
 Run each tool, wait for it to turn green, then start the next. Total ~1–2 h including queue time.
 
@@ -142,6 +158,14 @@ in the report.
 
 ## Step 4 · RNA arm (~1 h)
 
+```bash
+python3 scripts/galaxy_run.py --history "TUMOR01 tumour profiling" --arm rna
+```
+
+It fetches the GENCODE annotation into the history itself, then runs STAR with the wrapper's built-in
+**`arriba` preset** (which sets every chimeric parameter for you), Arriba Get Filters for hg38, and Arriba
+with the discarded-fusion output kept. The manual equivalent is below.
+
 ### 4.1 UMI-tools extract — same tool as 3.1
 
 Same settings, but the RNA files and this pattern:
@@ -163,10 +187,10 @@ https://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human/release_44/gencode.v44
 | Field | Value |
 |---|---|
 | Single-end or paired-end | Paired-end (as individual datasets) → the two outputs of 4.1 |
-| Reference genome | built-in index **hg38**, with **gene model from history** → the GENCODE GTF |
-| Length of the genomic sequence around annotated junctions | 150 |
-| Per gene read counts (GeneCounts) | Yes |
-| **Chimeric alignments** | Enable, then set: minimum segment length **10**, output type **WithinBAM SoftClip**, min overhang **10**, score drop max **30**, score for non-GT/AG junction **0**, score separation **1**, segment read gap max **3** |
+| Reference genome | **Use a built-in index** → *genome with no built-in gene-model* → **hg38**, then supply the GENCODE GTF as the gene model, splice-junction overhang **150** |
+| Per gene read counts | **GeneCounts** |
+| Chimeric alignments | output type **WithinBAM SoftClip** |
+| Computational settings | **Use parameters suggested for Arriba** — this one preset sets every chimeric parameter correctly |
 | Output splice junctions (SJ.out.tab) | Yes — **you need this file** |
 
 ### 4.4 UMI-tools deduplicate — on the STAR BAM, paired, directional.

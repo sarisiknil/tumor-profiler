@@ -37,7 +37,9 @@ GALAXY = Path(config.get("galaxy_import", "results/galaxy_import"))
 if MODE == "patient":
     DNA_R1, DNA_R2 = config["data"]["dna_r1"], config["data"]["dna_r2"]
     RNA_R1, RNA_R2 = config["data"]["rna_r1"], config["data"]["rna_r2"]
-    missing = [f for f in ("mutect2.vcf", "vardict.vcf", "lofreq.vcf", "coverage.regions.bed.gz")
+    COVERAGE = next((f for f in ("coverage.regions.bed", "coverage.regions.bed.gz")
+                     if (GALAXY / f).exists()), "coverage.regions.bed")
+    missing = [f for f in ("mutect2.vcf", "vardict.vcf", "lofreq.vcf", COVERAGE)
                if not (GALAXY / f).exists()]
     if missing and not config.get("allow_missing_galaxy"):
         raise WorkflowError(
@@ -161,7 +163,7 @@ if MODE == "example":
 else:
     rule mosdepth_from_galaxy:
         """Coverage was computed on Galaxy, where the BAM lives; only the small regions file is imported."""
-        input:  GALAXY / "coverage.regions.bed.gz"
+        input:  GALAXY / COVERAGE
         output: RES / "align/coverage.regions.bed.gz"
         shell:  "mkdir -p {RES}/align && cp {input} {output}"
 
