@@ -38,3 +38,12 @@ resources/cancer_genes.tsv
 resources/cancer_genes.txt
 resources/clinvar_*
 resources/hotspots*
+
+# conda/env creation logs and generated indexes
+logs/
+examples/reference/*.fa.*
+examples/reference/*.dict
+# raw VEP payloads are large and regenerable
+results_example/dna/vep.json
+results_example/logs/
+.snakemake/

@@ -1,0 +1,72 @@
+name: pipeline
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  example-run:
+    name: Run the example pipeline end to end
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash -el {0}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: conda-incubator/setup-miniconda@v3
+        with:
+          miniforge-version: latest
+          channels: conda-forge,bioconda
+          channel-priority: strict
+          activate-environment: tp-ci
+          python-version: "3.11"
+
+      - name: Cache conda packages
+        uses: actions/cache@v4
+        with:
+          path: ~/conda_pkgs_dir
+          key: conda-${{ runner.os }}-${{ hashFiles('environment/*.yaml') }}
+
+      - name: Install tools
+        run: |
+          conda install -y -q bwa samtools bcftools umi_tools freebayes lofreq vardict-java mosdepth \
+                              snakemake-minimal pandas pysam pyyaml requests plotly streamlit pytest
+
+      - name: Check that every tool is present and runnable
+        run: python scripts/check_tools.py || true
+
+      - name: Rebuild the example dataset from the real mini-reference
+        run: |
+          python scripts/fetch_example_reference.py -o examples/reference
+          python scripts/simulate_amp.py -o examples/simulated --depth 300
+
+      - name: Fetch the cancer-gene list
+        run: bash resources/fetch_resources.sh
+
+      - name: Dry run
+        run: snakemake -s workflow/Snakefile -n -c2
+
+      - name: Run the pipeline
+        run: snakemake -s workflow/Snakefile -c2
+
+      - name: Tests (truth-set recovery, dashboard rendering, unit tests)
+        run: pytest tests/ -q
+
+      - name: No patient identifiers in tracked files
+        run: |
+          if git ls-files | xargs grep -l -i -E 'REDACTED|TUMOR01-' 2>/dev/null | grep -v '^docs/' ; then
+            echo "::error::a laboratory identifier appears in a tracked file"; exit 1
+          fi
+          echo "clean"
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: example-results
+          path: |
+            results_example/report.md
+            results_example/summary.json
+            results_example/dna/variants_tiered.tsv
