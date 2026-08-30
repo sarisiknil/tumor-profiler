@@ -1,93 +1,227 @@
-# Do this next — step-by-step Galaxy run
+# Galaxy run — do this one step at a time
 
-Everything local is finished. These are the only remaining actions, in order.
+Tool versions below were read from the usegalaxy.eu API on 2026-08-30. Search the tool name in Galaxy's tool
+panel (top left) and check the version shown under the tool title matches.
 
-## 0 · Before you start (2 min)
+---
+
+## Step 1 · Account and API key (5 min)
+
+1. Go to <https://usegalaxy.eu> → **Login or Register** → register with your Sabancı address.
+2. Confirm the e-mail Galaxy sends you.
+3. Go to <https://usegalaxy.eu/user/api_key> → **Create a new key** → copy it.
+4. In a terminal:
 
 ```bash
 cd ~/projects/workspace/tumor-profiler
-python3 scripts/check_tools.py          # should print "All required tools are present"
-ls resources/panel_dna.bed              # 1,366 intervals, ~0.49 Mb — the calling target
-```
-Free some disk if you can: the archive `workspace/archive.zip` (2.6 GB) is byte-for-byte
-the same four FASTQ files that are already unpacked. Move it to an external drive **after** the upload succeeds.
-
-## 1 · Create the account (5 min)
-
-<https://usegalaxy.eu> → Register with your Sabancı address → confirm by e-mail.
-Then `User → Preferences → Manage API Key → Create a new key` and copy it.
-
-## 2 · Upload (30–60 min, unattended)
-
-`Upload Data` → `Choose local files`, add all four:
-
-```
-workspace/TUMOR01/DNA/TUMOR01_DNA_R1_001.fastq.gz
-workspace/TUMOR01/DNA/TUMOR01_DNA_R2_001.fastq.gz
-workspace/TUMOR01/RNA/TUMOR01_RNA_R1_001.fastq.gz
-workspace/TUMOR01/RNA/TUMOR01_RNA_R2_001.fastq.gz
+export GALAXY_API_KEY=<paste the key>
+conda activate tp-py
+python3 scripts/galaxy_upload.py --check
 ```
 
-Set **Type = `fastqsanger.gz`** and **Genome = `Human Dec. 2013 (GRCh38/hg38)`** for all four before pressing
-Start. Also upload `resources/panel_dna.bed` and `resources/panel_rna.bed` (type `bed`).
+You should see your username and `disk usage 0 bytes of quota 250.0 GB`. Keep this terminal open — the key
+lives only in it. (If you close it, `export` it again.)
 
-Name the history `TUMOR01 DNA panel`. While it uploads, continue to step 3.
+---
 
-## 3 · Fetch the germline resource inside Galaxy (no local download)
+## Step 2 · Upload everything with one command (~40–60 min, unattended)
 
-`Upload Data → Paste/Fetch data`, paste this URL, type `vcf_bgzip`:
+```bash
+python3 scripts/galaxy_upload.py --dry-run          # shows the 6 files and their total size
+python3 scripts/galaxy_upload.py --history "TUMOR01 tumour profiling"
+```
+
+This creates the history, uploads the four FASTQ files as `fastqsanger.gz` with genome `hg38`, uploads
+`resources/panel_dna.bed` and `resources/panel_rna.bed`, and asks Galaxy to download the gnomAD germline
+resource directly from Google's server (it never touches your laptop). It prints a link to watch progress and
+waits until every dataset is green.
+
+**If the script fails for any reason**, do it in the browser instead: `Upload Data → Choose local files`, add the
+four FASTQ files, set **Type `fastqsanger.gz`** and **Genome `Human Dec. 2013 (GRCh38/hg38)`** for each, then
+`Start`. Add the two BED files as type `bed`. Then `Paste/Fetch data` with this URL, type `vcf_bgzip`:
 
 ```
 https://storage.googleapis.com/gatk-best-practices/somatic-hg38/af-only-gnomad.hg38.vcf.gz
 ```
 
-## 4 · DNA workflow (~1–2 h including queue)
+While it uploads, read `docs/02_umi.md` and `docs/05_variant_calling.md` — those two pages are what Step 4 does.
 
-Run these tools in order; the exact parameters are in `galaxy/README.md`.
+---
 
-1. **fastp** — UMI: on, location `read1`, length `12`, skip `14`
-2. **Map with BWA-MEM** — reference `hg38`, paired, read group `SM=TUMOR01`
-3. **UMI-tools dedup** — paired, method `directional`
-4. **samtools ampliconclip** — the primer BED, hard clip
-5. **mosdepth** — `--by resources/panel_dna.bed`
-6. **GATK4 Mutect2** — tumour-only, germline resource = the gnomAD VCF, intervals = `panel_dna.bed`, emit `f1r2`
-7. **VarDict** — `-f 0.01`, intervals = `panel_dna.bed`
-8. **LoFreq call** — call indels
+## Step 3 · DNA arm, tool by tool
 
-## 5 · RNA workflow (~1 h)
+Run each tool, wait for it to turn green, then start the next. Total ~1–2 h including queue time.
 
-1. **fastp** — UMI: on, `read1`, length `12`, skip `14`
-2. **RNA STAR** — `hg38` + GTF, with the chimeric parameters listed in `galaxy/README.md`
-3. **UMI-tools dedup**
-4. **Arriba Get Filters**, then **Arriba** — keep `fusions.tsv` **and** `fusions.discarded.tsv`
-5. Keep STAR's `SJ.out.tab` — MET exon 14 skipping is in this assay's scope and Arriba cannot see it
+### 3.1 UMI-tools extract — `UMI-tools extract` v1.1.6+galaxy0
 
-## 6 · Bring it back and finish locally (10 min)
+| Field | Value |
+|---|---|
+| Library type | **Paired-end** |
+| Forward reads | `TUMOR01_DNA_R1_001.fastq.gz` |
+| Reverse reads | `TUMOR01_DNA_R2_001.fastq.gz` |
+| Barcode pattern for first read | `^(?P<umi_1>.{12})(?P<discard_1>AGTCGTCTCGAAGT?){s<=2}` |
+| Barcode pattern for second read | *(leave empty)* |
+| Extract method | **regex** |
+| Output log | Yes |
+
+This moves the 12-nt molecular barcode into the read name and deletes the fixed adapter region. Do **not** use
+fastp here: Galaxy's fastp wrapper exposes `umi_len` but not `umi_skip`, so it cannot remove the common region.
+
+### 3.2 Map with BWA-MEM — `Map with BWA-MEM` v0.7.19+galaxy1
+
+| Field | Value |
+|---|---|
+| Reference genome source | Use a built-in genome index |
+| Using reference genome | **Human: hg38** |
+| Single or Paired-end reads | Paired |
+| Select first / second set | the two outputs of step 3.1 |
+| Set read groups information | **Set read groups (SAM/BAM specification)** → ID `TUMOR01`, SM `TUMOR01`, PL `ILLUMINA`, LB `VariantPlex` |
+| Select analysis mode | 1. Simple Illumina mode |
+
+### 3.3 UMI-tools deduplicate — `UMI-tools deduplicate` v1.1.6+galaxy0
+
+| Field | Value |
+|---|---|
+| Reads to deduplicate | the BAM from 3.2 |
+| Library type | **Paired-end** |
+| Method to identify group of reads | **directional** |
+| Output log | Yes |
+
+Check the log afterwards: reads-in versus unique-molecules-out is your library-complexity number, and it belongs
+in the report.
+
+### 3.4 Samtools ampliconclip — `Samtools ampliconclip` v1.22+galaxy2
+
+| Field | Value |
+|---|---|
+| BAM file | the deduplicated BAM |
+| BED file of amplicon primers | `panel_dna.bed` |
+| Clipping | **Hard clip** |
+| Clip both ends | Yes |
+
+### 3.5 mosdepth — `mosdepth` v0.3.8+galaxy0
+
+| Field | Value |
+|---|---|
+| BAM/CRAM | the clipped BAM |
+| Compute coverage over | **regions in a BED file** → `panel_dna.bed` |
+| Per-base output | **No** |
+
+### 3.6 GATK4 Mutect2 — `GATK4 Mutect2` v4.6.2.0+galaxy0
+
+| Field | Value |
+|---|---|
+| Analysis mode | **tumor_only** |
+| Input Tumor BAM | the clipped BAM |
+| Reference source | built-in → **hg38** |
+| Germline Resource | `af-only-gnomad.hg38.vcf.gz` |
+| Intervals File | `panel_dna.bed` |
+| GZIP Output | No |
+
+### 3.7 VarDict — `VarDict` v1.8.4+galaxy0
+
+| Field | Value |
+|---|---|
+| Reference | built-in **hg38** |
+| BAM | the clipped BAM |
+| Regions | `panel_dna.bed` |
+| Sample name | `TUMOR01` |
+| Allele frequency threshold | **0.01** |
+| Output type | VCF |
+
+### 3.8 LoFreq Call variants — `Call variants` v2.1.5+galaxy3
+
+| Field | Value |
+|---|---|
+| Reference | built-in **hg38** |
+| BAM | the clipped BAM |
+| Call indels | Yes |
+| Variant calling parameters | defaults are fine |
+
+---
+
+## Step 4 · RNA arm (~1 h)
+
+### 4.1 UMI-tools extract — same tool as 3.1
+
+Same settings, but the RNA files and this pattern:
+
+```
+^(?P<umi_1>.{12})(?P<discard_1>CTGGATAGTACGCT){s<=2}
+```
+
+### 4.2 Get a gene annotation
+
+`Upload Data → Paste/Fetch data`, type `gtf`, genome `hg38`:
+
+```
+https://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human/release_44/gencode.v44.annotation.gtf.gz
+```
+
+### 4.3 RNA STAR — `RNA STAR` v2.7.8a+galaxy1
+
+| Field | Value |
+|---|---|
+| Single-end or paired-end | Paired-end (as individual datasets) → the two outputs of 4.1 |
+| Reference genome | built-in index **hg38**, with **gene model from history** → the GENCODE GTF |
+| Length of the genomic sequence around annotated junctions | 150 |
+| Per gene read counts (GeneCounts) | Yes |
+| **Chimeric alignments** | Enable, then set: minimum segment length **10**, output type **WithinBAM SoftClip**, min overhang **10**, score drop max **30**, score for non-GT/AG junction **0**, score separation **1**, segment read gap max **3** |
+| Output splice junctions (SJ.out.tab) | Yes — **you need this file** |
+
+### 4.4 UMI-tools deduplicate — on the STAR BAM, paired, directional.
+
+### 4.5 Arriba Get Filters — `Arriba Get Filters` v2.5.1+galaxy1 → genome **hg38**.
+
+### 4.6 Arriba — `Arriba` v2.5.1+galaxy1
+
+| Field | Value |
+|---|---|
+| STAR BAM | the deduplicated STAR BAM |
+| Genome | built-in **hg38** FASTA |
+| Gene annotation | the GENCODE GTF |
+| Blacklist / known fusions / protein domains | the three files from 4.5 |
+| Output discarded fusions | **Yes** — Arriba's filters are tuned for whole-transcriptome data and will over-filter amplicon panels |
+
+---
+
+## Step 5 · Bring the results back (10 min)
 
 ```bash
 export GALAXY_API_KEY=<your key>
-python3 scripts/import_galaxy.py --list                       # find the history name
+python3 scripts/import_galaxy.py --list
 python3 scripts/import_galaxy.py --history "TUMOR01" --out results/galaxy_import
-gatk LearnReadOrientationModel -I results/galaxy_import/f1r2.tar.gz -O results/galaxy_import/orientation.tar.gz
-gatk FilterMutectCalls -R <hg38.fa> -V results/galaxy_import/mutect2.vcf \
-     --ob-priors results/galaxy_import/orientation.tar.gz -O results/galaxy_import/mutect2.filtered.vcf
+ls results/galaxy_import        # mutect2.vcf, vardict.vcf, lofreq.vcf, coverage.regions.bed.gz,
+                                # fusions.tsv, fusions.discarded.tsv, SJ.out.tab
+```
+
+Only small text files come down; the BAMs stay on Galaxy. If a file is missing, rename the Galaxy dataset so its
+name contains `mutect`, `vardict`, `lofreq`, `regions`, `fusions` or `SJ` and re-run the import.
+
+**`FilterMutectCalls` is skipped on purpose.** It needs a local 3 GB copy of hg38 and your disk is nearly full;
+the pipeline instead keeps Mutect2's own FILTER column and requires two of three callers to agree. Say so in the
+methods section — it is a defensible, documented choice, not an omission.
+
+---
+
+## Step 6 · Finish locally (5 min)
+
+```bash
 snakemake -c4 --config mode=patient
 streamlit run dashboard/app.py -- --results results
 ```
 
-(If you would rather skip `FilterMutectCalls`, the pipeline still works: the merge step keeps Mutect2's own
-FILTER column and the caller-concordance rule does the heavy lifting.)
+Then open, in this order:
 
-## 7 · What to check first in the output
+1. `results/validation/concordance.tsv` — **the headline: is IDH1 p.R132C there at ~28 % VAF?**
+2. `results/dna/variants_tiered.tsv` — everything else, and at which tier.
+3. `results/rna/fusions_summary.tsv`, `results/rna/exon_skipping.tsv` — the laboratory reported no fusion.
+4. `results/report.md` and the dashboard — your report figures.
 
-- `results/validation/concordance.tsv` — **does the pipeline find IDH1 p.R132C at ~28 % VAF?**
-  That single line is the project's headline result.
-- `results/dna/variants_tiered.tsv` — anything else worth reporting, and at which tier.
-- `results/rna/fusions_summary.tsv` and `results/rna/exon_skipping.tsv` — the laboratory reported no fusion;
-  agreeing with a negative is also a result.
-- `results/report.md` and the dashboard — the figures for the internship report.
+---
 
-## 8 · Export the workflows
+## Step 7 · Export the workflows (5 min)
 
-`Workflow → Extract workflow from history → Download` → save as `galaxy/dna_panel.ga` and
-`galaxy/rna_fusion.ga`. Those two files are the reproducibility deliverable.
+In Galaxy: `Workflow → Extract workflow from history`, once for the DNA history and once for the RNA one.
+Then `Workflow → Download` and save them here as `galaxy/dna_panel.ga` and `galaxy/rna_fusion.ga`, and commit.
+Those two files let anyone re-run the heavy half exactly as you did — they are the reproducibility deliverable.
