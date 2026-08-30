@@ -61,7 +61,8 @@ def main():
         "exon_skipping": jload(R / "rna" / "exon_skipping.json"),
         "pathways": {"table": pathways, "summary": jload(R / "pathways" / "pathway_hits_summary.json")},
         "evidence": {"n_items": len(evidence), "items": evidence[:200], "trials": trials[:50]},
-        "validation": jload(R / "validation" / "concordance.json"),
+        "validation": {"summary": jload(R / "validation" / "concordance_summary.json"),
+                       "table": tload(R / "validation" / "concordance.tsv")},
         "disclaimer": ("Educational output of a student pipeline. Not a clinical report and not a basis for "
                        "medical decisions. Somatic findings only; no identifying information."),
     }
@@ -117,7 +118,23 @@ def main():
         L += ["", "## 6. Clinical-trial context (recruiting)", ""]
         for t in trials[:10]:
             L.append(f"- [{t.get('nct_id','')}]({t.get('url','')}) — {t.get('title','')} ({t.get('phase','')})")
-    L += ["", "## 7. Caveats", ""]
+    val = (summary.get("validation") or {}).get("summary") or {}
+    vtab = (summary.get("validation") or {}).get("table") or []
+    if val:
+        L += ["", "## 7. Validation against the accredited laboratory's report", "",
+              f"- Reported by the laboratory: **{val.get('reported_by_laboratory')}** · "
+              f"recovered here: **{val.get('concordant')}** · missed: **{val.get('missed')}** "
+              f"(sensitivity {val.get('sensitivity_vs_report')})",
+              f"- Additional somatic calls not in the report: {val.get('additional_somatic_calls')}"]
+        if vtab:
+            L += ["", "| Status | Gene | Variant | Lab VAF | Our VAF | Lab tier | Our tier |", "|---|---|---|---|---|---|---|"]
+            for r in vtab[:15]:
+                L.append(f"| {r.get('status','')} | {r.get('gene','')} | {r.get('variant','')} | "
+                         f"{r.get('lab_vaf','')} | {r.get('our_vaf','')} | {r.get('lab_tier','')} | "
+                         f"{r.get('our_tier','')} |")
+        for c in (val.get("interpretation") or []):
+            L.append(f"- {c}")
+    L += ["", "## 8. Caveats", ""]
     for c in ((bm.get("tmb") or {}).get("caveats") or []):
         L.append(f"- {c}")
     for c in ((summary["fusions"]["summary"] or {}).get("caveats") or []):

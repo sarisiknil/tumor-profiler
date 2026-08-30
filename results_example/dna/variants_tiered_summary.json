@@ -64,8 +64,8 @@
  },
  "disclaimer": "Educational output. Tier assignment here is automated and does not replace expert review or a clinical molecular tumour board.",
  "_provenance": {
-  "generated_utc": "2026-08-30T04:09:32+00:00",
-  "git_commit": "449fd70",
+  "generated_utc": "2026-08-30T16:25:21+00:00",
+  "git_commit": "b4e6d1b",
   "git_dirty": true,
   "python": "3.11.16",
   "argv": "scripts/tiering.py --variants results_example/dna/variants_filtered.tsv --evidence results_example/evidence/annot_evidence.tsv -o results_example/dna/variants_tiered"

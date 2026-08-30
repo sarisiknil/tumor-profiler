@@ -1,7 +1,7 @@
 {
  "counts": {
   "SOMATIC_LIKELY": 6,
-  "LOW_QUALITY": 3
+  "LOW_QUALITY": 1
  },
  "thresholds": {
   "min_vaf": 0.02,
@@ -16,8 +16,8 @@
  "germline_ambiguous": 2,
  "caveat": "Population-frequency filtering cannot exclude rare private germline variants (Sun et al. 2018; GATK Mutect2 FAQ). Residual germline calls are possible; germline-looking variants are labelled, not deleted.",
  "_provenance": {
-  "generated_utc": "2026-08-30T04:09:16+00:00",
-  "git_commit": "449fd70",
+  "generated_utc": "2026-08-30T16:25:05+00:00",
+  "git_commit": "b4e6d1b",
   "git_dirty": true,
   "python": "3.11.16",
   "argv": "scripts/filter_tumor_only.py --variants results_example/dna/variants_merged.tsv --vep results_example/dna/vep.tsv -o results_example/dna/variants_filtered"

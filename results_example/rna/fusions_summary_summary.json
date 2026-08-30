@@ -9,8 +9,8 @@
   "Any fusion used for a treatment decision needs orthogonal confirmation (FISH, IHC or RT-PCR)."
  ],
  "_provenance": {
-  "generated_utc": "2026-08-30T04:08:58+00:00",
-  "git_commit": "449fd70",
+  "generated_utc": "2026-08-30T16:24:45+00:00",
+  "git_commit": "b4e6d1b",
   "git_dirty": true,
   "python": "3.11.16",
   "argv": "scripts/fusion_summary.py --arriba results_example/rna/arriba_placeholder.tsv -o results_example/rna/fusions_summary"

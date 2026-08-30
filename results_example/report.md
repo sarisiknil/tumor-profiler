@@ -15,7 +15,7 @@
 
 ## 3. Variants
 
-- Classification: SOMATIC_LIKELY 6, LOW_QUALITY 3
+- Classification: SOMATIC_LIKELY 6, LOW_QUALITY 1
 - AMP/ASCO/CAP tiers: Tier I: 4, Tier II: 2
 
 | Gene | Variant | Tier | ESCAT | VAF | Therapies |
@@ -25,7 +25,7 @@
 | BRAF | ENSP00000493543.1:p.Val600Glu | I | I-B | 0.3022 | Cetuximab,FOLFOX-4 Regimen;Cetuximab,Panitumumab;Dabrafenib, |
 | EGFR | ENSP00000275493.2:p.Leu858Arg | I | I-B | 0.06 | Afatinib;Amivantamab,Carboplatin,Pemetrexed;Amivantamab,Laze |
 | TP53 | ENSP00000269305.4:p.Arg175His | II | II | 0.5467 | Doxorubicin;EAP Protocol;MDM2 Inhibitor AMGMDS3;Pazopanib,Vo |
-| PTEN | ENSP00000361021.3:p.Arg130Ter | II | IV | 0.4267 | Perifosine,Temsirolimus |
+| PTEN | ENSP00000361021.3:p.Arg130Ter | II | IV | 0.4278 | Perifosine,Temsirolimus |
 
 ## 5. Pathways
 
@@ -35,18 +35,12 @@
 
 ## 6. Clinical-trial context (recruiting)
 
-- [NCT06068049](https://clinicaltrials.gov/study/NCT06068049) — OSIREAL - Osimertinib RWE on EGFRm NSCLC in Spain ()
-- [NCT06775743](https://clinicaltrials.gov/study/NCT06775743) — ORIENT-31 Regimen in Combination With SBRT for EGFR-mutant Metastatic NSCLC After First-line Third-generation EGFR-TKIs (PHASE2)
-- [NCT06830863](https://clinicaltrials.gov/study/NCT06830863) — A Study to Evaluate Topical ATR04-484 for EGFRi-Associated Dermal Toxicity (PHASE1,PHASE2)
-- [NCT06722911](https://clinicaltrials.gov/study/NCT06722911) — Study of Adjuvant Nimotuzumab Combined with Nab-paclitaxel+ Gemcitabine in EGFR-positive Pancreatic Cancer (PHASE2)
-- [NCT06793215](https://clinicaltrials.gov/study/NCT06793215) — A Study Evaluating the Efficacy and Safety of Divarasib and Pembrolizumab Versus Pembrolizumab and Pemetrexed and Carboplatin or Cisplatin in Participants With  (PHASE3)
-- [NCT07094113](https://clinicaltrials.gov/study/NCT07094113) — AMG 410 Alone and in Combination With Other Agents in Participants With KRAS Altered Advanced or Metastatic Solid Tumors (PHASE1)
-- [NCT06043713](https://clinicaltrials.gov/study/NCT06043713) — Autologous CD8+ and CD4+ Transgenic T Cells Expressing High Affinity KRASG12V Mutation-Specific T Cell Receptors (FH-A11KRASG12V-TCR) in Treating Patients With  (PHASE1)
-- [NCT07054190](https://clinicaltrials.gov/study/NCT07054190) — A Study to Test Inavolisib Treatments in Participants With Early-Stage, PIK3CA-Mutated Breast Cancer (PHASE2)
-- [NCT05983107](https://clinicaltrials.gov/study/NCT05983107) — Chidamide/Everolimus for PIK3CA Wild-type/Mutant HR+/HER2- Advanced Breast Cancer (PHASE2)
-- [NCT06982521](https://clinicaltrials.gov/study/NCT06982521) — Phase 3 Study of RLY-2608 + Fulvestrant vs Capivasertib + Fulvestrant as Treatment for Locally Advanced or Metastatic PIK3CA-mutant HR+/HER2- Breast Cancer (PHASE3)
+- [NCT05503797](https://clinicaltrials.gov/study/NCT05503797) — A Study to Assess the Efficacy and Safety of FORE8394 in Participants With Cancer Harboring BRAF Alterations (PHASE2)
+- [NCT05874414](https://clinicaltrials.gov/study/NCT05874414) — Combination of GNS561 and Trametinib in Patients With Advanced KRAS Mutated Cholangiocarcinoma (PHASE1,PHASE2)
+- [NCT07594067](https://clinicaltrials.gov/study/NCT07594067) — TCR1188-ABC Cells in KRAS-mutated Cancers (PHASE1)
+- [NCT07458347](https://clinicaltrials.gov/study/NCT07458347) — A Phase 1 Dose-escalation Trial of KST-6051 in Participants With Advanced Solid Tumors With Kirsten Rat Sarcoma Viral Oncogene Homolog (KRAS) Mutation (PHASE1)
 
-## 7. Caveats
+## 8. Caveats
 
 - Assessable territory is only 0.002 Mb: far below the ~1 Mb that panel TMB estimation assumes. The value is reported for completeness but must not be interpreted as a tumour mutational burden.
 - Panel TMB is not directly comparable between assays without harmonisation (Merino et al. 2020, J Immunother Cancer 8:e000147).

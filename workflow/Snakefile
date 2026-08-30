@@ -300,6 +300,15 @@ rule exon_skipping:
         subprocess.run([PY, "scripts/exon_skipping.py", "--sj", str(src),
                         "-o", f"{RES}/rna/exon_skipping"], check=True)
 
+rule validate:
+    """Compare our calls with the accredited laboratory's report (private file, outside the repository)."""
+    input:  var=rules.tiering.output.tsv, allv=rules.filter_variants.output.tsv,
+            fus=rules.fusion_summary.output.tsv, reported=config.get("reported_findings", "../clinical/reported_findings.tsv")
+    output: tsv=RES / "validation/concordance.tsv", js=RES / "validation/concordance_summary.json"
+    shell:  "{PY} scripts/validate_against_clinical.py --reported {input.reported} --variants {input.var} "
+            "--all-variants {input.allv} --fusions {input.fus} -o {RES}/validation/concordance"
+
+
 # ---------------------------------------------------------------- integration
 rule pathways:
     input:  var=rules.tiering.output.tsv, fus=rules.fusion_summary.output.tsv
@@ -311,6 +320,12 @@ rule summary:
     input:  rules.qc_read_structure.output.json, rules.qc_read_structure_rna.output.json,
             rules.tiering.output.tsv, rules.biomarkers.output, rules.cnv.output.js,
             rules.pathways.output.tsv, rules.fusion_summary.output.tsv, rules.exon_skipping.output.js,
-            rules.evidence.output.ev, rules.infer_primers.output.tsv
+            rules.evidence.output.ev, rules.infer_primers.output.tsv,
+            # validation compares against the laboratory's report for THIS patient, so it only applies to
+            # patient mode; running it on the synthetic example would be meaningless.
+            *( [rules.validate.output.js]
+               if MODE == "patient" and Path(config.get("reported_findings",
+                                                        "../clinical/reported_findings.tsv")).exists()
+               else [] )
     output: js=RES / "summary.json", md=RES / "report.md"
     shell:  "{PY} scripts/build_summary_json.py --results {RES} --sample {SAMPLE}"

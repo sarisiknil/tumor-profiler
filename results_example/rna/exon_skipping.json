@@ -30,8 +30,8 @@
   "Positive calls require orthogonal confirmation (RT-PCR) before clinical use."
  ],
  "_provenance": {
-  "generated_utc": "2026-08-30T04:08:55+00:00",
-  "git_commit": "449fd70",
+  "generated_utc": "2026-08-30T16:24:40+00:00",
+  "git_commit": "b4e6d1b",
   "git_dirty": true,
   "python": "3.11.16",
   "argv": "scripts/exon_skipping.py --sj results_example/rna/SJ_placeholder.tab -o results_example/rna/exon_skipping"

@@ -34,14 +34,14 @@
   "mutational_signatures": "SBS refitting needs >= 100-200 SNVs (PCGR default 200); only 6 somatic SNVs were called."
  },
  "counts": {
-  "all_variants": 9,
+  "all_variants": 7,
   "somatic_likely": 6,
   "somatic_snvs": 6,
   "nonsynonymous": 6
  },
  "_provenance": {
-  "generated_utc": "2026-08-30T04:09:16+00:00",
-  "git_commit": "449fd70",
+  "generated_utc": "2026-08-30T16:25:05+00:00",
+  "git_commit": "b4e6d1b",
   "git_dirty": true,
   "python": "3.11.16",
   "argv": "scripts/biomarkers.py --variants results_example/dna/variants_filtered.tsv --mosdepth-regions results_example/align/coverage.regions.bed.gz -o results_example/dna/biomarkers.json"

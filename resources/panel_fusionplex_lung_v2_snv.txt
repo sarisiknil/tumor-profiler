@@ -1,0 +1,15 @@
+# Archer FusionPlex Lung v2 - genes also screened for SNV/indel on the RNA side.
+ALK
+BRAF
+EGFR
+ERBB2
+FGFR1
+FGFR2
+FGFR3
+KRAS
+NTRK1
+NTRK2
+NTRK3
+PIK3CA
+RET
+ROS1

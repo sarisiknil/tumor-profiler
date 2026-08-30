@@ -1,10 +1,8 @@
 key	chrom	pos	ref	alt	n_callers	callers	vaf	vaf_per_caller	depth	alt_reads	filters
-chr10:87933147:C>T	chr10	87933147	C	T	3	freebayes,lofreq,vardict	0.4267	freebayes=0.5;lofreq=0.3933;vardict=0.3867	300	118	freebayes=.;lofreq=PASS;vardict=PASS
+chr10:87933147:C>T	chr10	87933147	C	T	3	freebayes,lofreq,vardict	0.4278	freebayes=0.5;lofreq=0.3933;vardict=0.39	300	118	freebayes=.;lofreq=PASS;vardict=PASS
 chr12:25245351:C>A	chr12	25245351	C	A	3	freebayes,lofreq,vardict	0.3911	freebayes=0.5;lofreq=0.34;vardict=0.3333	300	102	freebayes=.;lofreq=PASS;vardict=pSTD
 chr17:7675088:C>T	chr17	7675088	C	T	3	freebayes,lofreq,vardict	0.5467	freebayes=0.5;lofreq=0.57;vardict=0.57	300	171	freebayes=.;lofreq=PASS;vardict=PASS
-chr17:7678115:C>T	chr17	7678115	C	T	3	freebayes,lofreq,vardict	0.0089	freebayes=0.0;lofreq=0.0133;vardict=0.0133	600	8	freebayes=.;lofreq=PASS;vardict=PASS
 chr3:179234297:A>G	chr3	179234297	A	G	3	freebayes,lofreq,vardict	0.3111	freebayes=0.5;lofreq=0.2167;vardict=0.2167	300	65	freebayes=.;lofreq=PASS;vardict=pSTD
 chr7:55191822:T>G	chr7	55191822	T	G	3	freebayes,lofreq,vardict	0.06	freebayes=0.0;lofreq=0.09;vardict=0.09	300	27	freebayes=.;lofreq=PASS;vardict=pSTD
 chr7:140753336:A>T	chr7	140753336	A	T	3	freebayes,lofreq,vardict	0.3022	freebayes=0.5;lofreq=0.2033;vardict=0.2033	300	61	freebayes=.;lofreq=PASS;vardict=pSTD
-chr12:25248381:C>T	chr12	25248381	C	T	2	freebayes,lofreq	0.005	freebayes=0.0;lofreq=0.01	598	6	freebayes=.;lofreq=PASS
-chr7:55194889:A>T	chr7	55194889	A	T	1	lofreq	0.01	lofreq=0.01	600	6	lofreq=PASS
+chr17:7678098:G>T	chr17	7678098	G	T	1	lofreq	0.01	lofreq=0.01	600	6	lofreq=PASS

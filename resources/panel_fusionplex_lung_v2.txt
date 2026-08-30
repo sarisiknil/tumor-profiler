@@ -1,0 +1,18 @@
+# Archer FusionPlex Lung v2 - fusion target genes (one-sided GSPs; the partner gene is discovered, not targeted).
+# MET exon 14 skipping is explicitly within the assay's scope.
+ALK
+BRAF
+EGFR
+ERBB2
+FGFR1
+FGFR2
+FGFR3
+MET
+NRG1
+NTRK1
+NTRK2
+NTRK3
+NUTM1
+PIK3CA
+RET
+ROS1

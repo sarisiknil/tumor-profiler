@@ -12,9 +12,16 @@ library:
   rna_common_region: "CTGGATAGTACGCT"
   umi_skip: 14
   read2_starts_with_primer: true
+cancer_type: "Cholangiocarcinoma"      # from the laboratory report; drives the evidence/trial queries
+tumour_content: 0.70                    # pathology estimate - a somatic clonal variant caps out near 0.35 VAF
 panel:
-  dna_name: "TBD from clinical report (VariantPlex ...)"
-  rna_name: "TBD from clinical report (FusionPlex ...)"
+  dna_name: "Archer VariantPlex Expanded Solid Tumor (76 genes; SNV/indel, CNV, MSI)"
+  rna_name: "Archer FusionPlex Lung v2 (17 genes; fusions + SNV/indel, incl. MET exon 14 skipping)"
+  dna_bed: "resources/panel_dna.bed"
+  rna_bed: "resources/panel_rna.bed"
+  dna_genes: "resources/panel_variantplex_expanded_solid_tumor.txt"
+  rna_genes: "resources/panel_fusionplex_lung_v2.txt"
+  lab_reference_build: "GRCh37/hg19 (the laboratory's pipeline; ours uses GRCh38)"
   min_depth_assessable: 100
 reference:
   build: "GRCh38 (hg38, Galaxy built-in indexes)"

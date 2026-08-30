@@ -1,0 +1,17 @@
+{
+ "genes_requested": 16,
+ "genes_resolved": 16,
+ "genes_unresolved": [],
+ "intervals": 338,
+ "approx_target_mb": 0.133,
+ "padding_bp": 20,
+ "method": "Exons of the MANE Select (or canonical protein-coding) transcript from Ensembl REST, padded to include splice sites.",
+ "caveat": "This approximates the assay's design: the manufacturer targets selected exons of some genes rather than all of them, so the true territory is smaller. Use the observed coverage (mosdepth) for the TMB denominator, and this BED for calling intervals.",
+ "_provenance": {
+  "generated_utc": "2026-08-30T16:22:42+00:00",
+  "git_commit": "b4e6d1b",
+  "git_dirty": true,
+  "python": "3.14.6",
+  "argv": "scripts/build_panel_bed.py --genes resources/panel_fusionplex_lung_v2.txt -o resources/panel_rna"
+ }
+}
