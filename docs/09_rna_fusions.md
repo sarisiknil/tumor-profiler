@@ -35,6 +35,28 @@ rather than cosmetic — the fusion caller receives an enormous pile of candidat
 artefacts of library construction, which is exactly why the panel-membership check ("is either partner
 actually a target of this assay?") does more filtering work here than Arriba's own confidence score.
 
+**Screening the output for artefacts — the step that matters most on this chemistry.** On this sample Arriba
+reported 20 fusions and discarded 166,694 more. Every one of the 20 involved a gene the assay primes, and the
+pattern was unmistakable once the calls were laid side by side: *FGFR1–FGFR3*, *FGFR3–FGFR1*, *FGFR2–FGFR3*,
+*FGFR3–FGFR2* — the same paralogous family joined in every possible combination, in **both orientations**, on a
+handful of reads each. `scripts/fusion_summary.py` therefore screens for the patterns this chemistry produces:
+
+| Flag | Why it indicates an artefact |
+|---|---|
+| reciprocal call (A–B *and* B–A reported) | a real fusion has one orientation |
+| paralogue pair (FGFR1/2/3, NTRK1/2/3, …) | reads and PCR products cross between near-identical genes |
+| both partners are panel targets | AMP primes one gene and *discovers* the partner; a join between two primed genes is a classic PCR chimera, since all targets are amplified in one tube |
+| promiscuous partner (≥3 different partners) | an artefact hub, not a driver |
+| partner with no gene symbol (ENSG…) | uncharacterised locus, usually a mapping artefact |
+| 5'-5' orientation | the two 5' ends are joined; no functional protein is possible |
+| ≤2 supporting reads | below any credible threshold |
+
+This matters more than it may appear. The most clinically exciting fusion in cholangiocarcinoma is an **FGFR2
+fusion** — a target with approved inhibitors. An unscreened reading of this output would have reported exactly
+that, and it would have been wrong. The accredited laboratory reported no fusion in this sample, and after
+screening the pipeline agrees. **Agreeing about a negative is a real result**, and the reasoning is recorded per
+call rather than asserted.
+
 **Honest sensitivity.** Benchmarked on real Archer FusionPlex FFPE samples against the vendor's software, Arriba
 recovered 86 % of fusions on the lung panel and 57 % on the sarcoma panel; STAR-Fusion recovered 33 % and 7 %
 (Capone et al. 2022). The pipeline therefore uses Arriba, keeps low-confidence calls rather than discarding
