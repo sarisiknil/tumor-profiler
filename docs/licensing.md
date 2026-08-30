@@ -23,3 +23,5 @@
 4. The internship is hosted by a company. OncoKB and COSMIC both draw a line between academic and commercial
    use; work done under a company rather than the university may fall on the commercial side. The pipeline is
    built so that removing the OncoKB token leaves it fully functional on CIViC alone.
+   See [oncokb_request.md](oncokb_request.md) for how to describe the intended use when requesting a licence,
+   and for the distinction you must be accurate about.
