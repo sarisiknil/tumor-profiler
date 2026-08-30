@@ -32,9 +32,21 @@ UMI_LEN = config["library"]["umi_len"]
 DNA_CR = config["library"]["dna_common_region"]
 RNA_CR = config["library"]["rna_common_region"]
 
+GALAXY = Path(config.get("galaxy_import", "results/galaxy_import"))
+
 if MODE == "patient":
     DNA_R1, DNA_R2 = config["data"]["dna_r1"], config["data"]["dna_r2"]
     RNA_R1, RNA_R2 = config["data"]["rna_r1"], config["data"]["rna_r2"]
+    missing = [f for f in ("mutect2.vcf", "vardict.vcf", "lofreq.vcf", "coverage.regions.bed.gz")
+               if not (GALAXY / f).exists()]
+    if missing and not config.get("allow_missing_galaxy"):
+        raise WorkflowError(
+            "patient mode expects the Galaxy outputs in " + str(GALAXY) + " but these are missing: "
+            + ", ".join(missing) + ".\n"
+            "Run the DNA and RNA workflows on usegalaxy.eu (see galaxy/README.md), then:\n"
+            "  export GALAXY_API_KEY=...\n"
+            "  python3 scripts/import_galaxy.py --history '<your history>' --out " + str(GALAXY) + "\n"
+            "Add --config allow_missing_galaxy=1 to inspect the DAG before the files exist.")
 else:
     DNA_R1, DNA_R2 = str(EX / "sim_DNA_R1.fastq.gz"), str(EX / "sim_DNA_R2.fastq.gz")
     RNA_R1, RNA_R2 = str(EX / "sim_RNA_R1.fastq.gz"), str(EX / "sim_RNA_R2.fastq.gz")
@@ -67,6 +79,14 @@ rule infer_primers:
     params: n=3000000, k=25, minc=(30 if MODE == "patient" else 5)
     shell:  "{PY} scripts/infer_primers.py --r2 {input.r2} -n {params.n} -k {params.k} "
             "--min-count {params.minc} -o {RES}/primers/gsp2_DNA"
+
+rule map_primers:
+    """Turn the inferred primers into a gene list. Needs primer coordinates: in patient mode the primer FASTA is
+    aligned on Galaxy (see galaxy/README.md) and the resulting BED is dropped into results/galaxy_import/."""
+    input:  bed=config.get("primer_mapped_bed", "results/galaxy_import/primers_mapped.bed")
+    output: tsv=RES / "primers/panel_genes.tsv", js=RES / "primers/panel_summary.json"
+    shell:  "{PY} scripts/map_primers.py --bed {input.bed} -o {RES}/primers/panel"
+
 
 rule fastqc:
     input:  r1=DNA_R1, r2=DNA_R2
@@ -132,11 +152,18 @@ rule ampliconclip:
     shell:  "samtools ampliconclip -b {input.bed} --hard-clip --both-ends -o {params.tmp} {input.bam} 2> {log} && "
             "samtools sort -o {output.bam} {params.tmp} && rm -f {params.tmp} && samtools index {output.bam}"
 
-rule mosdepth:
-    input:  bam=rules.ampliconclip.output.bam, bed=EX / "sim_targets.bed" if MODE == "example" else config.get("target_bed", "")
-    output: RES / "align/coverage.regions.bed.gz"
-    conda:  ENV("qc")
-    shell:  "mosdepth --by {input.bed} --no-per-base {RES}/align/coverage {input.bam}"
+if MODE == "example":
+    rule mosdepth:
+        input:  bam=rules.ampliconclip.output.bam, bed=EX / "sim_targets.bed"
+        output: RES / "align/coverage.regions.bed.gz"
+        conda:  ENV("qc")
+        shell:  "mosdepth --by {input.bed} --no-per-base {RES}/align/coverage {input.bam}"
+else:
+    rule mosdepth_from_galaxy:
+        """Coverage was computed on Galaxy, where the BAM lives; only the small regions file is imported."""
+        input:  GALAXY / "coverage.regions.bed.gz"
+        output: RES / "align/coverage.regions.bed.gz"
+        shell:  "mkdir -p {RES}/align && cp {input} {output}"
 
 # ---------------------------------------------------------------- variant calling (3 callers -> concordance)
 BAM = (RES / "align/clipped.bam") if MODE == "example" else Path(config.get("galaxy_bam", "results/galaxy_import/dedup.bam"))
@@ -165,10 +192,20 @@ rule call_vardict:
     shell:  "vardict-java -G {input.ref} -f 0.01 -N {SAMPLE} -b {input.bam} -c 1 -S 2 -E 3 -g 4 {input.bed} "
             "2> {log} | teststrandbias.R | var2vcf_valid.pl -N {SAMPLE} -E -f 0.01 > {output} 2>> {log}"
 
+# In example mode the three callers run locally against the mini-reference, whose contigs are named by region
+# (chr12_25204800_25250900), so their coordinates must be lifted to GRCh38 before annotation. In patient mode
+# the callers ran on Galaxy against the real genome, so the imported VCFs are simply copied through.
+CALLER_VCFS = ({"fb": rules.call_freebayes.output[0], "lf": rules.call_lofreq.output[0],
+                "vd": rules.call_vardict.output[0]} if MODE == "example" else
+               {"fb": str(GALAXY / "mutect2.vcf"), "lf": str(GALAXY / "lofreq.vcf"),
+                "vd": str(GALAXY / "vardict.vcf")})
+CALLER_NAMES = ({"fb": "freebayes", "lf": "lofreq", "vd": "vardict"} if MODE == "example" else
+                {"fb": "mutect2", "lf": "lofreq", "vd": "vardict"})
+
+
 rule lift_vcfs:
-    """The example reference uses region contigs (chr12_25204800_25250900); annotation needs true GRCh38
-    coordinates. In patient mode the Galaxy VCFs are already genome-based, so this is a copy."""
-    input:  fb=rules.call_freebayes.output, lf=rules.call_lofreq.output, vd=rules.call_vardict.output,
+    """Bring every caller's VCF into GRCh38 coordinates (a copy in patient mode)."""
+    input:  fb=CALLER_VCFS["fb"], lf=CALLER_VCFS["lf"], vd=CALLER_VCFS["vd"],
             regions=REGIONS
     output: fb=RES / "dna/lifted/freebayes.vcf", lf=RES / "dna/lifted/lofreq.vcf", vd=RES / "dna/lifted/vardict.vcf"
     run:
@@ -184,8 +221,9 @@ rule lift_vcfs:
 rule merge_callers:
     input:  fb=rules.lift_vcfs.output.fb, lf=rules.lift_vcfs.output.lf, vd=rules.lift_vcfs.output.vd
     output: tsv=RES / "dna/variants_merged.tsv", js=RES / "dna/variants_merged_summary.json"
-    shell:  "{PY} scripts/merge_callers.py --vcf freebayes={input.fb} --vcf lofreq={input.lf} "
-            "--vcf vardict={input.vd} -o {output.tsv}"
+    params: n1=CALLER_NAMES["fb"], n2=CALLER_NAMES["lf"], n3=CALLER_NAMES["vd"]
+    shell:  "{PY} scripts/merge_callers.py --vcf {params.n1}={input.fb} --vcf {params.n2}={input.lf} "
+            "--vcf {params.n3}={input.vd} -o {output.tsv}"
 
 rule annotate_vep:
     input:  rules.merge_callers.output.tsv
@@ -212,12 +250,12 @@ rule tiering:
     shell:  "{PY} scripts/tiering.py --variants {input.var} --evidence {input.ev} -o {RES}/dna/variants_tiered"
 
 rule biomarkers:
-    input:  var=rules.filter_variants.output.tsv, cov=rules.mosdepth.output
+    input:  var=rules.filter_variants.output.tsv, cov=(rules.mosdepth.output if MODE == "example" else rules.mosdepth_from_galaxy.output)
     output: RES / "dna/biomarkers.json"
     shell:  "{PY} scripts/biomarkers.py --variants {input.var} --mosdepth-regions {input.cov} -o {output}"
 
 rule cnv:
-    input:  cov=rules.mosdepth.output
+    input:  cov=(rules.mosdepth.output if MODE == "example" else rules.mosdepth_from_galaxy.output)
     output: tsv=RES / "dna/cnv.tsv", js=RES / "dna/cnv_summary.json"
     shell:  "{PY} scripts/cnv_molecules.py --regions {input.cov} --min-depth 20 -o {RES}/dna/cnv"
 

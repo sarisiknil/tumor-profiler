@@ -25,6 +25,15 @@ If a patient's true variant lies under the primer, the primer overwrites it and 
 primer was designed against a different allele, it can create a false variant at high allele fraction.
 `samtools ampliconclip -b primers.bed --hard-clip` removes them before calling.
 
+**Turning primers into a gene list.** Once the primer FASTA has been aligned to GRCh38 (BWA-MEM on Galaxy, one
+short job), `scripts/map_primers.py --bed ...` converts the coordinates into gene symbols through the Ensembl
+REST `/overlap/region` endpoint and counts how many primers target each gene. That count is the panel's depth of
+coverage per gene, and it is what tells you whether "no mutation found in gene X" means anything at all. On the
+example dataset the twelve simulated primers are recovered as exactly the six intended genes.
+
+(A `--blast` fallback exists for users without an aligner, but NCBI's public queue routinely quotes hours for a
+few hundred sequences, so the aligned-BED route is the one the workflow uses.)
+
 **How it can mislead.** Inferred primers are *candidates*: sequencing errors create near-duplicates, and a primer
 that overlaps a repetitive region can map to several places. The reconstructed panel is good enough to define
 which genes are assessable; it is not the manufacturer's design file, and the report says so.

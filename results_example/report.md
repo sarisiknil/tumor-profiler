@@ -14,12 +14,12 @@
 
 ## 3. Variants
 
-- Classification: SOMATIC_LIKELY 6, LOW_QUALITY 1
+- Classification: SOMATIC_LIKELY 6, LOW_QUALITY 3
 - AMP/ASCO/CAP tiers: Tier I: 4, Tier II: 2
 
 | Gene | Variant | Tier | ESCAT | VAF | Therapies |
 |---|---|---|---|---|---|
-| KRAS | ENSP00000308495.3:p.Gly12Cys | I | I-B | 0.39 | ARS-853,Epidermal Growth Factor Receptor Tyrosine Kinase Inh |
+| KRAS | ENSP00000308495.3:p.Gly12Cys | I | I-B | 0.3911 | ARS-853,Epidermal Growth Factor Receptor Tyrosine Kinase Inh |
 | PIK3CA | ENSP00000263967.3:p.His1047Arg | I | I-B | 0.3111 | Alpelisib,Fulvestrant;Capivasertib,Lapatinib;Capivasertib,Tr |
 | BRAF | ENSP00000493543.1:p.Val600Glu | I | I-B | 0.3022 | Cetuximab,FOLFOX-4 Regimen;Cetuximab,Panitumumab;Dabrafenib, |
 | EGFR | ENSP00000275493.2:p.Leu858Arg | I | I-B | 0.06 | Afatinib;Amivantamab,Carboplatin,Pemetrexed;Amivantamab,Laze |

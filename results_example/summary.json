@@ -1810,7 +1810,7 @@
  "variants": {
   "counts_by_class": {
    "SOMATIC_LIKELY": 6,
-   "LOW_QUALITY": 1
+   "LOW_QUALITY": 3
   },
   "counts_by_tier": {
    "I": 4,
@@ -1818,18 +1818,19 @@
   },
   "caller_concordance": {
    "per_caller_records": {
-    "freebayes": 6,
-    "lofreq": 7,
-    "vardict": 6
+    "freebayes": 8,
+    "lofreq": 9,
+    "vardict": 7
    },
-   "merged_variants": 7,
+   "merged_variants": 9,
    "by_agreement": {
     "1": 1,
-    "3": 6
+    "2": 1,
+    "3": 7
    },
    "_provenance": {
-    "generated_utc": "2026-08-30T03:37:36+00:00",
-    "git_commit": "a37e977",
+    "generated_utc": "2026-08-30T04:09:12+00:00",
+    "git_commit": "449fd70",
     "git_dirty": true,
     "python": "3.11.16",
     "argv": "scripts/merge_callers.py --vcf freebayes=results_example/dna/lifted/freebayes.vcf --vcf lofreq=results_example/dna/lifted/lofreq.vcf --vcf vardict=results_example/dna/lifted/vardict.vcf -o results_example/dna/variants_merged.tsv"
@@ -1846,7 +1847,7 @@
     "escat": "I-B",
     "therapies": "ARS-853,Epidermal Growth Factor Receptor Tyrosine Kinase Inhibitor;Adagrasib;Adagrasib,Cetuximab;Cetuximab,Chemotherapy;Dactolisib,Selumetinib;Divarasib;Docetaxel,Selumetinib;Gefitinib;Gefitinib,Erlotinib;Melphalan;Panitumumab;Regorafenib Anhydrous;Sotorasib;Sotorasib,Panitumumab",
     "tier_rationale": "CIViC A SENSITIVITYRESPONSE (Sotorasib); CIViC A SENSITIVITYRESPONSE (Adagrasib,Cetuximab); CIViC A SENSITIVITYRESPONSE (Sotorasib,Panitumumab); CIViC B SENSITIVITYRESPONSE (Divarasib); CIViC B RESISTANCE (Gefitinib,Erlotinib); CIViC B RESISTANCE (Cetuximab,Chemotherapy); CIViC B SENSITIVITYRESPONSE (Docetaxel,Selumetinib); CIViC B RESISTANCE (Gefitinib); CIViC C RESISTANCE (Panitumumab); CIViC D RESISTANCE (Melphalan); CIViC D SENSITIVITYRESPONSE (ARS-853,Epidermal Growth Factor Receptor Tyrosine Kinase Inhibitor); CIViC D SENSITIVITYRESPONSE (Adagrasib); CIViC D SENSITIVITYRESPONSE (Dactolisib,Selumetinib); CIViC D RESISTANCE (Melphalan); CIViC D RESISTANCE (Melphalan); CIViC D RESISTANCE (Regorafenib Anhydrous)",
-    "vaf": "0.39",
+    "vaf": "0.3911",
     "depth": "300",
     "n_callers": "3",
     "gnomad_af_max": "0.0",
@@ -1996,7 +1997,7 @@
     "class": "SOMATIC_LIKELY",
     "germline_ambiguous": "no",
     "reasons": "passes_all_filters",
-    "vaf": "0.39",
+    "vaf": "0.3911",
     "depth": "300",
     "alt_reads": "102",
     "n_callers": "3",
@@ -2116,14 +2117,14 @@
    "mutational_signatures": "SBS refitting needs >= 100-200 SNVs (PCGR default 200); only 6 somatic SNVs were called."
   },
   "counts": {
-   "all_variants": 7,
+   "all_variants": 9,
    "somatic_likely": 6,
    "somatic_snvs": 6,
    "nonsynonymous": 6
   },
   "_provenance": {
-   "generated_utc": "2026-08-30T03:37:39+00:00",
-   "git_commit": "a37e977",
+   "generated_utc": "2026-08-30T04:09:16+00:00",
+   "git_commit": "449fd70",
    "git_dirty": true,
    "python": "3.11.16",
    "argv": "scripts/biomarkers.py --variants results_example/dna/variants_filtered.tsv --mosdepth-regions results_example/align/coverage.regions.bed.gz -o results_example/dna/biomarkers.json"
@@ -2147,8 +2148,8 @@
    "For a defensible CNV call use CNVkit with a pooled reference of >= 10-20 samples processed identically (Talevich et al. 2016)."
   ],
   "_provenance": {
-   "generated_utc": "2026-08-30T03:37:31+00:00",
-   "git_commit": "a37e977",
+   "generated_utc": "2026-08-30T04:09:02+00:00",
+   "git_commit": "449fd70",
    "git_dirty": true,
    "python": "3.11.16",
    "argv": "scripts/cnv_molecules.py --regions results_example/align/coverage.regions.bed.gz --min-depth 20 -o results_example/dna/cnv"
@@ -2166,8 +2167,8 @@
     "Any fusion used for a treatment decision needs orthogonal confirmation (FISH, IHC or RT-PCR)."
    ],
    "_provenance": {
-    "generated_utc": "2026-08-30T03:37:27+00:00",
-    "git_commit": "a37e977",
+    "generated_utc": "2026-08-30T04:08:58+00:00",
+    "git_commit": "449fd70",
     "git_dirty": true,
     "python": "3.11.16",
     "argv": "scripts/fusion_summary.py --arriba results_example/rna/arriba_placeholder.tsv -o results_example/rna/fusions_summary"
@@ -2207,8 +2208,8 @@
    "Positive calls require orthogonal confirmation (RT-PCR) before clinical use."
   ],
   "_provenance": {
-   "generated_utc": "2026-08-30T03:37:25+00:00",
-   "git_commit": "a37e977",
+   "generated_utc": "2026-08-30T04:08:55+00:00",
+   "git_commit": "449fd70",
    "git_dirty": true,
    "python": "3.11.16",
    "argv": "scripts/exon_skipping.py --sj results_example/rna/SJ_placeholder.tab -o results_example/rna/exon_skipping"
@@ -2221,7 +2222,7 @@
     "n_altered": "3",
     "n_genes_in_set": "50",
     "altered_genes": "EGFR,KRAS,BRAF",
-    "alterations": "EGFR: ENSP00000275493.2:p.Leu858Arg (VAF 0.06, tier I) | KRAS: ENSP00000308495.3:p.Gly12Cys (VAF 0.39, tier I) | BRAF: ENSP00000493543.1:p.Val600Glu (VAF 0.3022, tier I)",
+    "alterations": "EGFR: ENSP00000275493.2:p.Leu858Arg (VAF 0.06, tier I) | KRAS: ENSP00000308495.3:p.Gly12Cys (VAF 0.3911, tier I) | BRAF: ENSP00000493543.1:p.Val600Glu (VAF 0.3022, tier I)",
     "source": "Sanchez-Vega et al. 2018 Cell, Table S3"
    },
    {
@@ -2331,8 +2332,8 @@
    "method": "Membership mapping against Sanchez-Vega et al. 2018 (Cell) curated pathway gene lists plus supplementary DNA-repair and chromatin sets.",
    "caveat": "This is not an enrichment analysis: the gene universe is defined by the panel, and a single sample provides no null distribution. Absence of a pathway hit may simply mean the panel does not cover that pathway's genes.",
    "_provenance": {
-    "generated_utc": "2026-08-30T03:40:00+00:00",
-    "git_commit": "a37e977",
+    "generated_utc": "2026-08-30T04:09:33+00:00",
+    "git_commit": "449fd70",
     "git_dirty": true,
     "python": "3.11.16",
     "argv": "scripts/pathway_map.py --variants results_example/dna/variants_tiered.tsv --fusions results_example/rna/fusions_summary.tsv -o results_example/pathways/pathway_hits"
@@ -3886,8 +3887,8 @@
  "validation": null,
  "disclaimer": "Educational output of a student pipeline. Not a clinical report and not a basis for medical decisions. Somatic findings only; no identifying information.",
  "_provenance": {
-  "generated_utc": "2026-08-30T03:40:00+00:00",
-  "git_commit": "a37e977",
+  "generated_utc": "2026-08-30T04:09:33+00:00",
+  "git_commit": "449fd70",
   "git_dirty": true,
   "python": "3.11.16",
   "argv": "scripts/build_summary_json.py --results results_example --sample EXAMPLE01"

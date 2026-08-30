@@ -13,8 +13,8 @@
  "cancer_type": "",
  "note": "OncoKB annotations are licensed for academic use and must not be redistributed; they are written under results/ which is git-ignored.",
  "_provenance": {
-  "generated_utc": "2026-08-30T03:39:59+00:00",
-  "git_commit": "a37e977",
+  "generated_utc": "2026-08-30T04:09:32+00:00",
+  "git_commit": "449fd70",
   "git_dirty": true,
   "python": "3.11.16",
   "argv": "scripts/annotate_evidence.py --variants results_example/dna/variants_filtered.tsv --cancer-type  -o results_example/evidence/annot"
