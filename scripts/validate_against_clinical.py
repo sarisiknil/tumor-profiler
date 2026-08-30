@@ -69,6 +69,9 @@ def main():
         if (r.get("type") or "SNV").upper() in ("SNV", "INDEL"):
             k = key_of(r["chrom_grch38"], r["pos_grch38"], r["ref"], r["alt"])
             mine = by_key.get(k) or all_by_key.get(k)
+            # class and caller support live in the classified table, tier in the tiered one; merge both so the
+            # concordance row shows why we called it as well as how we ranked it
+            full = {**(all_by_key.get(k) or {}), **(by_key.get(k) or {})} if mine else {}
             if mine:
                 concordant += 1
                 try:
@@ -78,8 +81,8 @@ def main():
                 rows.append({"status": "CONCORDANT", "gene": r["gene"], "variant": r.get("hgvs_p") or k,
                              "key": k, "lab_vaf": r.get("vaf"), "our_vaf": mine.get("vaf"),
                              "vaf_difference": round(dv, 3) if dv is not None else "",
-                             "lab_tier": r.get("tier"), "our_tier": mine.get("amp_tier", ""),
-                             "our_class": mine.get("class", ""), "our_callers": mine.get("callers", ""),
+                             "lab_tier": r.get("tier"), "our_tier": full.get("amp_tier", ""),
+                             "our_class": full.get("class", ""), "our_callers": full.get("callers", ""),
                              "note": ("VAF agrees within tolerance"
                                       if dv is not None and dv <= a.vaf_tolerance else
                                       "VAF differs by more than the tolerance — check tumour content and "
