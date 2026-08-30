@@ -28,6 +28,7 @@ REGIONS = config.get("example_regions", "examples/reference/regions.tsv")
 EX = Path("examples/simulated")
 ENV = lambda n: f"../environment/{n}.yaml"
 PY = sys.executable          # run helper scripts with the interpreter Snakemake itself runs under
+CANCER_TYPE = config.get("cancer_type", "") if MODE == "patient" else config.get("example_cancer_type", "")
 UMI_LEN = config["library"]["umi_len"]
 DNA_CR = config["library"]["dna_common_region"]
 RNA_CR = config["library"]["rna_common_region"]
@@ -242,14 +243,16 @@ rule evidence:
     input:  var=rules.filter_variants.output.tsv
     output: ev=RES / "evidence/annot_evidence.tsv", tr=RES / "evidence/annot_trials.tsv",
             dr=RES / "evidence/annot_druggability.tsv", js=RES / "evidence/annot_summary.json"
-    params: ct=config.get("cancer_type", "")
+    params: ct=CANCER_TYPE
     shell:  "{PY} scripts/annotate_evidence.py --variants {input.var} --cancer-type '{params.ct}' "
             "-o {RES}/evidence/annot"
 
 rule tiering:
     input:  var=rules.filter_variants.output.tsv, ev=rules.evidence.output.ev
     output: tsv=RES / "dna/variants_tiered.tsv", js=RES / "dna/variants_tiered_summary.json"
-    shell:  "{PY} scripts/tiering.py --variants {input.var} --evidence {input.ev} -o {RES}/dna/variants_tiered"
+    params: ct=CANCER_TYPE
+    shell:  "{PY} scripts/tiering.py --variants {input.var} --evidence {input.ev} "
+            "--cancer-type '{params.ct}' -o {RES}/dna/variants_tiered"
 
 rule biomarkers:
     input:  var=rules.filter_variants.output.tsv, cov=(rules.mosdepth.output if MODE == "example" else rules.mosdepth_from_galaxy.output)

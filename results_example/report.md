@@ -16,16 +16,16 @@
 ## 3. Variants
 
 - Classification: SOMATIC_LIKELY 6, LOW_QUALITY 1
-- AMP/ASCO/CAP tiers: Tier I: 4, Tier II: 2
+- AMP/ASCO/CAP tiers: Tier I: 3, Tier II: 3
 
 | Gene | Variant | Tier | ESCAT | VAF | Therapies |
 |---|---|---|---|---|---|
 | KRAS | ENSP00000308495.3:p.Gly12Cys | I | I-B | 0.3911 | ARS-853,Epidermal Growth Factor Receptor Tyrosine Kinase Inh |
-| PIK3CA | ENSP00000263967.3:p.His1047Arg | I | I-B | 0.3111 | Alpelisib,Fulvestrant;Capivasertib,Lapatinib;Capivasertib,Tr |
 | BRAF | ENSP00000493543.1:p.Val600Glu | I | I-B | 0.3022 | Cetuximab,FOLFOX-4 Regimen;Cetuximab,Panitumumab;Dabrafenib, |
 | EGFR | ENSP00000275493.2:p.Leu858Arg | I | I-B | 0.06 | Afatinib;Amivantamab,Carboplatin,Pemetrexed;Amivantamab,Laze |
-| TP53 | ENSP00000269305.4:p.Arg175His | II | II | 0.5467 | Doxorubicin;EAP Protocol;MDM2 Inhibitor AMGMDS3;Pazopanib,Vo |
+| TP53 | ENSP00000269305.4:p.Arg175His | II | IV | 0.5467 | Doxorubicin;EAP Protocol;MDM2 Inhibitor AMGMDS3;Pazopanib,Vo |
 | PTEN | ENSP00000361021.3:p.Arg130Ter | II | IV | 0.4278 | Perifosine,Temsirolimus |
+| PIK3CA | ENSP00000263967.3:p.His1047Arg | II | III | 0.3111 | Alpelisib,Fulvestrant;Capivasertib,Lapatinib;Capivasertib,Tr |
 
 ## 5. Pathways
 
@@ -35,10 +35,16 @@
 
 ## 6. Clinical-trial context (recruiting)
 
-- [NCT05503797](https://clinicaltrials.gov/study/NCT05503797) — A Study to Assess the Efficacy and Safety of FORE8394 in Participants With Cancer Harboring BRAF Alterations (PHASE2)
-- [NCT05874414](https://clinicaltrials.gov/study/NCT05874414) — Combination of GNS561 and Trametinib in Patients With Advanced KRAS Mutated Cholangiocarcinoma (PHASE1,PHASE2)
-- [NCT07594067](https://clinicaltrials.gov/study/NCT07594067) — TCR1188-ABC Cells in KRAS-mutated Cancers (PHASE1)
-- [NCT07458347](https://clinicaltrials.gov/study/NCT07458347) — A Phase 1 Dose-escalation Trial of KST-6051 in Participants With Advanced Solid Tumors With Kirsten Rat Sarcoma Viral Oncogene Homolog (KRAS) Mutation (PHASE1)
+- [NCT03340506](https://clinicaltrials.gov/study/NCT03340506) — Dabrafenib and/or Trametinib Rollover Study (PHASE4)
+- [NCT06068049](https://clinicaltrials.gov/study/NCT06068049) — OSIREAL - Osimertinib RWE on EGFRm NSCLC in Spain ()
+- [NCT06775743](https://clinicaltrials.gov/study/NCT06775743) — ORIENT-31 Regimen in Combination With SBRT for EGFR-mutant Metastatic NSCLC After First-line Third-generation EGFR-TKIs (PHASE2)
+- [NCT06706076](https://clinicaltrials.gov/study/NCT06706076) — A Study of BH-30643 in Subjects With Locally Advanced or Metastatic NSCLC Harboring EGFR and/or HER2 Mutations (PHASE1,PHASE2)
+- [NCT07361237](https://clinicaltrials.gov/study/NCT07361237) — A Phase l Clinical Study to Evalute the Safety,Tolerability,Pharmacokinetic Characteristics,and Preliminary Anti-tumor Efficacy of HJ-004-02 Tablets in Patients (PHASE1)
+- [NCT06793215](https://clinicaltrials.gov/study/NCT06793215) — A Study Evaluating the Efficacy and Safety of Divarasib and Pembrolizumab Versus Pembrolizumab and Pemetrexed and Carboplatin or Cisplatin in Participants With  (PHASE3)
+- [NCT07094113](https://clinicaltrials.gov/study/NCT07094113) — AMG 410 Alone and in Combination With Other Agents in Participants With KRAS Altered Advanced or Metastatic Solid Tumors (PHASE1)
+- [NCT06162221](https://clinicaltrials.gov/study/NCT06162221) — Study of RAS(ON) Inhibitors in Patients With Advanced RAS-mutated NSCLC (PHASE1,PHASE2)
+- [NCT06917079](https://clinicaltrials.gov/study/NCT06917079) — BBO-11818 in Adult Subjects With KRAS Mutant Cancer (PHASE1)
+- [NCT04585750](https://clinicaltrials.gov/study/NCT04585750) — The Evaluation of PC14586 in Patients With Advanced Solid Tumors Harboring a TP53 Y220C Mutation (PYNNACLE) (PHASE1,PHASE2)
 
 ## 8. Caveats
 

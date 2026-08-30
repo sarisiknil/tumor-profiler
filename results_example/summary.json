@@ -1818,8 +1818,8 @@
    "LOW_QUALITY": 1
   },
   "counts_by_tier": {
-   "I": 4,
-   "II": 2
+   "I": 3,
+   "II": 3
   },
   "caller_concordance": {
    "per_caller_records": {
@@ -1849,31 +1849,15 @@
     "consequence": "missense_variant",
     "amp_tier": "I",
     "escat": "I-B",
+    "disease_matched_evidence": "yes",
     "therapies": "ARS-853,Epidermal Growth Factor Receptor Tyrosine Kinase Inhibitor;Adagrasib;Adagrasib,Cetuximab;Cetuximab,Chemotherapy;Dactolisib,Selumetinib;Divarasib;Docetaxel,Selumetinib;Gefitinib;Gefitinib,Erlotinib;Melphalan;Panitumumab;Regorafenib Anhydrous;Sotorasib;Sotorasib,Panitumumab",
-    "tier_rationale": "CIViC A SENSITIVITYRESPONSE (Sotorasib); CIViC A SENSITIVITYRESPONSE (Adagrasib,Cetuximab); CIViC A SENSITIVITYRESPONSE (Sotorasib,Panitumumab); CIViC B SENSITIVITYRESPONSE (Divarasib); CIViC B RESISTANCE (Gefitinib,Erlotinib); CIViC B RESISTANCE (Cetuximab,Chemotherapy); CIViC B SENSITIVITYRESPONSE (Docetaxel,Selumetinib); CIViC B RESISTANCE (Gefitinib); CIViC C RESISTANCE (Panitumumab); CIViC D RESISTANCE (Melphalan); CIViC D SENSITIVITYRESPONSE (ARS-853,Epidermal Growth Factor Receptor Tyrosine Kinase Inhibitor); CIViC D SENSITIVITYRESPONSE (Adagrasib); CIViC D SENSITIVITYRESPONSE (Dactolisib,Selumetinib); CIViC D RESISTANCE (Melphalan); CIViC D RESISTANCE (Melphalan); CIViC D RESISTANCE (Regorafenib Anhydrous)",
+    "tier_rationale": "CIViC A SENSITIVITYRESPONSE (Sotorasib) \u2014 in Lung Non-small Cell Carcinoma; CIViC A SENSITIVITYRESPONSE (Adagrasib,Cetuximab) \u2014 in Colorectal Cancer, not Lung Non-small Cell Carcinoma; CIViC A SENSITIVITYRESPONSE (Sotorasib,Panitumumab) \u2014 in Colorectal Cancer, not Lung Non-small Cell Carcinoma; CIViC B SENSITIVITYRESPONSE (Divarasib) \u2014 in Lung Non-small Cell Carcinoma; CIViC B RESISTANCE (Gefitinib,Erlotinib) \u2014 in Colorectal Cancer, not Lung Non-small Cell Carcinoma; CIViC B RESISTANCE (Cetuximab,Chemotherapy) \u2014 in Colorectal Cancer, not Lung Non-small Cell Carcinoma",
     "vaf": "0.3911",
     "depth": "300",
     "n_callers": "3",
     "gnomad_af_max": "0.0",
     "clinvar_sig": "likely_pathogenic,not_provided,pathogenic",
     "n_evidence_items": "18"
-   },
-   {
-    "key": "chr3:179234297:A>G",
-    "gene": "PIK3CA",
-    "hgvsp": "ENSP00000263967.3:p.His1047Arg",
-    "hgvsc": "ENST00000263967.4:c.3140A>G",
-    "consequence": "missense_variant",
-    "amp_tier": "I",
-    "escat": "I-B",
-    "therapies": "Alpelisib,Fulvestrant;Capivasertib,Lapatinib;Capivasertib,Trastuzumab;Cetuximab,Dactolisib;Cetuximab,Irinotecan;Cetuximab,Panitumumab;Dactolisib;Everolimus,Fulvestrant;FAC Regimen,FEC Regimen;Inavolisib,Palbociclib,Fulvestrant;Izorlisib;Lapatinib;Lapatinib,Trastuzumab;Perifosine,Temsirolimus;Pictilisib;Trastuzumab;Trastuzumab Emtansine;Vemurafenib;Vemurafenib,Akt Inhibitor MK2206",
-    "tier_rationale": "CIViC A SENSITIVITYRESPONSE (Alpelisib,Fulvestrant); CIViC A SENSITIVITYRESPONSE (Inavolisib,Palbociclib,Fulvestrant); CIViC B RESISTANCE (FAC Regimen,FEC Regimen); CIViC B RESISTANCE (Cetuximab,Panitumumab); CIViC C RESISTANCE (Cetuximab,Irinotecan); CIViC C RESISTANCE (Cetuximab,Panitumumab); CIViC C SENSITIVITYRESPONSE (Everolimus,Fulvestrant); CIViC D SENSITIVITYRESPONSE (Izorlisib); CIViC D SENSITIVITYRESPONSE (Pictilisib); CIViC D RESISTANCE (Lapatinib,Trastuzumab); CIViC D RESISTANCE (Dactolisib); CIViC D SENSITIVITYRESPONSE (Dactolisib); CIViC D SENSITIVITYRESPONSE (Capivasertib,Trastuzumab); CIViC D SENSITIVITYRESPONSE (Capivasertib,Lapatinib); CIViC D SENSITIVITYRESPONSE (Perifosine,Temsirolimus); CIViC D RESISTANCE (Trastuzumab Emtansine); CIViC D RESISTANCE (Vemurafenib); CIViC D RESISTANCE (Lapatinib); CIViC D RESISTANCE (Trastuzumab); CIViC D SENSITIVITYRESPONSE (Vemurafenib,Akt Inhibitor MK2206); CIViC D SENSITIVITYRESPONSE (Dactolisib); CIViC D SENSITIVITYRESPONSE (Cetuximab,Dactolisib)",
-    "vaf": "0.3111",
-    "depth": "300",
-    "n_callers": "3",
-    "gnomad_af_max": "0.0",
-    "clinvar_sig": "likely_pathogenic,pathogenic",
-    "n_evidence_items": "25"
    },
    {
     "key": "chr7:140753336:A>T",
@@ -1883,8 +1867,9 @@
     "consequence": "missense_variant",
     "amp_tier": "I",
     "escat": "I-B",
+    "disease_matched_evidence": "yes",
     "therapies": "Cetuximab,FOLFOX-4 Regimen;Cetuximab,Panitumumab;Dabrafenib,Trametinib;Encorafenib,Binimetinib,Cetuximab;Encorafenib,Cetuximab;Tovorafenib;Trametinib;Trametinib,Dabrafenib;Vemurafenib;Vemurafenib,Cetuximab,Irinotecan;Vemurafenib,Cobimetinib",
-    "tier_rationale": "CIViC A SENSITIVITYRESPONSE (Vemurafenib); CIViC A SENSITIVITYRESPONSE (Encorafenib,Cetuximab); CIViC A SENSITIVITYRESPONSE (Tovorafenib); CIViC A SENSITIVITYRESPONSE (Dabrafenib,Trametinib); CIViC A SENSITIVITYRESPONSE (Dabrafenib,Trametinib); CIViC A SENSITIVITYRESPONSE (Trametinib,Dabrafenib); CIViC B SENSITIVITYRESPONSE (Dabrafenib,Trametinib); CIViC B SENSITIVITYRESPONSE (Vemurafenib); CIViC B SENSITIVITYRESPONSE (Dabrafenib,Trametinib); CIViC B SENSITIVITYRESPONSE (Dabrafenib,Trametinib); CIViC B SENSITIVITYRESPONSE (Encorafenib,Binimetinib,Cetuximab); CIViC B RESISTANCE (Cetuximab,Panitumumab); CIViC B SENSITIVITYRESPONSE (Vemurafenib); CIViC B SENSITIVITYRESPONSE (Vemurafenib,Cobimetinib); CIViC B SENSITIVITYRESPONSE (Vemurafenib); CIViC B SENSITIVITYRESPONSE (Vemurafenib,Cetuximab,Irinotecan); CIViC B SENSITIVITYRESPONSE (Trametinib); CIViC B RESISTANCE (Cetuximab,FOLFOX-4 Regimen); CIViC B SENSITIVITYRESPONSE (Vemurafenib)",
+    "tier_rationale": "CIViC A SENSITIVITYRESPONSE (Vemurafenib) \u2014 in Skin Melanoma, not Lung Non-small Cell Carcinoma; CIViC A SENSITIVITYRESPONSE (Encorafenib,Cetuximab) \u2014 in Colorectal Cancer, not Lung Non-small Cell Carcinoma; CIViC A SENSITIVITYRESPONSE (Tovorafenib) \u2014 in Childhood Low-grade Glioma, not Lung Non-small Cell Carcinoma; CIViC A SENSITIVITYRESPONSE (Dabrafenib,Trametinib) \u2014 in Lung Non-small Cell Carcinoma; CIViC A SENSITIVITYRESPONSE (Dabrafenib,Trametinib) \u2014 in Solid Tumor, not Lung Non-small Cell Carcinoma; CIViC A SENSITIVITYRESPONSE (Trametinib,Dabrafenib) \u2014 in Low Grade Glioma, not Lung Non-small Cell Carcinoma",
     "vaf": "0.3022",
     "depth": "300",
     "n_callers": "3",
@@ -1900,8 +1885,9 @@
     "consequence": "missense_variant",
     "amp_tier": "I",
     "escat": "I-B",
+    "disease_matched_evidence": "yes",
     "therapies": "Afatinib;Amivantamab,Carboplatin,Pemetrexed;Amivantamab,Lazertinib;Dacomitinib;Erlotinib;Erlotinib,Gefitinib;Erlotinib,Ramucirumab;Gefitinib;Gefitinib,Erlotinib;Osimertinib;Osimertinib,Chemotherapy",
-    "tier_rationale": "CIViC A SENSITIVITYRESPONSE (Erlotinib); CIViC A SENSITIVITYRESPONSE (Afatinib); CIViC A SENSITIVITYRESPONSE (Osimertinib); CIViC A SENSITIVITYRESPONSE (Dacomitinib); CIViC A SENSITIVITYRESPONSE (Erlotinib,Ramucirumab); CIViC A SENSITIVITYRESPONSE (Osimertinib,Chemotherapy); CIViC A SENSITIVITYRESPONSE (Gefitinib); CIViC A SENSITIVITYRESPONSE (Osimertinib); CIViC A SENSITIVITYRESPONSE (Amivantamab,Lazertinib); CIViC A SENSITIVITYRESPONSE (Amivantamab,Carboplatin,Pemetrexed); CIViC B SENSITIVITYRESPONSE (Dacomitinib); CIViC B SENSITIVITYRESPONSE (Gefitinib,Erlotinib); CIViC B SENSITIVITYRESPONSE (Afatinib); CIViC B SENSITIVITYRESPONSE (Afatinib); CIViC B SENSITIVITYRESPONSE (Gefitinib); CIViC B SENSITIVITYRESPONSE (Erlotinib); CIViC B SENSITIVITYRESPONSE (Erlotinib,Gefitinib); CIViC B SENSITIVITYRESPONSE (Gefitinib,Erlotinib); CIViC B SENSITIVITYRESPONSE (Afatinib); CIViC B SENSITIVITYRESPONSE (Erlotinib); CIViC B SENSITIVITYRESPONSE (Gefitinib); CIViC B SENSITIVITYRESPONSE (Gefitinib); CIViC B SENSITIVITYRESPONSE (Erlotinib); CIViC B SENSITIVITYRESPONSE (Gefitinib)",
+    "tier_rationale": "CIViC A SENSITIVITYRESPONSE (Erlotinib) \u2014 in Lung Non-small Cell Carcinoma; CIViC A SENSITIVITYRESPONSE (Afatinib) \u2014 in Lung Non-small Cell Carcinoma; CIViC A SENSITIVITYRESPONSE (Osimertinib) \u2014 in Lung Non-small Cell Carcinoma; CIViC A SENSITIVITYRESPONSE (Dacomitinib) \u2014 in Lung Non-small Cell Carcinoma; CIViC A SENSITIVITYRESPONSE (Erlotinib,Ramucirumab) \u2014 in Lung Non-small Cell Carcinoma; CIViC A SENSITIVITYRESPONSE (Osimertinib,Chemotherapy) \u2014 in Lung Non-small Cell Carcinoma",
     "vaf": "0.06",
     "depth": "300",
     "n_callers": "3",
@@ -1916,9 +1902,10 @@
     "hgvsc": "ENST00000269305.9:c.524G>A",
     "consequence": "missense_variant",
     "amp_tier": "II",
-    "escat": "II",
+    "escat": "IV",
+    "disease_matched_evidence": "no",
     "therapies": "Doxorubicin;EAP Protocol;MDM2 Inhibitor AMGMDS3;Pazopanib,Vorinostat",
-    "tier_rationale": "CIViC C SENSITIVITYRESPONSE (EAP Protocol); CIViC C SENSITIVITYRESPONSE (Pazopanib,Vorinostat); CIViC D SENSITIVITYRESPONSE (Doxorubicin); CIViC D RESISTANCE (MDM2 Inhibitor AMGMDS3); CIViC D RESISTANCE (MDM2 Inhibitor AMGMDS3)",
+    "tier_rationale": "CIViC C SENSITIVITYRESPONSE (EAP Protocol) \u2014 in Stomach Carcinoma, not Lung Non-small Cell Carcinoma; CIViC C SENSITIVITYRESPONSE (Pazopanib,Vorinostat) \u2014 in Sarcoma, not Lung Non-small Cell Carcinoma; CIViC D SENSITIVITYRESPONSE (Doxorubicin) \u2014 in Breast Cancer, not Lung Non-small Cell Carcinoma; CIViC D RESISTANCE (MDM2 Inhibitor AMGMDS3) \u2014 in Cancer, not Lung Non-small Cell Carcinoma; CIViC D RESISTANCE (MDM2 Inhibitor AMGMDS3) \u2014 in Cancer, not Lung Non-small Cell Carcinoma",
     "vaf": "0.5467",
     "depth": "300",
     "n_callers": "3",
@@ -1934,14 +1921,33 @@
     "consequence": "stop_gained",
     "amp_tier": "II",
     "escat": "IV",
+    "disease_matched_evidence": "no",
     "therapies": "Perifosine,Temsirolimus",
-    "tier_rationale": "CIViC D SENSITIVITYRESPONSE (Perifosine,Temsirolimus)",
+    "tier_rationale": "CIViC D SENSITIVITYRESPONSE (Perifosine,Temsirolimus) \u2014 in Thyroid Cancer, not Lung Non-small Cell Carcinoma",
     "vaf": "0.4278",
     "depth": "300",
     "n_callers": "3",
     "gnomad_af_max": "3.8e-05",
     "clinvar_sig": "benign,likely_benign,likely_pathogenic,pathogenic",
     "n_evidence_items": "1"
+   },
+   {
+    "key": "chr3:179234297:A>G",
+    "gene": "PIK3CA",
+    "hgvsp": "ENSP00000263967.3:p.His1047Arg",
+    "hgvsc": "ENST00000263967.4:c.3140A>G",
+    "consequence": "missense_variant",
+    "amp_tier": "II",
+    "escat": "III",
+    "disease_matched_evidence": "no",
+    "therapies": "Alpelisib,Fulvestrant;Capivasertib,Lapatinib;Capivasertib,Trastuzumab;Cetuximab,Dactolisib;Cetuximab,Irinotecan;Cetuximab,Panitumumab;Dactolisib;Everolimus,Fulvestrant;FAC Regimen,FEC Regimen;Inavolisib,Palbociclib,Fulvestrant;Izorlisib;Lapatinib;Lapatinib,Trastuzumab;Perifosine,Temsirolimus;Pictilisib;Trastuzumab;Trastuzumab Emtansine;Vemurafenib;Vemurafenib,Akt Inhibitor MK2206",
+    "tier_rationale": "CIViC A SENSITIVITYRESPONSE (Alpelisib,Fulvestrant) \u2014 in Breast Cancer, not Lung Non-small Cell Carcinoma; CIViC A SENSITIVITYRESPONSE (Inavolisib,Palbociclib,Fulvestrant) \u2014 in Breast Cancer, not Lung Non-small Cell Carcinoma; CIViC B RESISTANCE (FAC Regimen,FEC Regimen) \u2014 in Breast Cancer, not Lung Non-small Cell Carcinoma; CIViC B RESISTANCE (Cetuximab,Panitumumab) \u2014 in Colorectal Cancer, not Lung Non-small Cell Carcinoma; CIViC C RESISTANCE (Cetuximab,Irinotecan) \u2014 in Colorectal Cancer, not Lung Non-small Cell Carcinoma; CIViC C RESISTANCE (Cetuximab,Panitumumab) \u2014 in Colorectal Cancer, not Lung Non-small Cell Carcinoma",
+    "vaf": "0.3111",
+    "depth": "300",
+    "n_callers": "3",
+    "gnomad_af_max": "0.0",
+    "clinvar_sig": "likely_pathogenic,pathogenic",
+    "n_evidence_items": "25"
    }
   ],
   "top_somatic": [
@@ -2234,7 +2240,7 @@
     "n_altered": "2",
     "n_genes_in_set": "23",
     "altered_genes": "PIK3CA,PTEN",
-    "alterations": "PIK3CA: ENSP00000263967.3:p.His1047Arg (VAF 0.3111, tier I) | PTEN: ENSP00000361021.3:p.Arg130Ter (VAF 0.4278, tier II)",
+    "alterations": "PIK3CA: ENSP00000263967.3:p.His1047Arg (VAF 0.3111, tier II) | PTEN: ENSP00000361021.3:p.Arg130Ter (VAF 0.4278, tier II)",
     "source": "Sanchez-Vega et al. 2018 Cell, Table S3"
    },
    {
@@ -2336,8 +2342,8 @@
    "method": "Membership mapping against Sanchez-Vega et al. 2018 (Cell) curated pathway gene lists plus supplementary DNA-repair and chromatin sets.",
    "caveat": "This is not an enrichment analysis: the gene universe is defined by the panel, and a single sample provides no null distribution. Absence of a pathway hit may simply mean the panel does not cover that pathway's genes.",
    "_provenance": {
-    "generated_utc": "2026-08-30T16:25:22+00:00",
-    "git_commit": "b4e6d1b",
+    "generated_utc": "2026-08-30T17:20:27+00:00",
+    "git_commit": "526fe31",
     "git_dirty": true,
     "python": "3.11.16",
     "argv": "scripts/pathway_map.py --variants results_example/dna/variants_tiered.tsv --fusions results_example/rna/fusions_summary.tsv -o results_example/pathways/pathway_hits"
@@ -3771,39 +3777,111 @@
   "trials": [
    {
     "matched_gene": "BRAF",
-    "nct_id": "NCT05503797",
-    "title": "A Study to Assess the Efficacy and Safety of FORE8394 in Participants With Cancer Harboring BRAF Alterations",
+    "nct_id": "NCT03340506",
+    "title": "Dabrafenib and/or Trametinib Rollover Study",
+    "phase": "PHASE4",
+    "status": "RECRUITING",
+    "conditions": "Melanoma,Non Small Cell Lung Cancer,Solid Tumor,Rare Cancers,High Grade Glioma",
+    "url": "https://clinicaltrials.gov/study/NCT03340506"
+   },
+   {
+    "matched_gene": "EGFR",
+    "nct_id": "NCT06068049",
+    "title": "OSIREAL - Osimertinib RWE on EGFRm NSCLC in Spain",
+    "phase": "",
+    "status": "RECRUITING",
+    "conditions": "Non-small Cell Lung Cancer",
+    "url": "https://clinicaltrials.gov/study/NCT06068049"
+   },
+   {
+    "matched_gene": "EGFR",
+    "nct_id": "NCT06775743",
+    "title": "ORIENT-31 Regimen in Combination With SBRT for EGFR-mutant Metastatic NSCLC After First-line Third-generation EGFR-TKIs",
     "phase": "PHASE2",
     "status": "RECRUITING",
-    "conditions": "Cancer Harboring BRAF Alterations,HGG,LGG,Solid Tumors",
-    "url": "https://clinicaltrials.gov/study/NCT05503797"
+    "conditions": "NSCLC (Advanced Non-small Cell Lung Cancer),EGFR Mutation Positive Advanced Non Small Cell Lung Cancer",
+    "url": "https://clinicaltrials.gov/study/NCT06775743"
    },
    {
-    "matched_gene": "KRAS",
-    "nct_id": "NCT05874414",
-    "title": "Combination of GNS561 and Trametinib in Patients With Advanced KRAS Mutated Cholangiocarcinoma",
+    "matched_gene": "EGFR",
+    "nct_id": "NCT06706076",
+    "title": "A Study of BH-30643 in Subjects With Locally Advanced or Metastatic NSCLC Harboring EGFR and/or HER2 Mutations",
     "phase": "PHASE1,PHASE2",
     "status": "RECRUITING",
-    "conditions": "Cholangiocarcinoma",
-    "url": "https://clinicaltrials.gov/study/NCT05874414"
+    "conditions": "NSCLC (Advanced Non-small Cell Lung Cancer)",
+    "url": "https://clinicaltrials.gov/study/NCT06706076"
+   },
+   {
+    "matched_gene": "EGFR",
+    "nct_id": "NCT07361237",
+    "title": "A Phase l Clinical Study to Evalute the Safety,Tolerability,Pharmacokinetic Characteristics,and Preliminary Anti-tumor Efficacy of HJ-004-02 Tablets in Patients",
+    "phase": "PHASE1",
+    "status": "RECRUITING",
+    "conditions": "NSCLC (Advanced Non-small Cell Lung Cancer)",
+    "url": "https://clinicaltrials.gov/study/NCT07361237"
    },
    {
     "matched_gene": "KRAS",
-    "nct_id": "NCT07594067",
-    "title": "TCR1188-ABC Cells in KRAS-mutated Cancers",
-    "phase": "PHASE1",
+    "nct_id": "NCT06793215",
+    "title": "A Study Evaluating the Efficacy and Safety of Divarasib and Pembrolizumab Versus Pembrolizumab and Pemetrexed and Carboplatin or Cisplatin in Participants With ",
+    "phase": "PHASE3",
     "status": "RECRUITING",
-    "conditions": "Cholangiocarcinoma,Colorectal Cancer,Non-Small Cell Lung Cancer,Pancreatic Adenocarcinoma",
-    "url": "https://clinicaltrials.gov/study/NCT07594067"
+    "conditions": "Non-Small Cell Lung Cancer,KRAS G12C Lung Cancer",
+    "url": "https://clinicaltrials.gov/study/NCT06793215"
    },
    {
     "matched_gene": "KRAS",
-    "nct_id": "NCT07458347",
-    "title": "A Phase 1 Dose-escalation Trial of KST-6051 in Participants With Advanced Solid Tumors With Kirsten Rat Sarcoma Viral Oncogene Homolog (KRAS) Mutation",
+    "nct_id": "NCT07094113",
+    "title": "AMG 410 Alone and in Combination With Other Agents in Participants With KRAS Altered Advanced or Metastatic Solid Tumors",
     "phase": "PHASE1",
     "status": "RECRUITING",
-    "conditions": "KRAS-mutant Non-small Cell Lung Cancer (NSCLC),KRAS-mutant Pancreatic Ductal Adenocarcinoma (PDAC),KRAS-mutant Colorecta",
-    "url": "https://clinicaltrials.gov/study/NCT07458347"
+    "conditions": "KRAS Altered Advanced or Metastatic Solid Tumors",
+    "url": "https://clinicaltrials.gov/study/NCT07094113"
+   },
+   {
+    "matched_gene": "KRAS",
+    "nct_id": "NCT06162221",
+    "title": "Study of RAS(ON) Inhibitors in Patients With Advanced RAS-mutated NSCLC",
+    "phase": "PHASE1,PHASE2",
+    "status": "RECRUITING",
+    "conditions": "Non-Small Cell Lung Cancer, NSCLC,KRAS, NRAS, HRAS-mutated NSCLC,KRAS G12C-mutated Solid Tumors, Lung Cancer,Lung Cancer",
+    "url": "https://clinicaltrials.gov/study/NCT06162221"
+   },
+   {
+    "matched_gene": "KRAS",
+    "nct_id": "NCT06917079",
+    "title": "BBO-11818 in Adult Subjects With KRAS Mutant Cancer",
+    "phase": "PHASE1",
+    "status": "RECRUITING",
+    "conditions": "Non-Small Cell Lung Cancer,NSCLC,PDAC - Pancreatic Ductal Adenocarcinoma,CRC (Colorectal Cancer),Metastatic Non-Small Lu",
+    "url": "https://clinicaltrials.gov/study/NCT06917079"
+   },
+   {
+    "matched_gene": "TP53",
+    "nct_id": "NCT04585750",
+    "title": "The Evaluation of PC14586 in Patients With Advanced Solid Tumors Harboring a TP53 Y220C Mutation (PYNNACLE)",
+    "phase": "PHASE1,PHASE2",
+    "status": "RECRUITING",
+    "conditions": "Advanced Solid Tumor,Advanced Malignant Neoplasm,Metastatic Cancer,Metastatic Solid Tumor,Lung Cancer,Ovarian Cancer,End",
+    "url": "https://clinicaltrials.gov/study/NCT04585750"
+   },
+   {
+    "matched_gene": "TP53",
+    "nct_id": "NCT05877599",
+    "title": "A Study of NT-175 in Adult Participants With Advanced Malignancies That Are Positive for HLA-A*02:01 and the TP53 R175H Mutation",
+    "phase": "PHASE1",
+    "status": "RECRUITING",
+    "conditions": "Non-small Cell Lung Cancer,Head and Neck Squamous Cell Carcinoma,Colorectal Carcinoma,Pancreatic Adenocarcinoma,Breast C",
+    "url": "https://clinicaltrials.gov/study/NCT05877599"
+   },
+   {
+    "matched_gene": "TP53",
+    "nct_id": "NCT06369181",
+    "title": "Neuroendocrine Transformation in RB1/TP53 Inactivated NSCLC",
+    "phase": "",
+    "status": "RECRUITING",
+    "conditions": "Neuroendocrine Carcinoma,Non-small Cell Lung Cancer,Histology Transformation",
+    "url": "https://clinicaltrials.gov/study/NCT06369181"
    }
   ]
  },
@@ -3813,8 +3891,8 @@
  },
  "disclaimer": "Educational output of a student pipeline. Not a clinical report and not a basis for medical decisions. Somatic findings only; no identifying information.",
  "_provenance": {
-  "generated_utc": "2026-08-30T16:25:22+00:00",
-  "git_commit": "b4e6d1b",
+  "generated_utc": "2026-08-30T17:20:27+00:00",
+  "git_commit": "526fe31",
   "git_dirty": true,
   "python": "3.11.16",
   "argv": "scripts/build_summary_json.py --results results_example --sample EXAMPLE01"

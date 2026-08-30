@@ -13,6 +13,9 @@ library:
   umi_skip: 14
   read2_starts_with_primer: true
 cancer_type: "Cholangiocarcinoma"      # from the laboratory report; drives the evidence/trial queries
+# The synthetic example carries lung-flavoured drivers (KRAS G12C, EGFR L858R, BRAF V600E), so it is tiered
+# against that diagnosis - otherwise every variant would be capped at Tier II for the wrong reason.
+example_cancer_type: "Lung Non-small Cell Carcinoma"
 tumour_content: 0.70                    # pathology estimate - a somatic clonal variant caps out near 0.35 VAF
 panel:
   dna_name: "Archer VariantPlex Expanded Solid Tumor (76 genes; SNV/indel, CNV, MSI)"

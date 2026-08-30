@@ -1,9 +1,11 @@
 {
  "tier_counts": {
-  "I": 4,
-  "II": 2
+  "I": 3,
+  "II": 3
  },
  "n_somatic": 6,
+ "cancer_type": "Lung Non-small Cell Carcinoma",
+ "variants_with_evidence_in_this_tumour_type": 3,
  "systems": {
   "AMP/ASCO/CAP": "Li MM et al. 2017 J Mol Diagn 19(1):4-23",
   "ESCAT": "Mateo J et al. 2018 Ann Oncol 29(9):1895-1902"
@@ -62,12 +64,13 @@
    ]
   }
  },
+ "disease_context_rule": "AMP/ASCO/CAP Tier I requires evidence in the patient's own tumour type; identical evidence from a different tumour type is capped at Tier II. Free knowledge bases cover tumour types unevenly, so a variant can be genuinely Tier I under a guideline (e.g. NCCN) while the open evidence available here only supports Tier II.",
  "disclaimer": "Educational output. Tier assignment here is automated and does not replace expert review or a clinical molecular tumour board.",
  "_provenance": {
-  "generated_utc": "2026-08-30T16:25:21+00:00",
-  "git_commit": "b4e6d1b",
+  "generated_utc": "2026-08-30T17:20:27+00:00",
+  "git_commit": "526fe31",
   "git_dirty": true,
   "python": "3.11.16",
-  "argv": "scripts/tiering.py --variants results_example/dna/variants_filtered.tsv --evidence results_example/evidence/annot_evidence.tsv -o results_example/dna/variants_tiered"
+  "argv": "scripts/tiering.py --variants results_example/dna/variants_filtered.tsv --evidence results_example/evidence/annot_evidence.tsv --cancer-type Lung Non-small Cell Carcinoma -o results_example/dna/variants_tiered"
  }
 }

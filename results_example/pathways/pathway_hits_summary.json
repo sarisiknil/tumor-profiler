@@ -16,8 +16,8 @@
  "method": "Membership mapping against Sanchez-Vega et al. 2018 (Cell) curated pathway gene lists plus supplementary DNA-repair and chromatin sets.",
  "caveat": "This is not an enrichment analysis: the gene universe is defined by the panel, and a single sample provides no null distribution. Absence of a pathway hit may simply mean the panel does not cover that pathway's genes.",
  "_provenance": {
-  "generated_utc": "2026-08-30T16:25:22+00:00",
-  "git_commit": "b4e6d1b",
+  "generated_utc": "2026-08-30T17:20:27+00:00",
+  "git_commit": "526fe31",
   "git_dirty": true,
   "python": "3.11.16",
   "argv": "scripts/pathway_map.py --variants results_example/dna/variants_tiered.tsv --fusions results_example/rna/fusions_summary.tsv -o results_example/pathways/pathway_hits"

@@ -10,13 +10,13 @@
   "TP53"
  ],
  "oncokb_token_present": false,
- "cancer_type": "Cholangiocarcinoma",
+ "cancer_type": "Lung Non-small Cell Carcinoma",
  "note": "OncoKB annotations are licensed for academic use and must not be redistributed; they are written under results/ which is git-ignored.",
  "_provenance": {
-  "generated_utc": "2026-08-30T16:25:21+00:00",
-  "git_commit": "b4e6d1b",
+  "generated_utc": "2026-08-30T17:20:27+00:00",
+  "git_commit": "526fe31",
   "git_dirty": true,
   "python": "3.11.16",
-  "argv": "scripts/annotate_evidence.py --variants results_example/dna/variants_filtered.tsv --cancer-type Cholangiocarcinoma -o results_example/evidence/annot"
+  "argv": "scripts/annotate_evidence.py --variants results_example/dna/variants_filtered.tsv --cancer-type Lung Non-small Cell Carcinoma -o results_example/evidence/annot"
  }
 }

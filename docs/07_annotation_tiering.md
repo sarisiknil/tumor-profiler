@@ -30,6 +30,14 @@ significance, dbSNP identifier and the SIFT/PolyPhen predictions.
 The two disagree on purpose, and seeing where they disagree is the point: *BRAF* V600E is tier I in melanoma and
 tier II in a tumour type where the drug is not approved — the same molecule, a different decision.
 
+**The disease context is part of the tier, so the pipeline enforces it.** Evidence is only allowed to support
+Tier I if it comes from the patient's own tumour type; identical evidence from a different tumour type is capped
+at Tier II, and the rationale column says which disease each evidence item came from. This has a practical
+consequence worth understanding: a variant can be genuinely Tier I under a clinical guideline while the *freely
+available* evidence only supports Tier II, simply because the open knowledge bases cover tumour types unevenly.
+When that happens the honest output is Tier II with the reason attached — not a Tier I the evidence does not
+carry.
+
 **How it can mislead.** Automated tiering reproduces the *evidence*, not the judgement of a molecular tumour
 board. It does not know the patient's prior treatments, cannot weigh a resistance mutation against a
 sensitivity one, and inherits every gap and lag in the underlying databases.
