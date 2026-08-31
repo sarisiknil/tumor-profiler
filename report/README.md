@@ -49,13 +49,24 @@ diacritics, as APA requires).
 
 ## The other two deliverables
 
-The guidelines require three files, not one. Still to produce:
+All three required files are generated from the same results, so they cannot disagree with each other:
 
-- **Presentation** (`XX395_Presentation_...pptx`), 10–15 minutes, Times New Roman: motivation and problem,
-  objective, methods and tools, outcomes and deliverables, results. A single large poster-style slide is an
-  accepted alternative.
-- **Digest** (`XX395_Digest_...pptx`), one slide: project title, company, duration, your name, then project
-  objectives and expectations followed by a numbered list of outcomes.
+```bash
+python3 report/build_report.py --results results     # the report
+python3 report/build_slides.py --results results     # presentation and digest
+```
+
+- **`BIO395_Presentation_DRAFT.pptx`** — 13 slides, Times New Roman, 16:9. Covers motivation, objective,
+  methods and tools, outcomes and results, in the order the guidelines specify. Two placeholders (title-slide
+  details, repository URL). At roughly one minute per slide it lands inside the 10–15 minute window; rehearse
+  and cut slide 6 or 11 first if you run long.
+- **`BIO395_Digest_DRAFT.pptx`** — the single slide the guidelines describe: title, company, duration and
+  author, then project objectives and six numbered outcomes. Three placeholders, all on the header lines.
+
+The presentation deliberately spends its middle third on the two findings that make the project worth
+presenting — the exact agreement with the accredited laboratory, and the single chemistry artefact that
+explains both the excess DNA calls and all twenty candidate fusions. If you need to shorten it, cut breadth,
+not those.
 
 ## Figures worth adding
 
