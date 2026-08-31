@@ -37,6 +37,39 @@ if amb:
         icon="⚠️",
     )
 
+conc = R.get("concordance")
+if isinstance(conc, pd.DataFrame) and not conc.empty:
+    st.subheader("Agreement with the accredited laboratory")
+    hit = conc[conc["status"] == "CONCORDANT"]
+    for _, r in hit.iterrows():
+        st.success(
+            f"**{r['gene']} {r['variant']}** — reported by the laboratory at VAF **{r['lab_vaf']}**, "
+            f"measured here at **{r['our_vaf']}** by {r.get('our_callers', '')}. "
+            f"Laboratory tier {r['lab_tier']}, ours {r['our_tier']}.", icon="✅")
+    st.dataframe(conc[["status", "gene", "variant", "lab_vaf", "our_vaf", "lab_tier", "our_tier", "note"]],
+                 width='stretch', hide_index=True)
+    teaching_note(
+        "Why the tiers differ",
+        "The laboratory cited a clinical guideline recording an approved therapy for this alteration in this "
+        "tumour type. The open knowledge bases used here hold level-A evidence for the same variant only in "
+        "*other* tumour types, and the tiering rule refuses Tier I on evidence from a different disease. The "
+        "gap measures the uneven tumour-type coverage of free evidence sources, not a disagreement about "
+        "biology.")
+
+art = filt[filt.get("artefact_risk", pd.Series(dtype=str)).isin(["high", "possible"])] \
+    if "artefact_risk" in filt.columns else pd.DataFrame()
+if not art.empty:
+    st.subheader("Artefact screening")
+    st.warning(
+        f"**{len(art)} of {(filt['class'] == 'SOMATIC_LIKELY').sum()} somatic candidates carry an artefact "
+        "flag.** Two patterns are only visible across the call set as a whole: several apparently independent "
+        "mutations within a few tens of bases, and dominance of a single substitution class. Both point to "
+        "cross-priming between amplicons amplified in the same reaction rather than to mutational processes.",
+        icon="⚠️")
+    st.dataframe(art[["gene", "hgvsp", "vaf", "artefact_risk", "artefact_flags"]],
+                 width='stretch', hide_index=True,
+                 column_config={"artefact_flags": st.column_config.TextColumn("why flagged", width="large")})
+
 if isinstance(tier, pd.DataFrame) and not tier.empty:
     st.subheader("Clinically significant variants")
     show = tier.copy()
@@ -49,7 +82,7 @@ if isinstance(tier, pd.DataFrame) and not tier.empty:
     )
     fig.update_layout(height=90 + 42 * len(show), margin=dict(l=10, r=10, t=30, b=10),
                       xaxis_range=[0, max(0.6, float(show["vaf"].max() or 0.6) * 1.15)])
-    st.plotly_chart(fig, use_container_width=True)
+    st.plotly_chart(fig, width='stretch')
     st.caption("The horizontal position is the fraction of DNA molecules carrying the mutation. Variants near "
                "the highest fraction were probably present in the founding tumour clone; low-fraction variants "
                "are either subclonal (present in part of the tumour) or diluted by normal cells in the biopsy.")
@@ -57,7 +90,7 @@ if isinstance(tier, pd.DataFrame) and not tier.empty:
     st.dataframe(
         show[["gene", "hgvsp", "consequence", "amp_tier", "escat", "vaf", "depth", "n_callers",
               "therapies", "tier_rationale"]],
-        use_container_width=True, hide_index=True,
+        width='stretch', hide_index=True,
         column_config={"hgvsp": st.column_config.TextColumn("protein change"),
                        "amp_tier": st.column_config.TextColumn("tier", width="small"),
                        "vaf": st.column_config.NumberColumn("VAF", format="%.3f"),
@@ -83,7 +116,7 @@ klass = st.multiselect("Show classes", sorted(filt["class"].unique()), default=s
 st.dataframe(filt[filt["class"].isin(klass)][
     ["gene", "hgvsp", "consequence", "class", "germline_ambiguous", "vaf", "depth", "alt_reads",
      "n_callers", "callers", "gnomad_af_max", "clinvar_sig", "reasons"]],
-    use_container_width=True, hide_index=True)
+    width='stretch', hide_index=True)
 
 bm = R.get("biomarkers") or {}
 if bm:
@@ -104,7 +137,7 @@ if bm:
         fig = go.Figure(go.Bar(x=list(spec.keys()), y=list(spec.values()), marker_color="#3f6fa8"))
         fig.update_layout(height=240, margin=dict(l=10, r=10, t=30, b=10),
                           title="Substitution spectrum of somatic SNVs", yaxis_title="count")
-        st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(fig, width='stretch')
         ff = bm.get("ffpe_indicator", {})
         st.caption(f"C>T / G>A share: **{ff.get('C>T_or_G>A_fraction_of_snvs')}** "
                    f"({ff.get('low_vaf_C>T_count')} of them below 10 % VAF). {ff.get('note','')}")

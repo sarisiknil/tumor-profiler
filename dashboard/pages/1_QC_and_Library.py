@@ -53,7 +53,7 @@ for arm, key in (("DNA", "qc_dna"), ("RNA", "qc_rna")):
                           title=f"{arm} Read 1 — base composition by position",
                           xaxis_title="position in read", yaxis_title="fraction",
                           legend=dict(orientation="h", y=1.15))
-        st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(fig, width='stretch')
         st.caption("Positions 1–12 are random (all four bases ~25 %): that is the unique molecular identifier. "
                    "The block that follows is a single fixed base per position: the adapter's common region. "
                    "Everything after it is genomic or transcript sequence.")
@@ -85,8 +85,8 @@ if isinstance(prim, pd.DataFrame) and not prim.empty:
     fig.update_layout(height=260, margin=dict(l=10, r=10, t=30, b=10),
                       title="Cumulative share of reads explained by the top-N primer candidates",
                       xaxis_title="primer candidates (ranked)", yaxis_title="cumulative fraction of reads")
-    st.plotly_chart(fig, use_container_width=True)
-    st.dataframe(prim.head(20), use_container_width=True, hide_index=True)
+    st.plotly_chart(fig, width='stretch')
+    st.dataframe(prim.head(20), width='stretch', hide_index=True)
 
 merge = R.get("merge_summary") or {}
 if merge:

@@ -29,13 +29,13 @@ if isinstance(pw, pd.DataFrame) and not pw.empty:
                      text="altered_genes", labels={"n_altered": "altered genes", "pathway": ""})
         fig.update_traces(marker_color="#3f6fa8", textposition="outside", cliponaxis=False)
         fig.update_layout(height=110 + 40 * len(hit), margin=dict(l=10, r=120, t=30, b=10))
-        st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(fig, width='stretch')
         for _, r in hit.iterrows():
             with st.expander(f"{r['pathway']} — {r['n_altered']} of {r['n_genes_in_set']} genes altered"):
                 st.markdown(r["alterations"] or "—")
                 st.caption(r["source"])
     st.dataframe(pw[["pathway", "n_altered", "n_genes_in_set", "altered_genes"]],
-                 use_container_width=True, hide_index=True)
+                 width='stretch', hide_index=True)
 
 teaching_note(
     "Read this as a map, not as a statistic",

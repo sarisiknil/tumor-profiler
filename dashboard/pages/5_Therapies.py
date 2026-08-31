@@ -26,7 +26,7 @@ if isinstance(ev, pd.DataFrame) and not ev.empty:
     view = ev[ev["level"].isin(lvl)] if lvl else ev
     st.dataframe(view[["gene", "alteration", "source", "type", "level", "significance", "direction",
                        "therapies", "disease", "url"]],
-                 use_container_width=True, hide_index=True,
+                 width='stretch', hide_index=True,
                  column_config={"url": st.column_config.LinkColumn("source", display_text="open")})
     st.caption("CIViC evidence levels run from A (validated in clinical practice) through B (clinical trial), "
                "C (case study), D (preclinical) to E (inferential). OncoKB levels 1–2 mark standard-of-care "
@@ -38,12 +38,12 @@ if isinstance(ev, pd.DataFrame) and not ev.empty:
     if "disease" in ev.columns:
         cross = ev.groupby(["gene", "alteration", "disease"]).size().reset_index(name="evidence items")
         st.dataframe(cross.sort_values("evidence items", ascending=False).head(30),
-                     use_container_width=True, hide_index=True)
+                     width='stretch', hide_index=True)
 
 dr = R.get("druggability")
 if isinstance(dr, pd.DataFrame) and not dr.empty:
     st.subheader("Drug–gene interactions (DGIdb)")
-    st.dataframe(dr.head(60), use_container_width=True, hide_index=True)
+    st.dataframe(dr.head(60), width='stretch', hide_index=True)
     st.caption("A drug–gene interaction is a much weaker statement than clinical evidence: it means somebody "
                "has reported that a compound acts on this gene product, not that it helps this patient.")
 
@@ -51,7 +51,7 @@ tr = R.get("trials")
 if isinstance(tr, pd.DataFrame) and not tr.empty:
     st.subheader("Recruiting clinical trials mentioning these genes")
     st.dataframe(tr[["matched_gene", "nct_id", "title", "phase", "status", "url"]],
-                 use_container_width=True, hide_index=True,
+                 width='stretch', hide_index=True,
                  column_config={"url": st.column_config.LinkColumn("registry", display_text="open")})
     st.caption("Retrieved live from ClinicalTrials.gov. Eligibility depends on far more than a gene name.")
 

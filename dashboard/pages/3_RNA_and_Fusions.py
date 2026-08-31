@@ -23,16 +23,29 @@ st.markdown(
 fus = R.get("fusions")
 fsum = R.get("fusion_summary") or {}
 if isinstance(fus, pd.DataFrame) and not fus.empty:
-    st.subheader("Detected fusions")
+    st.subheader("Candidate fusions, after artefact screening")
+    flagged = (fus["artefact_risk"] != "not flagged").sum() if "artefact_risk" in fus.columns else 0
+    if flagged == len(fus) and len(fus):
+        st.error(
+            f"**All {len(fus)} candidate fusions carry an artefact flag.** They are the paralogous FGFR "
+            "family joined in every possible combination, in both orientations, on a handful of reads each — "
+            "the signature of cross-priming between genes the assay amplifies in the same tube. The "
+            "accredited laboratory reported no fusion, and after screening neither does this pipeline. "
+            "An unscreened reading would have reported an FGFR2 fusion, the single most consequential false "
+            "positive available in this tumour type.", icon="🚫")
+    elif flagged:
+        st.warning(f"{flagged} of {len(fus)} candidates carry an artefact flag.", icon="⚠️")
+    cols = [c for c in ["fusion", "artefact_risk", "confidence", "reading_frame", "targetable",
+                        "support_total", "artefact_reasons", "breakpoint1", "breakpoint2", "notes"]
+            if c in fus.columns]
     st.dataframe(
-        fus[["fusion", "confidence", "reading_frame", "targetable", "support_total",
-             "breakpoint1", "breakpoint2", "retained_domains", "notes"]],
-        use_container_width=True, hide_index=True,
+        fus[cols],
+        width='stretch', hide_index=True,
         column_config={"support_total": st.column_config.NumberColumn("supporting reads"),
                        "notes": st.column_config.TextColumn("interpretation", width="large")},
     )
     for _, f in fus.iterrows():
-        if f.get("targetable"):
+        if f.get("targetable") and f.get("artefact_risk", "not flagged") == "not flagged":
             st.success(f"**{f['fusion']}** involves {f['targetable']}, a kinase with approved inhibitors. "
                        f"Confidence: {f['confidence']}; {f['support_total']} supporting reads. "
                        "A finding like this would need orthogonal confirmation (FISH, IHC or RT-PCR) before "
@@ -45,7 +58,7 @@ st.divider()
 sk = R.get("exon_skipping")
 if isinstance(sk, pd.DataFrame) and not sk.empty:
     st.subheader("Exon-skipping events")
-    st.dataframe(sk, use_container_width=True, hide_index=True)
+    st.dataframe(sk, width='stretch', hide_index=True)
     st.caption("Fusion callers do not look for exon skipping — it is a splicing change inside a single gene, "
                "not a join between two genes. MET exon 14 skipping is the clinically important example: it is "
                "targetable, and RNA detects it far more reliably than DNA, because the causal DNA variants are "

@@ -51,6 +51,7 @@ def load_results(results_dir: str | None = None) -> dict:
         "trials": "evidence/annot_trials.tsv",
         "druggability": "evidence/annot_druggability.tsv",
         "primers": "primers/gsp2_DNA.tsv",
+        "concordance": "validation/concordance.tsv",
     }.items():
         p = root / rel
         if p.exists() and p.stat().st_size > 0:
