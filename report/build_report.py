@@ -61,6 +61,16 @@ def setup(doc):
         h.paragraph_format.space_after = Pt(6)
 
 
+def running_head(doc, text):
+    """The guidelines require a running head in the page header as well as a page number in the footer."""
+    hp = doc.sections[0].header.paragraphs[0]
+    hp.alignment = WD_ALIGN_PARAGRAPH.RIGHT
+    hp.paragraph_format.line_spacing = 1.0
+    r = hp.add_run(text)
+    r.font.name = "Times New Roman"
+    r.font.size = Pt(10)
+
+
 def page_numbers(doc):
     p = doc.sections[0].footer.paragraphs[0]
     p.alignment = WD_ALIGN_PARAGRAPH.CENTER
@@ -137,6 +147,14 @@ def table(doc, headers, rows, caption=None, widths=None):
 
 
 # --------------------------------------------------------------------------------------- content
+def _r2(v, places=2):
+    """Round a value for display. The guidelines ask for no more decimal places than necessary."""
+    try:
+        return f"{float(v):.{places}f}"
+    except (TypeError, ValueError):
+        return v
+
+
 def build(results_dir, out_path):
     R = Path(results_dir)
     S = jload(R / "summary.json")
@@ -165,6 +183,7 @@ def build(results_dir, out_path):
     doc = Document()
     setup(doc)
     page_numbers(doc)
+    running_head(doc, "DNA\u2013RNA TUMOUR PROFILING PIPELINE")
 
     # ------------------------------------------------------------------ title page
     for _ in range(3):
@@ -320,7 +339,7 @@ def build(results_dir, out_path):
          "is reliable, and agreement between independent callers should be used as the filter.")
     para(doc,
          "Formalin fixation deaminates cytosine and produces characteristic C>T and G>A changes at low allele "
-         "fraction (Do and Dobrovic, 2015). Diossy et al. (2021) show that strand-orientation scoring "
+         "fraction (Do and Dobrovic, 2015). D\u00edossy et al. (2021) show that strand-orientation scoring "
          "identifies such artefacts, and — importantly for how results are presented — argue that when an "
          "individual targetable mutation is at stake the artefact probability should be reported alongside "
          "the call rather than used to delete it.")
@@ -329,7 +348,12 @@ def build(results_dir, out_path):
          "AMP/ASCO/CAP recommendation, sorts variants into four tiers by strength of clinical evidence, with "
          "Tier I reserved for an approved therapy or professional guideline in the patient's own tumour type. "
          "Mateo et al. (2018) propose ESCAT, which instead asks how ready a target is for routine use. The "
-         "two disagree by design, and the pipeline reports both.")
+         "two disagree by design, and the pipeline reports both. The evidence behind those tiers comes from "
+         "curated knowledge bases: CIViC (Griffith et al., 2017), which is released under a public-domain "
+         "licence and can therefore be redistributed, and OncoKB (Chakravarty et al., 2017), which is free "
+         "for academic use but whose annotations may not be republished. Nakken et al. (2018) show what an "
+         "integrated open interpretation report of this kind looks like in practice, and their Personal "
+         "Cancer Genome Reporter was the model for the output produced here.")
     para(doc,
          "For the RNA arm, Uhrig et al. (2021) describe Arriba, the fusion caller used here, and Haas et al. "
          "(2019) benchmark twenty-three callers on whole-transcriptome data. Neither is directly transferable "
@@ -390,7 +414,7 @@ def build(results_dir, out_path):
          "example mode everything runs locally on a synthetic dataset built over a small extract of the real "
          "human reference, which is what continuous integration executes. The split exists for a concrete "
          "reason: aligning to the human genome needs roughly 6 GB of RAM for BWA and about 31 GB for STAR, "
-         "while the machine available had 8 GB.")
+         "while the machine available had 8 GB. Table 1 lists the stages and where each executes.")
     table(doc,
           ["Stage", "Tool", "Where it runs"],
           [["Read-structure and primer inference", "project scripts (pure Python)", "laptop"],
@@ -522,7 +546,8 @@ def build(results_dir, out_path):
          f"{merged.get('per_caller_records', {}).get('mutect2', 0):,}, "
          f"{merged.get('per_caller_records', {}).get('lofreq', 0):,} and "
          f"{merged.get('per_caller_records', {}).get('freebayes', 0):,} records respectively, merging to "
-         f"{merged.get('merged_variants', 0):,} distinct positions.")
+         f"{merged.get('merged_variants', 0):,} distinct positions. Their agreement is summarised in "
+         "Table 2.")
     ba = merged.get("by_agreement", {})
     table(doc, ["Callers in agreement", "Variants"],
           [[k, f"{v:,}"] for k, v in sorted(ba.items())],
@@ -540,7 +565,7 @@ def build(results_dir, out_path):
          "as \"benign, pathogenic\" must not be read as benign. Variants that are heterozygous, rare and "
          "pathogenic in a cancer-predisposition gene are flagged as unresolvable rather than assigned, "
          "because a tumour-only assay genuinely cannot decide and an inherited finding has consequences "
-         "beyond the patient.")
+         "beyond the patient. Table 3 gives the resulting classification.")
     table(doc, ["Classification", "Variants"],
           [[k.replace("_", " ").title(), f"{v:,}"] for k, v in counts.items()],
           caption="Table 3. Classification of the merged variant calls.")
@@ -560,6 +585,17 @@ def build(results_dir, out_path):
          + f"In total {filt.get('somatic_flagged_artefact', 0)} of {counts.get('SOMATIC_LIKELY', 0)} "
          + f"candidates carried at least one flag, leaving {filt.get('somatic_unflagged', 0)} unflagged. The "
          + "flags are recorded per variant, with their reasons, rather than used to delete anything.")
+
+    para(doc,
+         "Three observations identify the mechanism behind those flags, and they point the same way. The "
+         "substitution spectrum of the somatic candidates is dominated by one class and its reverse "
+         "complement. Ten of the calls sit within two hundred bases of another, four of them inside a "
+         "thirty-five base window in a single gene, which is not a pattern independent mutational events "
+         "produce. And the same explanation \u2014 cross-priming between amplicons amplified together in one "
+         "reaction, generating chimeric molecules whose mismatches are carried in the reads themselves "
+         "\u2014 accounts both for this and for the pseudo-fusions described in Section 4.5.7, where genes "
+         "primed in the same tube were joined in every possible pairwise combination. The DNA and RNA arms "
+         "show one artefact with two faces.")
 
     doc.add_heading("4.5.6 Annotation, tiering and biomarkers", level=3)
     para(doc,
@@ -585,6 +621,11 @@ def build(results_dir, out_path):
              + f"Before screening the same calculation gave {tmb.get('tmb_per_mb_before_screening', 0)} per "
              + "megabase. Section 4.6 explains why neither figure should be believed, and what that reveals.")
     para(doc,
+         "Tumour mutational burden was reported with an explicit confidence interval because panel-based "
+         "estimates are not portable between assays: the Friends of Cancer Research harmonisation study "
+         "(Merino et al., 2020) showed that the same tumour yields materially different values on different "
+         "panels, so a bare number invites a comparison it cannot support.")
+    para(doc,
          "Microsatellite instability and mutational signatures were deliberately not computed. Normal-free "
          "microsatellite calling needs a panel-specific model or a baseline built from at least twenty normal "
          "samples; signature fitting needs on the order of one to two hundred mutations. Neither condition "
@@ -598,7 +639,9 @@ def build(results_dir, out_path):
          f"{ra.get('uniquely_mapped_pct', 0)} % uniquely mapped and {ra.get('chimeric_pct', 0)} % classified "
          "as chimeric — but this is a property of the chemistry rather than of the tumour. Read 1 begins at "
          "an arbitrary ligation point, Read 2 at a fixed primer, inserts are short, and the caller's preset "
-         "sets a deliberately permissive chimeric threshold.")
+         "sets a deliberately permissive chimeric threshold. The genes involved were then mapped onto the "
+         "canonical oncogenic pathways curated by Sanchez-Vega et al. (2018), reported in Appendix B as "
+         "membership rather than enrichment, since the gene universe is fixed by the assay.")
     para(doc,
          f"Arriba reported {fus.get('n_fusions', 0)} fusions and discarded a further 166,694. Laid side by "
          "side, the reported calls showed an unmistakable pattern: the same paralogous family joined in every "
@@ -622,16 +665,17 @@ def build(results_dir, out_path):
                       "splicing changes within a single gene.")
         para(doc,
              "MET exon 14 skipping is explicitly within the assay's scope and is targetable by approved "
-             "inhibitors. It was not detected, and the negative is meaningful rather than empty: the "
+             "inhibitors. As Table 4 shows, it was not detected, and the negative is meaningful rather than "
+         "empty: the "
              "canonical junctions flanking the exon carried thousands of reads, so the region was well "
              "covered and the event would have been visible had it been present.")
 
     # ------------------------------------------------------------------ 4.6 results
     doc.add_heading("4.6 Results", level=2)
     para(doc,
-         f"The pipeline ran to completion on the patient specimen. Against the accredited laboratory's "
-         f"report it recovered {val.get('concordant', 1)} of {val.get('reported_by_laboratory', 1)} reported "
-         f"variants and missed {val.get('missed', 0)}.")
+         f"The pipeline ran to completion on the patient specimen, recovering "
+         f"{val.get('concordant', 1)} of the {val.get('reported_by_laboratory', 1)} variants the accredited "
+         f"laboratory reported and missing {val.get('missed', 0)} (Table 5).")
     if hit:
         table(doc,
               ["", "Accredited laboratory", "This pipeline"],
@@ -642,50 +686,35 @@ def build(results_dir, out_path):
                ["Callers supporting", "vendor software", hit.get("our_callers", "")],
                ["Clinical tier", hit.get("lab_tier", ""), hit.get("our_tier", "")],
                ["Reference build", "GRCh37/hg19", "GRCh38"]],
-              caption="Table 5. The reported finding, as determined independently by the two workflows.")
+              caption="Table 5. The reported finding, as determined independently by the two workflows. "
+                      "Allele fractions are given to four decimal places here because the agreement at that "
+                      "precision is itself the result; elsewhere two decimals are used.")
         para(doc,
-             "The allele fractions agree to three decimal places, which is the "
-             "single most informative number in this report: two independent workflows, using different "
-             "aligners, different callers, different reference builds and different deduplication strategies, "
-             "measured the same quantity in the same specimen and obtained the same answer.")
-    para(doc, "Three differences remain, and each is informative.", spacing=1.5)
+             "The allele fractions agree to three decimal places. That is the single most informative result "
+             "here: two independent workflows, with different aligners, callers, reference builds and "
+             "deduplication strategies, measured the same quantity in the same specimen and agreed.")
     para(doc,
-         f"First, clinical tier. The laboratory assigned Tier I-A; this pipeline assigns "
-         f"{hit.get('our_tier','II')}. Both are defensible. The laboratory cited the NCCN Biliary Tract "
-         "guideline, which records an approved therapy for this alteration in this tumour type. The free "
-         "knowledge bases available here hold level-A evidence for the same variant only in other tumour "
-         "types, and the tiering rule correctly refuses to award Tier I on evidence from a different disease. "
-         "The gap is not a disagreement about biology; it measures the uneven tumour-type coverage of open "
-         "evidence sources, and it is the clearest argument in this project for why automated tiering "
-         "requires either curated commercial knowledge or expert review.")
+         "Three differences remain, and each is informative. First, clinical tier: the laboratory assigned "
+         f"Tier I-A, this pipeline {hit.get('our_tier','II')}. Both are defensible. The laboratory cited the "
+         "NCCN Biliary Tract guideline, which records an approved therapy for this alteration in this tumour "
+         "type, whereas the open knowledge bases available here hold level-A evidence for the same variant "
+         "only in other tumour types, and the tiering rule correctly refuses Tier I on evidence from a "
+         "different disease. The gap measures the uneven tumour-type coverage of open evidence sources rather "
+         "than any disagreement about biology, and it is this project's clearest argument for why automated "
+         "tiering needs curated commercial knowledge or expert review.")
     para(doc,
-         f"Second, the number of candidate variants. The pipeline classified "
-         f"{counts.get('SOMATIC_LIKELY', 0)} variants as likely somatic where the laboratory reported one. "
-         "Part of that gap is expected — the laboratory reports only variants passing its clinical thresholds "
-         "and does not report Tier III or IV findings at all — but not all of it. The substitution spectrum "
-         "of the somatic candidates is dominated by one class and its reverse complement, ten of the calls "
-         "sit within two hundred bases of another (four of them within a thirty-five base window in one "
-         "gene), and the same mechanism \u2014 cross-priming between amplicons amplified together in a "
-         "single reaction \u2014 accounts both for this and for the pseudo-fusions seen in the RNA arm, "
-         "where genes "
-         "primed in the same tube were joined in every possible pairwise combination. The DNA and RNA arms "
-         "show one artefact with two faces.")
-    if tmb:
-        para(doc,
-             "Third, and following directly from the second, the "
-             f"tumour mutational burden is not credible. Before artefact screening it computes to "
-             f"{tmb.get('tmb_per_mb_before_screening', 0)} mutations per megabase; after screening, to "
-             f"{tmb.get('tmb_per_mb', 0)}. Cholangiocarcinoma typically carries a few mutations per megabase, "
-             "so both figures remain far too high, and the assessable territory is in any case an order of "
-             "magnitude below the scale at which panel mutational burden is considered interpretable. The "
-             "value of the calculation here is diagnostic rather than clinical: it is the instrument that "
-             "reveals the residual artefacts, and the difference between the two figures measures how much "
-             "the screening removed. Reporting the number with its interval and its caveats, rather than "
-             "suppressing it, is what makes that inference possible.")
+         f"Second, the pipeline classified {counts.get('SOMATIC_LIKELY', 0)} variants as likely somatic where "
+         "the laboratory reported one. Part of that gap is expected, since the laboratory reports only "
+         "variants passing its clinical thresholds and does not report Tier III or IV findings at all; the "
+         "remainder is technical, and the evidence for that is set out in Section 4.5.5. Third, and following "
+         "from it, the tumour mutational burden is not credible at either "
+         f"{tmb.get('tmb_per_mb_before_screening', 0)} or {tmb.get('tmb_per_mb', 0)} mutations per megabase, "
+         "against the few per megabase typical of this tumour type. Its value here is diagnostic rather than "
+         "clinical: it is the instrument that reveals the residual artefacts.")
     para(doc,
-         "On the RNA side the two workflows agree on a negative: the laboratory reported no fusion, and after "
-         "artefact screening this pipeline reports none either, with the reasoning recorded for each of the "
-         "candidate calls. Microsatellite status was not determined by either workflow, for the same reason.")
+         "On the RNA side the two workflows agree on a negative: the laboratory reported no fusion and, after "
+         "artefact screening, neither does this pipeline, with the reasoning recorded per call. Neither "
+         "workflow could determine microsatellite status.")
     todo(doc, "If the pipeline is adopted or extended by the company after the internship, state that here, "
               "as the guidelines ask whether the project has been implemented.")
 
@@ -876,14 +905,16 @@ def build(results_dir, out_path):
     doc.add_page_break()
     doc.add_heading("9. APPENDICES", level=1)
     doc.add_heading("Appendix A. Alterations classified as likely somatic", level=2)
+    para(doc, "Table A1 lists every alteration classified as likely somatic, with its tier assignment.")
     rows = [[t.get("gene", ""), (t.get("hgvsp", "") or "").split(":")[-1], t.get("consequence", ""),
-             t.get("amp_tier", ""), t.get("escat", ""), t.get("vaf", ""), t.get("n_callers", "")]
+             t.get("amp_tier", ""), t.get("escat", ""), _r2(t.get("vaf", "")), t.get("n_callers", "")]
             for t in tiered]
     if rows:
         table(doc, ["Gene", "Protein change", "Consequence", "Tier", "ESCAT", "VAF", "Callers"], rows[:45],
               caption="Table A1. Variants classified as likely somatic, with tier assignments. The sample "
                       "identifier does not appear; the specimen is referred to by an alias throughout.")
     doc.add_heading("Appendix B. Oncogenic pathway membership", level=2)
+    para(doc, "Table B1 maps the altered genes onto the canonical oncogenic pathways.")
     prow = [[p_["pathway"], p_["n_altered"], p_["n_genes_in_set"], p_["altered_genes"]]
             for p_ in paths if int(p_.get("n_altered", 0) or 0)]
     if prow:
@@ -898,6 +929,7 @@ def build(results_dir, out_path):
          "without any patient data. Every JSON output carries a provenance block recording the generation "
          "time, the git commit and the command line.")
     todo(doc, "Insert the public repository URL once the code is pushed to GitHub.")
+    para(doc, "Table C1 records the provenance of the analysis reported here.")
     prov = S.get("_provenance", {})
     if prov:
         table(doc, ["Field", "Value"], [[k, str(v)] for k, v in prov.items()],

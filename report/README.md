@@ -7,6 +7,27 @@ number in it comes from `results/summary.json` and the tables underneath it. Reg
 python3 report/build_report.py --results results --out report/BIO395_FinalReport_DRAFT.docx
 ```
 
+## Guideline compliance
+
+`check_guidelines.py` audits the generated file against the faculty guidelines mechanically:
+
+```bash
+python3 report/check_guidelines.py report/BIO395_FinalReport_DRAFT.docx
+```
+
+It currently reports **0 failures, 20 passes** and three items that need a human:
+
+| Item | What to do |
+|---|---|
+| Section 4.6 estimated at ~1.2 pages against a 1-page limit | The estimate is from character counts, not real pagination. Open the file in Word and check; if it does run over, move Table 5 to the appendix and reference it from the text. |
+| Two values in Table 5 with four decimal places | Deliberate and explained in the caption — the agreement at that precision is the result. Every other table uses two. |
+| 23 `[TO COMPLETE]` placeholders | Only you can fill these. |
+
+What the audit verifies automatically: Times New Roman 12 pt, double spacing, 1-inch margins, page numbers in
+the footer, a running head in the header, abstract within 250 words, every section within its page limit, every
+table captioned *and* referred to in the text, every reference cited, and references alphabetised (ignoring
+diacritics, as APA requires).
+
 ## Before submitting
 
 1. Fill the **23 red `[TO COMPLETE]` placeholders** — company facts, supervisor, dates, and the personal
@@ -14,12 +35,27 @@ python3 report/build_report.py --results results --out report/BIO395_FinalReport
 2. Insert the automatic table of contents in Word (References → Table of Contents → Automatic Table). The
    headings already use the built-in Heading 1/2/3 styles.
 3. Rename to the required convention:
-   `BIO395_FinalReport_FIRSTNAME_LASTNAME_DDMonthYYYY.doc`
+   `XX395_FinalReport_FIRSTNAME_LASTNAME_DDMonthYYYY.doc`, where `XX` is your diploma programme
+   (BIO, CS, EE, IE, MAT, ME or DSA). The generated file is `.docx`; the guidelines ask for `.doc`, so
+   use Word's *Save As* and pick Word 97-2003 if your instructor takes the extension literally.
+   If you are submitting for two different internships, append `_Internship1` / `_Internship2`.
 4. Check the length against the section limits: company information ≤3 pages, each of 3.1–3.3 ≤1 page,
    related literature ≤3 pages, 4.5 details ≤10 pages, 4.6 results ≤1 page, section 5 ≤3 pages,
    conclusions and recommendations ≤1 page each.
-5. Confirm the file is under 10 MB and that no patient identifier appears anywhere. The specimen is referred
+5. Check that no section starts near the bottom of a page — the guidelines ask you to insert a page break
+   instead. This cannot be checked without real pagination.
+6. Confirm the file is under 10 MB and that no patient identifier appears anywhere. The specimen is referred
    to by an alias throughout and the laboratory's sample code is not used.
+
+## The other two deliverables
+
+The guidelines require three files, not one. Still to produce:
+
+- **Presentation** (`XX395_Presentation_...pptx`), 10–15 minutes, Times New Roman: motivation and problem,
+  objective, methods and tools, outcomes and deliverables, results. A single large poster-style slide is an
+  accepted alternative.
+- **Digest** (`XX395_Digest_...pptx`), one slide: project title, company, duration, your name, then project
+  objectives and expectations followed by a numbered list of outcomes.
 
 ## Figures worth adding
 
