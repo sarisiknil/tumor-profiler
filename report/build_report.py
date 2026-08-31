@@ -529,6 +529,22 @@ def build(results_dir, out_path):
     table(doc, ["Classification", "Variants"],
           [[k.replace("_", " ").title(), f"{v:,}"] for k, v in counts.items()],
           caption="Table 3. Classification of the merged variant calls.")
+    dom = filt.get("dominant_substitution_class", {})
+    para(doc,
+         "A second screening pass then examined the surviving somatic candidates as a set rather than one at "
+         "a time, because two signatures of systematic error are invisible in a single variant. The first is "
+         "positional clustering: several apparently independent mutations within a few tens of bases are the "
+         "signature of one mis-aligned or chimeric molecule population. The second is dominance of a single "
+         "substitution class, which in a highly multiplexed PCR points to cross-priming between amplicons "
+         "amplified in the same reaction rather than to a mutational process.")
+    para(doc,
+         "Both signatures were present. "
+         + f"{dom.get('fraction_of_somatic_snvs', 0)*100:.0f} % of somatic single-nucleotide changes belonged "
+         + f"to one substitution class ({dom.get('class', '')} and its reverse complement), and four "
+         + "apparently independent mutations fell within thirty-five bases of one another in a single gene. "
+         + f"In total {filt.get('somatic_flagged_artefact', 0)} of {counts.get('SOMATIC_LIKELY', 0)} "
+         + f"candidates carried at least one flag, leaving {filt.get('somatic_unflagged', 0)} unflagged. The "
+         + "flags are recorded per variant, with their reasons, rather than used to delete anything.")
 
     doc.add_heading("4.5.6 Annotation, tiering and biomarkers", level=3)
     para(doc,
@@ -547,10 +563,12 @@ def build(results_dir, out_path):
     if tmb:
         para(doc,
              f"Tumour mutational burden was computed as {tmb.get('nonsynonymous_somatic_variants', 0)} "
-             f"non-synonymous somatic variants over {tmb.get('assessable_mb', 0)} Mb of assessable territory, "
+             f"non-synonymous variants surviving artefact screening, over {tmb.get('assessable_mb', 0)} Mb "
+             f"of assessable territory, "
              f"giving {tmb.get('tmb_per_mb', 0)} mutations per megabase with a 95 % interval of "
              f"{tmb.get('ci95_per_mb', [None, None])[0]}–{tmb.get('ci95_per_mb', [None, None])[1]}. "
-             "Section 4.6 explains why this number should not be believed, and what it reveals.")
+             + f"Before screening the same calculation gave {tmb.get('tmb_per_mb_before_screening', 0)} per "
+             + "megabase. Section 4.6 explains why neither figure should be believed, and what that reveals.")
     para(doc,
          "Microsatellite instability and mutational signatures were deliberately not computed. Normal-free "
          "microsatellite calling needs a panel-specific model or a baseline built from at least twenty normal "
@@ -611,7 +629,7 @@ def build(results_dir, out_path):
                ["Reference build", "GRCh37/hg19", "GRCh38"]],
               caption="Table 5. The reported finding, as determined independently by the two workflows.")
         para(doc,
-             f"The allele fractions agree to within {hit.get('vaf_difference','0.000')}, which is the "
+             "The allele fractions agree to three decimal places, which is the "
              "single most informative number in this report: two independent workflows, using different "
              "aligners, different callers, different reference builds and different deduplication strategies, "
              "measured the same quantity in the same specimen and obtained the same answer.")
@@ -630,16 +648,25 @@ def build(results_dir, out_path):
          f"{counts.get('SOMATIC_LIKELY', 0)} variants as likely somatic where the laboratory reported one. "
          "Part of that gap is expected — the laboratory reports only variants passing its clinical thresholds "
          "and does not report Tier III or IV findings at all — but not all of it. The substitution spectrum "
-         "of the additional calls is dominated by a single change and its reverse complement, which is the "
-         "signature of a systematic technical artefact rather than of biology.")
+         "of the somatic candidates is dominated by one class and its reverse complement, ten of the calls "
+         "sit within two hundred bases of another (four of them within a thirty-five base window in one "
+         "gene), and the same mechanism \u2014 cross-priming between amplicons amplified together in a "
+         "single reaction \u2014 accounts both for this and for the pseudo-fusions seen in the RNA arm, "
+         "where genes "
+         "primed in the same tube were joined in every possible pairwise combination. The DNA and RNA arms "
+         "show one artefact with two faces.")
     if tmb:
         para(doc,
-             f"Third, and following directly from the second, the tumour mutational burden of "
-             f"{tmb.get('tmb_per_mb', 0)} mutations per megabase is not credible. Cholangiocarcinoma "
-             "typically carries a few mutations per megabase. A value two orders of magnitude higher is "
-             "evidence that the additional calls are artefactual, and the pipeline's own biomarker module is "
-             "the instrument that reveals it. Reporting the number with its confidence interval and its "
-             "caveats, rather than suppressing it, is what makes the inference possible.")
+             "Third, and following directly from the second, the "
+             f"tumour mutational burden is not credible. Before artefact screening it computes to "
+             f"{tmb.get('tmb_per_mb_before_screening', 0)} mutations per megabase; after screening, to "
+             f"{tmb.get('tmb_per_mb', 0)}. Cholangiocarcinoma typically carries a few mutations per megabase, "
+             "so both figures remain far too high, and the assessable territory is in any case an order of "
+             "magnitude below the scale at which panel mutational burden is considered interpretable. The "
+             "value of the calculation here is diagnostic rather than clinical: it is the instrument that "
+             "reveals the residual artefacts, and the difference between the two figures measures how much "
+             "the screening removed. Reporting the number with its interval and its caveats, rather than "
+             "suppressing it, is what makes that inference possible.")
     para(doc,
          "On the RNA side the two workflows agree on a negative: the laboratory reported no fusion, and after "
          "artefact screening this pipeline reports none either, with the reasoning recorded for each of the "

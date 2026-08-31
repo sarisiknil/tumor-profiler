@@ -103,16 +103,62 @@ def main():
                      "clinvar_sig": an.get("clinvar_sig", ""),
                      "class": cls, "reasons": ";".join(reasons) or "passes_all_filters",
                      "ffpe_context": "yes" if ffpe else "no"})
+    # ---- second pass: patterns that only become visible across the whole call set -----------------------
+    # Two signatures of a systematic technical problem, both of which individual variants cannot reveal:
+    #  * positional clustering - several "independent mutations" within a few tens of bases is the signature
+    #    of one mis-aligned or chimeric molecule population, not of separate mutational events;
+    #  * substitution-class dominance - in a highly multiplexed PCR, cross-priming between the amplicons
+    #    amplified in the same tube produces chimeric molecules whose mismatches share a substitution class.
+    som = [r for r in rows if r["class"] == "SOMATIC_LIKELY"]
+    FOLD = {("G", "A"): ("C", "T"), ("T", "C"): ("A", "G"), ("G", "T"): ("C", "A"), ("G", "C"): ("C", "G"),
+            ("A", "T"): ("T", "A"), ("A", "G"): ("T", "C"), ("A", "C"): ("T", "G")}
+
+    def klass(r):
+        pair = FOLD.get((r["ref"], r["alt"]), (r["ref"], r["alt"]))
+        return f"{pair[0]}>{pair[1]}"
+
+    snvs = [r for r in som if len(r["ref"]) == 1 and len(r["alt"]) == 1]
+    class_counts = {}
+    for r in snvs:
+        class_counts[klass(r)] = class_counts.get(klass(r), 0) + 1
+    dominant, dom_frac = "", 0.0
+    if len(snvs) >= 10:
+        dominant, n_dom = max(class_counts.items(), key=lambda kv: kv[1])
+        dom_frac = n_dom / len(snvs)
+    CLUSTER_BP = 200
+    for r in som:
+        flags = []
+        near = [o for o in som if o is not r and o["chrom"] == r["chrom"]
+                and abs(int(o["pos"]) - int(r["pos"])) <= CLUSTER_BP]
+        if near:
+            flags.append(f"clustered: {len(near)+1} somatic calls within {CLUSTER_BP} bp "
+                         "- the signature of one mis-aligned or chimeric molecule population, not of "
+                         "independent mutations")
+        if dom_frac >= 0.30 and len(r["ref"]) == 1 and len(r["alt"]) == 1 and klass(r) == dominant:
+            flags.append(f"belongs to the dominant substitution class {dominant} "
+                         f"({dom_frac*100:.0f}% of somatic SNVs): a systematic bias, not a mutational process")
+        r["artefact_flags"] = "; ".join(flags)
+        r["artefact_risk"] = "high" if len(flags) >= 2 else ("possible" if flags else "not flagged")
+    for r in rows:
+        r.setdefault("artefact_flags", "")
+        r.setdefault("artefact_risk", "" if r["class"] != "SOMATIC_LIKELY" else "not flagged")
+
     order = {"SOMATIC_LIKELY": 0, "ARTEFACT_LIKELY": 1, "GERMLINE_LIKELY": 2, "LOW_QUALITY": 3}
     rows.sort(key=lambda r: (order[r["class"]], -float(r.get("vaf") or 0)))
-    cols = ["key","gene","hgvsc","hgvsp","consequence","impact","class","germline_ambiguous","reasons","vaf",
-            "depth","alt_reads","n_callers","callers","gnomad_af_max","clinvar_sig","ffpe_context",
-            "chrom","pos","ref","alt"]
+    cols = ["key","gene","hgvsc","hgvsp","consequence","impact","class","artefact_risk","germline_ambiguous",
+            "reasons","artefact_flags","vaf","depth","alt_reads","n_callers","callers","gnomad_af_max",
+            "clinvar_sig","ffpe_context","chrom","pos","ref","alt"]
     write_tsv(rows, a.out + ".tsv", cols)
     counts = {}
     for r in rows: counts[r["class"]] = counts.get(r["class"], 0) + 1
     write_json({"counts": counts, "thresholds": cfg,
                 "germline_ambiguous": sum(1 for r in rows if r["germline_ambiguous"] == "yes"),
+                "somatic_flagged_artefact": sum(1 for r in rows if r["class"] == "SOMATIC_LIKELY"
+                                                and r.get("artefact_risk") in ("high", "possible")),
+                "somatic_unflagged": sum(1 for r in rows if r["class"] == "SOMATIC_LIKELY"
+                                         and r.get("artefact_risk") == "not flagged"),
+                "substitution_class_counts": class_counts,
+                "dominant_substitution_class": {"class": dominant, "fraction_of_somatic_snvs": round(dom_frac, 3)},
                 "caveat": "Population-frequency filtering cannot exclude rare private germline variants "
                           "(Sun et al. 2018; GATK Mutect2 FAQ). Residual germline calls are possible; "
                           "germline-looking variants are labelled, not deleted."},

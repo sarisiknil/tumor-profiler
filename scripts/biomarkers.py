@@ -87,8 +87,13 @@ def main():
     cfg = load_config(a.config)
     min_depth = cfg["panel"]["min_depth_assessable"]
     rows = read_tsv(a.variants)
-    som = [r for r in rows if r.get("class") == "SOMATIC_LIKELY"]
+    som_all = [r for r in rows if r.get("class") == "SOMATIC_LIKELY"]
+    # TMB must be computed on the calls one actually believes. Variants carrying an artefact flag - positional
+    # clustering, or membership of a dominant substitution class - are excluded from the numerator, and both
+    # figures are reported so the effect of the screen is visible rather than assumed.
+    som = [r for r in som_all if r.get("artefact_risk", "not flagged") == "not flagged"]
     nonsyn = [r for r in som if any(c in (r.get("consequence") or "") for c in NONSYN)]
+    nonsyn_all = [r for r in som_all if any(c in (r.get("consequence") or "") for c in NONSYN)]
     if a.mosdepth_regions and Path(a.mosdepth_regions).exists():
         mb = assessable_mb(a.mosdepth_regions, min_depth)
         denom_src = f"mosdepth regions with mean depth >= {min_depth}x"
@@ -96,8 +101,9 @@ def main():
         mb = a.panel_size_mb or 0.0
         denom_src = "panel size given on the command line (mosdepth output not available)"
     tmb = round(len(nonsyn) / mb, 2) if mb else None
+    tmb_unscreened = round(len(nonsyn_all) / mb, 2) if mb else None
     lo, hi = poisson_ci(len(nonsyn), mb) if mb else (None, None)
-    snvs = [r for r in som if len(r.get("ref", "")) == 1 and len(r.get("alt", "")) == 1]
+    snvs = [r for r in som_all if len(r.get("ref", "")) == 1 and len(r.get("alt", "")) == 1]
     fold = {("G", "A"): ("C", "T"), ("T", "C"): ("A", "G"), ("G", "T"): ("C", "A"),
             ("G", "C"): ("C", "G"), ("A", "T"): ("T", "A"), ("A", "G"): ("T", "C"), ("A", "C"): ("T", "G")}
     spectrum = {}
@@ -109,11 +115,16 @@ def main():
     low_vaf_ct = sum(1 for r in snvs if (r["ref"], r["alt"]) in (("C", "T"), ("G", "A"))
                      and float(r.get("vaf") or 0) < 0.10)
     out = {
-        "tmb": {"nonsynonymous_somatic_variants": len(nonsyn), "assessable_mb": round(mb, 3),
+        "tmb": {"nonsynonymous_somatic_variants": len(nonsyn),
+                "nonsynonymous_before_artefact_screening": len(nonsyn_all),
+                "tmb_per_mb_before_screening": tmb_unscreened,
+                "assessable_mb": round(mb, 3),
                 "denominator_source": denom_src, "tmb_per_mb": tmb, "ci95_per_mb": [lo, hi],
                 "reference_threshold": "TMB-high is commonly defined as >= 10 mutations/Mb (FDA pembrolizumab "
                                        "tissue-agnostic indication, measured with FoundationOne CDx)",
                 "meaningful": mb >= 0.1,
+                "screening_note": (f"{len(som_all) - len(som)} of {len(som_all)} somatic candidates carried an "
+                                   "artefact flag and were excluded from the numerator."),
                 "caveats": ([] if mb >= 0.1 else
                             [f"Assessable territory is only {mb:.3f} Mb: far below the ~1 Mb that panel TMB "
                              "estimation assumes. The value is reported for completeness but must not be "
