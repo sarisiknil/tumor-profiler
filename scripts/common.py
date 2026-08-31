@@ -44,36 +44,65 @@ def read_vcf(path):
             yield rec
 
 def vaf_and_depth(rec):
-    """Best-effort VAF/DP extraction across Mutect2 (AF/AD/DP), VarDict (AF/VD/DP), LoFreq (INFO AF/DP4/DP)."""
+    """Observed variant allele fraction, depth and alternate-read count, across caller conventions.
+
+    Order matters. Allele *counts* come first because they are unambiguous, and only then the AF fields:
+    LoFreq's INFO/AF is the observed frequency, but FreeBayes' INFO/AF is a genotype-model estimate that is
+    0.5 for every heterozygous call. Reading that as a VAF silently replaces every FreeBayes measurement with
+    0.5 — which is exactly the kind of wrong number that looks plausible in a table.
+    """
     fmt, info = rec["fmt"], rec["info"]
-    dp = None; alt = None; vaf = None
-    if "DP" in fmt:
-        try: dp = int(fmt["DP"])
-        except ValueError: pass
-    if dp is None and "DP" in info:
-        try: dp = int(info["DP"])
-        except (ValueError, TypeError): pass
+    dp = alt = vaf = None
+
+    def as_int(x):
+        try:
+            return int(x)
+        except (TypeError, ValueError):
+            return None
+
+    # 1. allele depths: AD=ref,alt (GATK, VarDict, FreeBayes) -- the most direct measurement
     if "AD" in fmt:
         parts = fmt["AD"].split(",")
         if len(parts) >= 2:
-            try:
-                ref_c, alt = int(parts[0]), int(parts[1])
-                if dp is None: dp = ref_c + alt
-            except ValueError: pass
-    if alt is None and "VD" in fmt:
-        try: alt = int(fmt["VD"])
-        except ValueError: pass
-    if "AF" in fmt:
-        try: vaf = float(fmt["AF"].split(",")[0])
-        except ValueError: pass
-    if vaf is None and "AF" in info and info["AF"] is not True:
-        try: vaf = float(str(info["AF"]).split(",")[0])
-        except ValueError: pass
-    if vaf is None and alt is not None and dp:
-        vaf = alt / dp
+            ref_c, alt_c = as_int(parts[0]), as_int(parts[1])
+            if ref_c is not None and alt_c is not None and (ref_c + alt_c) > 0:
+                alt, dp, vaf = alt_c, ref_c + alt_c, alt_c / (ref_c + alt_c)
+    # 2. FreeBayes also gives reference/alternate observation counts explicitly
+    if vaf is None and "RO" in fmt and "AO" in fmt:
+        ref_c, alt_c = as_int(fmt["RO"]), as_int(str(fmt["AO"]).split(",")[0])
+        if ref_c is not None and alt_c is not None and (ref_c + alt_c) > 0:
+            alt, dp, vaf = alt_c, ref_c + alt_c, alt_c / (ref_c + alt_c)
+    # 3. VarDict reports the alternate count as VD alongside DP
+    if vaf is None and "VD" in fmt and "DP" in fmt:
+        alt_c, d = as_int(fmt["VD"]), as_int(fmt["DP"])
+        if alt_c is not None and d:
+            alt, dp, vaf = alt_c, d, alt_c / d
+    # 4. an explicit per-sample AF (Mutect2) is a real measurement
+    if vaf is None and "AF" in fmt:
+        try:
+            vaf = float(fmt["AF"].split(",")[0])
+        except ValueError:
+            pass
+    # 5. INFO/DP4 = ref-fwd, ref-rev, alt-fwd, alt-rev (LoFreq, bcftools)
+    if vaf is None and isinstance(info.get("DP4"), str):
+        parts = [as_int(x) for x in info["DP4"].split(",")]
+        if len(parts) == 4 and all(p is not None for p in parts):
+            ref_c, alt_c = parts[0] + parts[1], parts[2] + parts[3]
+            if ref_c + alt_c > 0:
+                alt, dp, vaf = alt_c, ref_c + alt_c, alt_c / (ref_c + alt_c)
+    # 6. last resort: INFO/AF. Correct for LoFreq, a genotype estimate for FreeBayes, so it is only used
+    #    when nothing above produced a value and never for a record that carried allele counts.
+    if vaf is None and info.get("AF") not in (None, True):
+        try:
+            vaf = float(str(info["AF"]).split(",")[0])
+        except ValueError:
+            pass
+    if dp is None:
+        dp = as_int(fmt.get("DP")) or as_int(info.get("DP"))
     if alt is None and vaf is not None and dp:
         alt = round(vaf * dp)
     return vaf, dp, alt
+
 
 def variant_key(rec) -> str:
     return f"{rec['chrom']}:{rec['pos']}:{rec['ref']}>{rec['alt']}"

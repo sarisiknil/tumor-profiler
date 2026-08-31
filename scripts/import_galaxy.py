@@ -72,6 +72,8 @@ def main():
     contents = api(a.server, key, f"histories/{hist['id']}/contents", {"v": "dev", "keys": "id,name,extension,deleted,visible,state"})
     out = Path(a.out); out.mkdir(parents=True, exist_ok=True)
     manifest = []
+    exact_names = {fn for _, fn in WANTED}
+    contents = sorted(contents, key=lambda d: 0 if d.get("name") in exact_names else 1)
     for d in contents:
         if d.get("deleted") or not d.get("visible") or d.get("state") != "ok":
             continue
@@ -80,11 +82,21 @@ def main():
         if ext in SKIP_EXT and not a.all:
             print(f"  skip (large): {name}")
             continue
+        # Exact name wins. The runner already renames every output to its canonical name, so a dataset called
+        # exactly `fusions.tsv` is the one we want -- a loose regex would otherwise let `fusions.pdf`,
+        # `fusions.vcf` or `known_fusions.tsv.gz` overwrite it.
         target = None
-        for pattern, filename in WANTED:
-            if re.search(pattern, name, re.I):
-                target = filename
-                break
+        exact = {fn for _, fn in WANTED}
+        if name in exact:
+            target = name
+        else:
+            for pattern, filename in WANTED:
+                if re.search(pattern, name, re.I):
+                    target = filename
+                    break
+        if target and (out / target).exists() and name != target:
+            print(f"  keep existing {target} (not overwriting with {name!r})")
+            continue
         if target is None:
             if not a.all:
                 continue

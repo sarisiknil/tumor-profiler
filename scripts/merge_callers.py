@@ -48,11 +48,12 @@ def main():
         print(f"{name}: {n} records", file=sys.stderr)
     rows = []
     for e in merged.values():
-        vafs = [v for v in e["vaf"].values()]
+        vafs = sorted(e["vaf"].values())
         dps = [v for v in e["depth"].values()]
         rows.append({"key": e["key"], "chrom": e["chrom"], "pos": e["pos"], "ref": e["ref"], "alt": e["alt"],
                      "n_callers": len(set(e["callers"])), "callers": ",".join(sorted(set(e["callers"]))),
-                     "vaf": round(sum(vafs)/len(vafs), 4) if vafs else "",
+                     "vaf": (round(vafs[len(vafs)//2], 4) if len(vafs) % 2
+                             else round((vafs[len(vafs)//2 - 1] + vafs[len(vafs)//2]) / 2, 4)) if vafs else "",
                      "vaf_per_caller": ";".join(f"{k}={v}" for k, v in sorted(e["vaf"].items())),
                      "depth": max(dps) if dps else "",
                      "alt_reads": max(e["alt_reads"].values()) if e["alt_reads"] else "",

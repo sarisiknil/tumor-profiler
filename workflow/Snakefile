@@ -40,7 +40,9 @@ if MODE == "patient":
     RNA_R1, RNA_R2 = config["data"]["rna_r1"], config["data"]["rna_r2"]
     COVERAGE = next((f for f in ("coverage.regions.bed", "coverage.regions.bed.gz")
                      if (GALAXY / f).exists()), "coverage.regions.bed")
-    missing = [f for f in ("mutect2.vcf", "vardict.vcf", "lofreq.vcf", COVERAGE)
+    # the third caller is VarDict where it works and FreeBayes where it does not (see scripts/galaxy_run.py)
+    THIRD = "vardict.vcf" if (GALAXY / "vardict.vcf").exists() else "freebayes.vcf"
+    missing = [f for f in ("mutect2.vcf", THIRD, "lofreq.vcf", COVERAGE)
                if not (GALAXY / f).exists()]
     if missing and not config.get("allow_missing_galaxy"):
         raise WorkflowError(
@@ -163,9 +165,10 @@ if MODE == "example":
         shell:  "mosdepth --by {input.bed} --no-per-base {RES}/align/coverage {input.bam}"
 else:
     rule mosdepth_from_galaxy:
-        """Coverage was computed on Galaxy, where the BAM lives; only the small regions file is imported."""
+        """Coverage was computed on Galaxy, where the BAM lives; only the small regions file is imported.
+        Keep the source extension - the readers decide whether to gunzip from the file name."""
         input:  GALAXY / COVERAGE
-        output: RES / "align/coverage.regions.bed.gz"
+        output: RES / "align" / COVERAGE
         shell:  "mkdir -p {RES}/align && cp {input} {output}"
 
 # ---------------------------------------------------------------- variant calling (3 callers -> concordance)
@@ -278,7 +281,7 @@ rule rna_umi_extract:
 rule fusion_summary:
     """In patient mode Arriba runs on Galaxy and its fusions.tsv is imported; in example mode a stub is used
     when no Arriba output exists, so the rest of the workflow still completes."""
-    input:  umi=rules.rna_umi_extract.output.r1
+    input:  *( [rules.rna_umi_extract.output.r1] if MODE == "example" else [] )
     output: tsv=RES / "rna/fusions_summary.tsv", js=RES / "rna/fusions_summary_summary.json"
     params: arriba=config.get("arriba_tsv", "results/galaxy_import/fusions.tsv")
     run:

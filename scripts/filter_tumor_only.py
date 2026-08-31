@@ -65,8 +65,11 @@ def main():
             reasons.append(f"low_vaf({vaf:.3f})")
         if ncall < cfg["min_callers_agree"]:
             reasons.append(f"single_caller({v.get('callers','')})")
+        # Concordance is the whole point of running three callers: with no matched normal, a variant seen by
+        # one caller only is not evidence, whatever its allele fraction. Such calls are kept and labelled, not
+        # deleted, so a reviewer can still find them.
         if any(r.startswith(("low_depth", "few_alt_reads", "low_vaf")) for r in reasons) or \
-           (ncall < cfg["min_callers_agree"] and vaf and vaf < 0.05):
+           ncall < cfg["min_callers_agree"]:
             cls = "LOW_QUALITY"
         # germline
         lo, hi = cfg["het_germline_vaf_window"]
