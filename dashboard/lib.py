@@ -77,9 +77,11 @@ def header(title: str, R: dict):
     st.title(f"🧬 {title}")
     left, right = st.columns([3, 1])
     with left:
+        # Show only the results directory's name. The absolute path contains the user account and the
+        # workspace folder, and this caption appears in every screenshot that goes into the report.
         st.caption(f"Sample **{s.get('sample', '—')}** · library: "
                    f"{(s.get('library') or {}).get('chemistry', 'unknown chemistry')} · "
-                   f"results from `{R['dir']}`")
+                   f"results from `{Path(R['dir']).name}/`")
     with right:
         st.caption(f"generated {(s.get('_provenance') or {}).get('generated_utc', '—')}")
 
