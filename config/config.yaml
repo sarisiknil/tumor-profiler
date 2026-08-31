@@ -1,10 +1,13 @@
 # Central configuration. Paths point OUTSIDE the repo for private data.
 sample_id: "TUMOR01"            # public alias used in every output; the lab sample ID never appears in outputs
+# Patient FASTQ paths are NOT stored here: a laboratory sample code is itself an identifier. Copy
+# config/config.local.example.yaml to config/config.local.yaml (git-ignored) and put the real paths there;
+# the workflow loads it automatically when present.
 data:
-  dna_r1: "../TUMOR01/DNA/TUMOR01_DNA_R1_001.fastq.gz"
-  dna_r2: "../TUMOR01/DNA/TUMOR01_DNA_R2_001.fastq.gz"
-  rna_r1: "../TUMOR01/RNA/TUMOR01_RNA_R1_001.fastq.gz"
-  rna_r2: "../TUMOR01/RNA/TUMOR01_RNA_R2_001.fastq.gz"
+  dna_r1: "PATH/TO/DNA_R1.fastq.gz"
+  dna_r2: "PATH/TO/DNA_R2.fastq.gz"
+  rna_r1: "PATH/TO/RNA_R1.fastq.gz"
+  rna_r2: "PATH/TO/RNA_R2.fastq.gz"
 library:
   chemistry: "IDT/Archer Anchored Multiplex PCR (AMP), Liquid P5 MBC + P7 adapters"
   umi_len: 12

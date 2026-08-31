@@ -47,3 +47,6 @@ examples/reference/*.dict
 results_example/dna/vep.json
 results_example/logs/
 .snakemake/
+
+# local overrides carrying real paths / identifiers
+config/config.local.yaml

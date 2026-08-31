@@ -73,8 +73,8 @@ Run each tool, wait for it to turn green, then start the next. Total ~1–2 h in
 | Field | Value |
 |---|---|
 | Library type | **Paired-end** |
-| Forward reads | `TUMOR01_DNA_R1_001.fastq.gz` |
-| Reverse reads | `TUMOR01_DNA_R2_001.fastq.gz` |
+| Forward reads | `<SAMPLE>_DNA_R1.fastq.gz` |
+| Reverse reads | `<SAMPLE>_DNA_R2.fastq.gz` |
 | Barcode pattern for first read | `^(?P<umi_1>.{12})(?P<discard_1>AGTCGTCTCGAAGT?){s<=2}` |
 | Barcode pattern for second read | *(leave empty)* |
 | Extract method | **regex** |

@@ -1,0 +1,7 @@
+# Copy to config/config.local.yaml (git-ignored) and fill in the real paths.
+# The workflow merges this over config/config.yaml when the file exists.
+data:
+  dna_r1: "../<SAMPLE>/DNA/<SAMPLE>-D_R1_001.fastq.gz"
+  dna_r2: "../<SAMPLE>/DNA/<SAMPLE>-D_R2_001.fastq.gz"
+  rna_r1: "../<SAMPLE>/RNA/<SAMPLE>-R_R1_001.fastq.gz"
+  rna_r2: "../<SAMPLE>/RNA/<SAMPLE>-R_R2_001.fastq.gz"

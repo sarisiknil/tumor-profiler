@@ -1,7 +1,6 @@
 # Requesting an OncoKB academic licence
 
-Register at <https://www.oncokb.org/account/register> with your **institutional** address
-(`...@sabanciuniv.edu`). The form asks for a short description of intended use. Text you can adapt:
+Register at <https://www.oncokb.org/account/register> with your **institutional** address (`...@sabanciuniv.edu`). The form asks for a short description of intended use. Text you can adapt:
 
 ## Short version (for a small form field)
 

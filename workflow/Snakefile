@@ -20,6 +20,17 @@ from pathlib import Path
 
 configfile: "config/config.yaml"
 
+# Real patient paths live in a git-ignored local override so that no identifier reaches version control.
+_local = Path("config/config.local.yaml")
+if _local.exists():
+    import yaml as _yaml
+    _over = _yaml.safe_load(_local.read_text()) or {}
+    for _k, _v in _over.items():
+        if isinstance(_v, dict) and isinstance(config.get(_k), dict):
+            config[_k].update(_v)
+        else:
+            config[_k] = _v
+
 MODE = config.get("mode", "example")
 RES = Path(config.get("results_dir", "results" if MODE == "patient" else "results_example"))
 SAMPLE = config.get("sample_id", "TUMOR01") if MODE == "patient" else "EXAMPLE01"

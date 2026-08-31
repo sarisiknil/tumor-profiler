@@ -63,7 +63,7 @@ Everything in Phase 3 is written out click-by-click in `galaxy/UPLOAD_CHECKLIST.
 ## Phase 6 · Write the deliverables — ~4 days, start by 13 September at the latest
 
 Three files, named as the faculty guidelines require
-(`BIO395_FinalReport_NIL_LASTNAME_DDMonthYYYY.doc` etc.):
+(`BIO395_FinalReport_FIRSTNAME_LASTNAME_DDMonthYYYY.doc` etc.):
 
 - [ ] **Report** — section mapping:
   - 3.3 Motivation: vendor software is closed and per-sample priced; the analysis behind a clinical report

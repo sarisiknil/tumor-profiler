@@ -57,8 +57,11 @@ jobs:
 
       - name: No patient identifiers in tracked files
         run: |
-          if git ls-files | xargs grep -l -i -E 'REDACTED|TUMOR01-' 2>/dev/null | grep -v '^docs/' ; then
-            echo "::error::a laboratory identifier appears in a tracked file"; exit 1
+          # the audit itself and the roadmap name the pattern, so they are excluded from their own check
+          hits=$(git ls-files | xargs grep -l -i -E 'REDACTED|TUMOR01-' 2>/dev/null \
+                 | grep -vE '^(\.github/workflows/ci\.yml|ROADMAP\.md|docs/)' || true)
+          if [ -n "$hits" ]; then
+            echo "::error::a laboratory identifier appears in: $hits"; exit 1
           fi
           echo "clean"
 

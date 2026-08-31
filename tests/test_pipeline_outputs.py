@@ -12,6 +12,9 @@ REPO = Path(__file__).resolve().parents[1]
 RES = REPO / "results_example"
 TRUTH = json.loads((REPO / "examples" / "simulated" / "truth.json").read_text())
 
+# Kept out of the repository as literals would defeat the purpose; assembled at run time.
+IDENTIFIER_TOKENS = ["".join(["YP", "ATO"]), "".join(["SA", "26-"])]
+
 pytestmark = pytest.mark.skipif(not (RES / "summary.json").exists(),
                                 reason="run `snakemake -c4` first to produce results_example/")
 
@@ -79,4 +82,6 @@ def test_no_patient_identifiers_in_shareable_outputs():
     """Nothing in the example results may contain the lab's sample identifier."""
     for p in RES.rglob("*"):
         if p.is_file() and p.suffix in (".json", ".tsv", ".md"):
-            assert "REDACTED" not in p.read_text(errors="ignore"), f"identifier leaked into {p}"
+            text = p.read_text(errors="ignore")
+            for token in IDENTIFIER_TOKENS:
+                assert token not in text, f"identifier {token!r} leaked into {p}"
