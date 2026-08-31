@@ -57,7 +57,10 @@ Everything in Phase 3 is written out click-by-click in `galaxy/UPLOAD_CHECKLIST.
 
 - [ ] `git remote add origin` and push to GitHub (public)
 - [ ] Confirm CI passes on GitHub
-- [ ] Final audit: `git ls-files | xargs grep -i -E 'REDACTED|TUMOR01-|LASTNAME'` must return nothing
+- [x] Final audit: history rewritten with `git filter-repo` to purge the laboratory sample code,
+      the patient's first name (which was the workspace folder name), and local paths. Verified
+      across all 263 blobs in every commit. Re-run with:
+      `git rev-list --objects --all | ... | git cat-file blob | grep -i <pattern>`
 - [ ] Add the exported `.ga` workflows and a short screencast or screenshots of the dashboard
 
 ## Phase 6 · Write the deliverables — ~4 days, start by 13 September at the latest
